@@ -1,7 +1,15 @@
+<% @reviews.each do |breview| %>
+  <%= review.title %>
+  <%= review.body %>
+  <%= link_to "Show", review_path(review.id) %>
+  <%= link_to "Edit", edit_review_path(review.id) %>
+  <%= link_to "Destroy", review_path(review.id), method: :delete, "data-confirm" => "Are you sure ?" %>
+<% end %>
+
 <%= form_with model: @reviews do |f| %>
-        <h6>Title</h6>
-          <%= f.text_field :title %>
-         <h6>Body</h6>
-          <%= f.text_area :body %>
-          <%= f.submit 'Create Review' %>
+  <h6>Title</h6>
+    <%= f.text_field :title %>
+  <h6>Body</h6>
+    <%= f.text_area :body %>
+    <%= f.submit 'Create Review' %>
 <% end %>

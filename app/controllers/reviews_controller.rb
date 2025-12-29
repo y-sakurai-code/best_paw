@@ -1,8 +1,11 @@
 class ReviewsController < ApplicationController
+
   def new
   end
 
   def index
+    @review = Review.new
+    @reviews = Review.all
   end
 
   def show

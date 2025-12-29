@@ -1,0 +1,7 @@
+<%= form_with model: @reviews do |f| %>
+        <h6>Title</h6>
+          <%= f.text_field :title %>
+         <h6>Body</h6>
+          <%= f.text_area :body %>
+          <%= f.submit 'Create Review' %>
+<% end %>

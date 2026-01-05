@@ -1,2 +1,11 @@
 <h1>Reviews#new</h1>
 <p>Find me in app/views/reviews/new.html.erb</p>
+
+
+<%= form_with model: @review do |f| %>
+  <h6>Title</h6>
+    <%= f.text_field :title %>
+  <h6>Body</h6>
+    <%= f.text_area :body %>
+    <%= f.submit 'Create Review' %>
+<% end %>

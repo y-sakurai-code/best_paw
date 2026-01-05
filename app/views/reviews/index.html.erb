@@ -1,15 +1,12 @@
-<% @reviews.each do |breview| %>
+<h4>投稿一覧</h4>
+
+<% @reviews.each do |review| %>
+  <p>レビュータイトル</p>
   <%= review.title %>
+  <p>レビュー本文</p>
   <%= review.body %>
+  <br>
   <%= link_to "Show", review_path(review.id) %>
   <%= link_to "Edit", edit_review_path(review.id) %>
   <%= link_to "Destroy", review_path(review.id), method: :delete, "data-confirm" => "Are you sure ?" %>
-<% end %>
-
-<%= form_with model: @reviews do |f| %>
-  <h6>Title</h6>
-    <%= f.text_field :title %>
-  <h6>Body</h6>
-    <%= f.text_area :body %>
-    <%= f.submit 'Create Review' %>
 <% end %>

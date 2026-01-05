@@ -1,23 +1,24 @@
 class ReviewsController < ApplicationController
 
   def new
-  end
-
-  def index
     @review = Review.new
-    @reviews = Review.all
-  end
-
-  def show
-  end
-
-  def edit
   end
 
   def create
     review = Review.new(review_params)
     review.save
-    redirect_to review_path(review.id)
+    redirect_to "/"
+  end
+
+  def index
+    @reviews = Review.all
+  end
+
+  def show
+    @review = Review.find(params[:id])
+  end
+
+  def edit
   end
 
 

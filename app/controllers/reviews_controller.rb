@@ -7,7 +7,7 @@ class ReviewsController < ApplicationController
   def create
     review = Review.new(review_params)
     review.save
-    redirect_to "/"
+    redirect_to review_path(review.id)
   end
 
   def index
@@ -19,6 +19,19 @@ class ReviewsController < ApplicationController
   end
 
   def edit
+    @review = Review.find(params[:id])
+  end
+
+  def update
+    review = Review.find(params[:id])
+    review.update(review_params)
+    redirect_to review_path(review.id)
+  end
+
+  def destroy
+    review = Review.find(params[:id])
+    review.destroy(review_params)
+    redirect_to reviews_path
   end
 
 

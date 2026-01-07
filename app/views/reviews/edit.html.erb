@@ -4,6 +4,15 @@
 
 <h3>レビュー編集画面</h3>
 
+<% if @review.errors.any? %>
+  <%= @review.errors.count %>件のエラーが発生しました
+  <ul>
+    <% @review.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+  </ul>
+<% end %>
+
 <%= form_with model: @review do |f| %>
 
   <h4>レビュータイトル</h4>

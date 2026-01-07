@@ -1,6 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
   <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="application.css" />
     <title>BestPaw</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
@@ -12,8 +14,8 @@
 
   <body>
     <header>
-      <div class="collapse navbar-collapse" id="navbarNavDropdown">
-        <ul class="navbar-nav ml-auto">
+      <div class="navbar">
+        <ul class="navbar">
           <% if user_signed_in? %>
             <li class="nav-item">
             <%= link_to "Home", reviews_path, class: 'nav-link text-dark' %>

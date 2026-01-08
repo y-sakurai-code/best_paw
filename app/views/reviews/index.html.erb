@@ -7,6 +7,8 @@
   <%= review.body %>
   <br>
   <%= link_to "Show", review_path(review.id) %>
-  <%= link_to "Edit", edit_review_path(review.id) %>
-  <%= link_to "Destroy", review_path(review.id), method: :delete, "data-confirm" => "Are you sure ?" %>
+  <% if review.user_id == current_user.id %>
+    <%= link_to "Edit", edit_review_path(review.id) %>
+    <%= link_to "Destroy", review_path(review.id), method: :delete, "data-confirm" => "Are you sure ?" %>
+  <% end %>
 <% end %>

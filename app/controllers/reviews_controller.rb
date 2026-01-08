@@ -1,4 +1,5 @@
 class ReviewsController < ApplicationController
+  before_action :is_matching_login_user, only: [:edit, :update]
 
   def new
     @review = Review.new
@@ -6,6 +7,7 @@ class ReviewsController < ApplicationController
 
   def create
     @review = Review.new(review_params)
+    @review.user_id = current_user.id
     if @review.save
       redirect_to review_path(@review.id)
     else
@@ -45,6 +47,13 @@ class ReviewsController < ApplicationController
   private
   def review_params
     params.require(:review).permit(:title, :body)
+  end
+
+  def is_matching_login_user
+    @review = Review.find(params[:id])
+    unless @review.user_id == current_user.id
+      redirect_to reviews_path
+    end
   end
 
 end

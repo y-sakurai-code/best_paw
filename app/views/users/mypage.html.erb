@@ -1,2 +1,15 @@
-<h1>Users#mypage</h1>
-<p>Find me in app/views/users/mypage.html.erb</p>
+<!-- ユーザーの詳細 -->
+<div>
+  <h3>ユーザーネーム：<%= current_user.name %></h3>
+  <h3>メールアドレス：<%= current_user.name %></h3>
+  <h3>パスワード：<%= current_user.name %></h3>
+</div>
+
+<!-- ユーザーの投稿一覧 -->
+<h3>レビュー 一覧</h3>
+<% @reviews.each do |review| %>
+<div>
+  <p>レビュータイトル：<%= review.title %></p>
+  <p>レビュー本文：<%= review.body %></p>
+</div>
+<% end %>

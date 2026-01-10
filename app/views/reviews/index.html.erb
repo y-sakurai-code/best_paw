@@ -1,14 +1,16 @@
-<h4>レビュー一覧</h4>
+<div class="content">
+  <h4>レビュー一覧</h4>
 
-<% @reviews.each do |review| %>
-  <p>レビュータイトル</p>
-  <%= review.title %>
-  <p>レビュー本文</p>
-  <%= review.body %>
-  <br>
-  <%= link_to "Show", review_path(review.id) %>
-  <% if review.user_id == current_user.id %>
-    <%= link_to "Edit", edit_review_path(review.id) %>
-    <%= link_to "Destroy", review_path(review.id), method: :delete, "data-confirm" => "Are you sure ?" %>
+  <% @reviews.each do |review| %>
+    <p>レビュータイトル</p>
+    <%= review.title %>
+    <p>レビュー本文</p>
+    <%= review.body %>
+    <br>
+    <%= link_to "Show", review_path(review.id) %>
+    <% if review.user_id == current_user.id %>
+      <%= link_to "Edit", edit_review_path(review.id) %>
+      <%= link_to "Destroy", review_path(review.id), method: :delete, "data-confirm" => "Are you sure ?" %>
+    <% end %>
   <% end %>
-<% end %>
+</div>

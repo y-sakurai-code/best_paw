@@ -1,13 +1,17 @@
 <!-- ユーザー情報リンク -->
-<div>
+<div class="content">
   <%= link_to "ユーザー情報詳細", user_path(current_user.id) %>
 </div>
 
 <!-- ユーザーの投稿一覧 -->
+<div class="content">
 <h3>レビュー 一覧</h3>
 <% @reviews.each do |review| %>
-<div>
   <p>レビュータイトル：<%= review.title %></p>
   <p>レビュー本文：<%= review.body %></p>
-</div>
+  <br>
+  <%= link_to "Show", review_path(review.id) %>
+  <%= link_to "Edit", edit_review_path(review.id) %>
+  <%= link_to "Destroy", review_path(review.id), method: :delete, "data-confirm" => "Are you sure ?" %>
 <% end %>
+</div>

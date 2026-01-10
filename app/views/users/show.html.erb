@@ -1,8 +1,10 @@
 <!-- ユーザーの詳細 -->
-<div>
+<div class="content">
   <h3>ユーザーネーム：<%= current_user.name %></h3>
   <h3>メールアドレス：<%= current_user.email %></h3>
   <h3>パスワード：***********</h3>
 
   <%= link_to "ユーザー情報編集", edit_user_path(current_user.id) %>
+  <br>
+  <%= link_to "Back", users_mypage_path %>
 </div>

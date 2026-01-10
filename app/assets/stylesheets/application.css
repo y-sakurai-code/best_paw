@@ -37,3 +37,10 @@ header .headline {
   display: inline-block;
   margin: 0 20px;
 }
+
+.content {
+  width: 90%;
+  padding: 15px 0;
+  margin: 30px auto 0;
+  text-align: center;
+}

@@ -1,31 +1,29 @@
-<h1>Reviews#edit</h1>
-<p>Find me in app/views/reviews/edit.html.erb</p>
+<div class="content">
+  <h3>レビュー編集画面</h3>
 
+  <% if @review.errors.any? %>
+    <%= @review.errors.count %>件のエラーが発生しました
+    <ul>
+      <% @review.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  <% end %>
 
-<h3>レビュー編集画面</h3>
+  <%= form_with model: @review do |f| %>
 
-<% if @review.errors.any? %>
-  <%= @review.errors.count %>件のエラーが発生しました
-  <ul>
-    <% @review.errors.full_messages.each do |message| %>
-      <li><%= message %></li>
-    <% end %>
-  </ul>
-<% end %>
-
-<%= form_with model: @review do |f| %>
-
-  <h4>レビュータイトル</h4>
-  <%= f.text_field :title %>
+    <h3>レビュータイトル</h3>
+    <%= f.text_field :title %>
   
-  <h4>レビュー本文</h4>
-  <%= f.text_area :body %>
-  
-  <%= f.submit '保存' %>
+    <h3>レビュー本文</h3>
+    <%= f.text_area :body %>
+    <br>
+    <%= f.submit '保存' %>
 
-  <br>
-  <%= link_to "Back", reviews_path %>
-  <%= link_to "Show", review_path(@review.id) %>
-  <%= link_to "Destroy", review_path(@review.id), method: :delete, "data-confirm" => "Are you sure ?" %>
+    <br>
+    <%= link_to "Back", reviews_path %>
+    <%= link_to "Show", review_path(@review.id) %>
+    <%= link_to "Destroy", review_path(@review.id), method: :delete, "data-confirm" => "Are you sure ?" %>
   
-<% end %>
+  <% end %>
+</div>

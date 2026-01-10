@@ -1,13 +1,15 @@
-<h1>Reviews#show</h1>
-<p>Find me in app/views/reviews/show.html.erb</p>
+<div class="content">
 
-<h3>レビュータイトル</h3>
-<p><%= @review.title %></p>
+  <h3>レビュータイトル</h3>
+  <p><%= @review.title %></p>
 
-<h3>レビュー本文</h3>
-<p><%= @review.body %></p>
+  <h3>レビュー本文</h3>
+  <p><%= @review.body %></p>
 
-<br>
-<%= link_to "Back", reviews_path %>
-<%= link_to "Edit", edit_review_path(@review.id) %>
-<%= link_to "Destroy", review_path(@review.id), method: :delete, "data-confirm" => "Are you sure ?" %>
+  <br>
+  <%= link_to "Back", reviews_path %>
+  <% if @review.user_id == current_user.id %>
+    <%= link_to "Edit", edit_review_path(@review.id) %>
+    <%= link_to "Destroy", review_path(@review.id), method: :delete, "data-confirm" => "Are you sure ?" %>
+  <% end %>
+</div>

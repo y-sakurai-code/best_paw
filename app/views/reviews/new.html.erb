@@ -1,19 +1,21 @@
-<h1>Reviews#new</h1>
-<p>Find me in app/views/reviews/new.html.erb</p>
+<div class="content">
+  <h3>新規レビュー投稿</h3>
 
-<% if @review.errors.any? %>
-  <%= @review.errors.count %>件のエラーが発生しました
-  <ul>
-    <% @review.errors.full_messages.each do |message| %>
-      <li><%= message %></li>
-    <% end %>
-  </ul>
-<% end %>
+  <% if @review.errors.any? %>
+    <%= @review.errors.count %>件のエラーが発生しました
+    <ul>
+      <% @review.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  <% end %>
 
-<%= form_with model: @review do |f| %>
-  <h6>Title</h6>
-    <%= f.text_field :title %>
-  <h6>Body</h6>
-    <%= f.text_area :body %>
-    <%= f.submit 'Create Review' %>
-<% end %>
+  <%= form_with model: @review do |f| %>
+    <h4>レビュータイトル</h4>
+      <%= f.text_field :title %>
+    <h4>レビュー本文</h4>
+      <%= f.text_area :body %>
+      <br>
+      <%= f.submit 'Create Review' %>
+  <% end %>
+</div>

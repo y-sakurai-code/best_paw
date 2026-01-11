@@ -22,10 +22,11 @@ class UsersController < ApplicationController
     @user = current_user
   end
 
-  def archive
-    user = User.find(params[:id])
-    user.archive
-    redirect_to root_path
+  def destroy
+    user = current_user
+    user.destroy
+    reset_session 
+    redirect_to root_path, notice: "退会処理が完了しました"
   end
 
   private

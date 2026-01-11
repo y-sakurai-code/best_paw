@@ -28,7 +28,7 @@
   <br>
   <br>
 
-  <%= link_to "退会", user_path(@user.id), method: :archive, "data-confirm" => "Are you sure ?" %>
+  <%= link_to "退会", users_path(id: current_user.id), method: :delete, "data-confirm" => "Are you sure ?" %>
 
   <br>
   <br>

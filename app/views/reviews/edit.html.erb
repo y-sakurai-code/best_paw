@@ -20,10 +20,11 @@
     <br>
     <%= f.submit '保存' %>
 
+  <% end %>
+
     <br>
     <%= link_to "Back", reviews_path %>
     <%= link_to "Show", review_path(@review.id) %>
     <%= link_to "Destroy", review_path(@review.id), method: :delete, "data-confirm" => "Are you sure ?" %>
   
-  <% end %>
 </div>

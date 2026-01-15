@@ -1,0 +1,42 @@
+<div class="content">
+<table class="table table-hover table-inverse">
+  <!--検索対象モデルがUserの時(あとで犬に変更予定) -->
+  <% if @range == "User" %>
+  <h2>Users search for "<%= @word %>"</h2>
+    <thead>
+      <tr>
+        <th>name</th>
+        <th colspan="3"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @users.each do |user| %>
+        <tr>
+          <td><%= user.name %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  <% else %>
+    <!--検索対象モデルがUserではない時(= 検索対象モデルがReviewの時) -->
+    <thead>
+      <tr>
+        <th></th>
+        <th>レビュータイトル</th>
+        <th>レビュー本文</th>
+      </tr>
+    <tbody>
+    <h2>Reviews search for "<%= @word %>"</h2>
+    <% @reviews.each do |review| %>
+      <tr>
+        <td>
+          <%= link_to user_path(review.user) do %>
+          <% end %>
+        </td>
+        <td><%= link_to review.title , review_path(review.id) %></td>
+        <td><%= review.body %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  <% end %>
+</table>
+</div>

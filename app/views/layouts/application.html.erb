@@ -33,6 +33,14 @@
             <li class="nav-item">
               <%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: 'nav-link text-dark' %>
             </li>
+            <li class="nav-item">
+              <%= form_with url: search_path, local: true, method: :get do |f| %>
+              <%= f.text_field :word %>
+              <%= f.select :range, options_for_select([['User'], ['Review']]) %>
+              <%= f.select :search, options_for_select([["完全一致","perfect_match"], ["前方一致","forward_match"],  ["後方一致","backward_match"], ["部分一致","partial_match"]]) %>
+              <%= f.submit "検索", class: "btn-sm btn-primary" %>
+              <% end %>
+            </li>
             <% else %>
             <li class="nav-item">
             <%= link_to "Home", root_path, class: 'nav-link text-dark' %>

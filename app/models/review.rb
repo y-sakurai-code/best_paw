@@ -4,6 +4,7 @@ class Review < ApplicationRecord
   validates :body, presence: true
 
   belongs_to :user
+  has_many :review_comments, dependent: :destroy
 
   def self.looks(search, word)
     if search == "perfect_match"

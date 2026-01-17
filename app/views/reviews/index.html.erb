@@ -7,6 +7,7 @@
     <p>レビュー本文</p>
     <%= review.body %>
     <br>
+    <p><%= "#{review.review_comments.count} コメント" %></p>
     <%= link_to "Show", review_path(review.id) %>
     <% if review.user_id == current_user.id %>
       <%= link_to "Edit", edit_review_path(review.id) %>

@@ -8,6 +8,11 @@ class ReviewCommentsController < ApplicationController
     redirect_to review_path(review)
   end
 
+  def destroy
+    ReviewComment.find(params[:id]).destroy
+    redirect_to review_path(params[:review_id])
+ end 
+
   private
 
   def review_comment_params

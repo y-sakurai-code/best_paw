@@ -10,6 +10,8 @@
   <p>レビュータイトル：<%= review.title %></p>
   <p>レビュー本文：<%= review.body %></p>
   <br>
+  <p><%= "#{review.review_comments.count} コメント" %></p>
+  <br>
   <%= link_to "Show", review_path(review.id) %>
   <%= link_to "Edit", edit_review_path(review.id) %>
   <%= link_to "Destroy", review_path(review.id), method: :delete, "data-confirm" => "Are you sure ?" %>

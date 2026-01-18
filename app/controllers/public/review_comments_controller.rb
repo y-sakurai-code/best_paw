@@ -1,4 +1,4 @@
-class ReviewCommentsController < ApplicationController
+class Public::ReviewCommentsController < ApplicationController
 
   def create
     review = Review.find(params[:review_id])

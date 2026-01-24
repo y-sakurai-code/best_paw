@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class Public::SessionsController < Devise::SessionsController
-  before_action :configure_permitted_parameters, if: :devise_controller?
   # before_action :configure_sign_in_params, only: [:create]
 
   # GET /resource/sign_in
@@ -26,22 +25,5 @@ class Public::SessionsController < Devise::SessionsController
   #   devise_parameter_sanitizer.permit(:sign_in, keys: [:attribute])
   # end
 
-  def after_sign_in_path_for(resource)
-    users_mypage_path
-  end
-
-  def after_sign_out_path_for(resource)
-    if request.referer&.include?("edit")
-      new_user_registration_path
-    else
-      about_path
-    end
-  end
-
-  protected
-
-  def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:name])
-  end
 
 end

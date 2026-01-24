@@ -1,10 +1,74 @@
-<div class="content">
-  <h1>全ユーザー一覧</h1>
-    <ul>
-      <% @users.each do |user| %>
-        <li>
-          <%= link_to user.name, admin_user_path(user.id) %>
-        </li>
-      <% end %>
-    </ul>
+<div class="container py-4">
+  <%# ヘッダーエリア %>
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold text-dark mb-0">
+      <i class="fa-solid fa-users-gear text-secondary me-2"></i>会員管理
+    </h2>
+    <div class="text-secondary small">
+      全登録者数: <span class="fw-bold text-dark"><%= @users.count %></span> 名
+    </div>
+  </div>
+
+  <%# 会員一覧テーブル %>
+  <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+    <div class="table-responsive">
+      <table class="table table-hover align-middle mb-0">
+        <thead class="bg-light text-secondary">
+          <tr>
+            <th class="px-4 py-3" style="width: 80px;">ID</th>
+            <th class="py-3">ユーザーネーム</th>
+            <th class="py-3">メールアドレス</th>
+            <th class="py-3">登録日</th>
+            <th class="py-3 text-end px-4">操作</th>
+          </tr>
+        </thead>
+        <tbody class="border-top-0">
+          <% @users.each do |user| %>
+            <tr>
+              <td class="px-4 text-secondary small">#<%= user.id %></td>
+              <td>
+                <div class="d-flex align-items-center">
+                  <div class="bg-secondary-subtle rounded-circle p-2 me-2 d-inline-flex align-items-center justify-content-center" style="width: 35px; height: 35px;">
+                    <i class="fa-solid fa-user text-secondary small"></i>
+                  </div>
+                  <span class="fw-bold text-dark"><%= user.name %></span>
+                </div>
+              </td>
+              <td class="text-secondary small">
+                <%= user.email %>
+              </td>
+              <td class="text-secondary small">
+                <%= user.created_at.strftime('%Y/%m/%d') %>
+              </td>
+              <td class="text-end px-4">
+                <%= link_to admin_user_path(user.id), class: "btn btn-sm btn-outline-dark rounded-pill px-3 transition" do %>
+                  詳細
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+    
+    <%# ユーザーがいない場合の表示 %>
+    <% if @users.empty? %>
+      <div class="text-center py-5">
+        <p class="text-muted mb-0">登録されているユーザーはいません。</p>
+      </div>
+    <% end %>
+  </div>
 </div>
+
+<style>
+  .table-hover tbody tr:hover {
+    background-color: rgba(0,0,0,0.02);
+  }
+  .transition {
+    transition: all 0.2s ease;
+  }
+  .btn-outline-dark:hover {
+    background-color: #343a40;
+    color: #fff;
+  }
+</style>

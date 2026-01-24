@@ -1,26 +1,86 @@
-<h2>Log in</h2>
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-5 col-lg-4">
+      
+      <%# 管理者用ログインカード %>
+      <div class="card border-0 shadow rounded-4 overflow-hidden">
+        
+        <%# カード上部のヘッダーエリア %>
+        <div class="bg-dark py-4 text-center">
+          <div class="bg-secondary d-inline-flex align-items-center justify-content-center rounded-circle mb-2" style="width: 60px; height: 60px;">
+            <i class="fa-solid fa-lock text-white fs-3"></i>
+          </div>
+          <h4 class="text-white fw-bold mb-0">Admin Login</h4>
+          <p class="text-light opacity-50 small mb-0">Best Paw 管理者専用</p>
+        </div>
 
-<%= form_with model: @admin, url: session_path(resource_name), local: true do |f| %>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
+        <div class="card-body p-4 p-md-5 bg-white">
+          <%= form_with model: @admin, url: session_path(resource_name), local: true do |f| %>
+            
+            <%# メールアドレス %>
+            <div class="mb-4">
+              <%= f.label :email, "管理者メールアドレス", class: "form-label small fw-bold text-secondary" %>
+              <div class="input-group">
+                <span class="input-group-text bg-light border-0 text-muted">
+                  <i class="fa-solid fa-envelope"></i>
+                </span>
+                <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control bg-light border-0 py-2", placeholder: "admin@example.com" %>
+              </div>
+            </div>
 
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "current-password" %>
-  </div>
+            <%# パスワード %>
+            <div class="mb-4">
+              <%= f.label :password, "パスワード", class: "form-label small fw-bold text-secondary" %>
+              <div class="input-group">
+                <span class="input-group-text bg-light border-0 text-muted">
+                  <i class="fa-solid fa-key"></i>
+                </span>
+                <%= f.password_field :password, autocomplete: "current-password", class: "form-control bg-light border-0 py-2", placeholder: "••••••••" %>
+              </div>
+            </div>
 
-  <% if devise_mapping.rememberable? %>
-    <div class="field">
-      <%= f.check_box :remember_me %>
-      <%= f.label :remember_me %>
+            <%# ログイン状態保持 %>
+            <% if devise_mapping.rememberable? %>
+              <div class="mb-4 form-check">
+                <%= f.check_box :remember_me, class: "form-check-input" %>
+                <%= f.label :remember_me, "ログイン状態を保持する", class: "form-check-label small text-muted" %>
+              </div>
+            <% end %>
+
+            <%# ログインボタン（管理者らしく落ち着いたダークカラー） %>
+            <div class="d-grid mb-3">
+              <%= f.submit "管理者ログイン", class: "btn btn-dark btn-lg rounded-pill fw-bold shadow-sm" %>
+            </div>
+
+          <% end %>
+
+          <%# 共有リンク %>
+          <div class="text-center mt-4">
+            <%= render "admin/shared/links" %>
+          </div>
+        </div>
+      </div>
+
+      <%# 一般サイトへ戻るリンク %>
+      <div class="text-center mt-4">
+        <%= link_to root_path, class: "text-decoration-none text-secondary small" do %>
+          <i class="fa-solid fa-arrow-left me-1"></i>一般サイトへ戻る
+        <% end %>
+      </div>
+
     </div>
-  <% end %>
-
-  <div class="actions">
-    <%= f.submit "Log in" %>
   </div>
-<% end %>
+</div>
 
-<%= render "admin/shared/links" %>
+<style>
+  /* 管理画面用リンクのカラー調整 */
+  .text-center a {
+    color: #6c757d;
+    text-decoration: none;
+    font-size: 0.85rem;
+  }
+  .text-center a:hover {
+    color: #343a40;
+    text-decoration: underline;
+  }
+</style>

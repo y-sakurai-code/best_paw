@@ -1,16 +1,65 @@
-<div class="content">
+<div class="container py-4">
+  <%# 戻るリンク %>
+  <div class="mb-4">
+    <%= link_to admin_dashboards_path, class: "text-decoration-none text-secondary small" do %>
+      <i class="fa-solid fa-arrow-left me-1"></i>会員一覧へ戻る
+    <% end %>
+  </div>
 
-  <h3>ユーザーネーム</h3>
-  <p><%= @user.name %></p>
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      
+      <%# 会員情報メインカード %>
+      <div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-4">
+        <div class="card-header bg-dark py-3 px-4">
+          <h5 class="text-white mb-0 fw-bold">
+            <i class="fa-solid fa-id-card me-2 text-secondary"></i>会員詳細情報
+          </h5>
+        </div>
+        
+        <div class="card-body p-4 p-md-5">
+          <div class="row mb-4">
+            <div class="col-sm-4 text-secondary small fw-bold">ユーザーID</div>
+            <div class="col-sm-8 text-dark">#<%= @user.id %></div>
+          </div>
 
-  <h3>emailアドレス</h3>
-  <p><%= @user.email %></p>
+          <div class="row mb-4">
+            <div class="col-sm-4 text-secondary small fw-bold">ユーザーネーム</div>
+            <div class="col-sm-8">
+              <span class="fs-5 fw-bold text-dark"><%= @user.name %></span>
+            </div>
+          </div>
 
-  
+          <div class="row mb-4">
+            <div class="col-sm-4 text-secondary small fw-bold">メールアドレス</div>
+            <div class="col-sm-8">
+              <span class="text-dark"><%= @user.email %></span>
+            </div>
+          </div>
 
+          <div class="row mb-4">
+            <div class="col-sm-4 text-secondary small fw-bold">登録日時</div>
+            <div class="col-sm-8 text-secondary">
+              <%= @user.created_at.strftime('%Y年 %m月 %d日 %H:%M') %>
+            </div>
+          </div>
 
+          <hr class="my-4 opacity-25">
 
-  <br>
-  <%= link_to "Back", admin_dashboards_path %>
-  <%= link_to '削除', admin_user_path(@user), method: :delete, data: { confirm: '本当に削除しますか？' } %>
+          <%# 管理アクション %>
+          <div class="d-flex justify-content-between align-items-center mt-5">
+            <div class="text-muted small">
+              <i class="fa-solid fa-circle-info me-1"></i>このユーザーを完全に削除する場合は右のボタンを押してください。
+            </div>
+            
+            <%= link_to admin_user_path(@user), method: :delete, data: { confirm: '本当にこのユーザーを削除しますか？紐づく投稿もすべて削除されます。' }, class: "btn btn-outline-danger rounded-pill px-4 fw-bold" do %>
+              <i class="fa-solid fa-user-slash me-1"></i>このユーザーを削除
+            <% end %>
+          </div>
+        </div>
+      </div>
+
+      <%# (将来的な拡張) このユーザーの投稿一覧などをここに表示することも可能です %>
+    </div>
+  </div>
 </div>

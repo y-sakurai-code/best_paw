@@ -1,21 +1,45 @@
-<div class="content">
-  <h3>新規レビュー投稿</h3>
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+      <div class="card border-0 shadow-sm rounded-4 p-4 p-md-5">
+        
+        <div class="text-center mb-4">
+          <div class="bg-warning-subtle rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 70px; height: 70px;">
+            <i class="fa-solid fa-pen-to-square fa-2x text-warning"></i>
+          </div>
+          <h2 class="fw-bold">新規レビュー投稿</h2>
+          <p class="text-secondary small">愛犬との思い出や、おすすめグッズを教えてください</p>
+        </div>
 
-  <% if @review.errors.any? %>
-    <%= @review.errors.count %>件のエラーが発生しました
-    <ul>
-      <% @review.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-    </ul>
-  <% end %>
+        <% if @review.errors.any? %>
+          <div class="alert alert-danger border-0 rounded-4 shadow-sm mb-4">
+            <div class="fw-bold mb-1"><%= @review.errors.count %>件のエラーが発生しました</div>
+            <ul class="mb-0 small">
+              <% @review.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
 
-  <%= form_with model: @review do |f| %>
-    <h4>レビュータイトル</h4>
-      <%= f.text_field :title %>
-    <h4>レビュー本文</h4>
-      <%= f.text_area :body %>
-      <br>
-      <%= f.submit 'Create Review' %>
-  <% end %>
+        <%= form_with model: @review, local: true do |f| %>
+          <div class="mb-4">
+            <%= f.label :title, "レビュータイトル", class: "form-label fw-bold" %>
+            <%= f.text_field :title, class: "form-control form-control-lg bg-light border-0 rounded-3", placeholder: "例：このおもちゃ、大喜びでした！" %>
+          </div>
+
+          <div class="mb-4">
+            <%= f.label :body, "レビュー本文", class: "form-label fw-bold" %>
+            <%= f.text_area :body, class: "form-control bg-light border-0 rounded-3", rows: 6, placeholder: "使い心地や、愛犬の反応を詳しく教えてね" %>
+          </div>
+
+          <div class="d-grid gap-2 mt-5">
+            <%= f.submit 'レビューを投稿する', class: "btn btn-warning btn-lg rounded-pill fw-bold shadow-sm py-3" %>
+            <%= link_to '戻る', reviews_path, class: "btn btn-link text-secondary text-decoration-none small" %>
+          </div>
+        <% end %>
+
+      </div>
+    </div>
+  </div>
 </div>

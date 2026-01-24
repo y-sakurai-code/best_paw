@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <link rel="stylesheet" href="application.css" />
     <title>BestPaw</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -14,50 +14,71 @@
   </head>
 
   <body>
-    <header>
-      <div class="navbar">
-        <ul class="navbar">
+    <header class="py-2 border-bottom shadow-sm bg-white">
+      <nav class="navbar navbar-expand-lg">
+        <div class="container">
           <% if user_signed_in? %>
-            <li class="nav-item">
-            <%= link_to "Home", reviews_path, class: 'nav-link text-dark' %>
-            </li>
-            <li class="nav-item">
-            <%= link_to "about", about_path, class: 'nav-link text-dark' %>
-            </li>
-            <li class="nav-item">
-              <%= link_to 'マイページ', users_mypage_path(current_user.id), class: 'nav-link text-dark' %>
-            </li>
-            <li class="nav-item">
-              <%= link_to 'レビュー投稿', new_review_path, class: 'nav-link text-dark' %>
-            </li>
-            <li class="nav-item">
-              <%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: 'nav-link text-dark' %>
-            </li>
-            <li class="nav-item">
-              <%= form_with url: search_path, local: true, method: :get do |f| %>
-              <%= f.text_field :word %>
-              <%= f.select :range, options_for_select([['User'], ['Review']]) %>
-              <%= f.select :search, options_for_select([["完全一致","perfect_match"], ["前方一致","forward_match"],  ["後方一致","backward_match"], ["部分一致","partial_match"]]) %>
-              <%= f.submit "検索", class: "btn-sm btn-primary" %>
-              <% end %>
-            </li>
-            <% else %>
-            <li class="nav-item">
-            <%= link_to "Home", root_path, class: 'nav-link text-dark' %>
-            </li>
-            <li class="nav-item">
-            <%= link_to "about", about_path, class: 'nav-link text-dark' %>
-            </li>
-            <li class="nav-item">
-              <%= link_to "ログイン", new_user_session_path, class: 'nav-link text-dark' %>
-            </li>
-            <li class="nav-item">
-              <%= link_to "新規登録", new_user_registration_path, class: 'nav-link text-dark' %>
-            </li>
+            <%= link_to reviews_path, class: "navbar-brand fw-bold text-warning fs-3" do %>
+              Best Paw
+            <% end %>
+          <% else %>
+            <%= link_to root_path, class: "navbar-brand fw-bold text-warning fs-3" do %>
+              Best Paw
+            <% end %>
           <% end %>
-        </ul>
-      </div>
+
+          <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start w-100">
+            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0 align-items-center">
+              <% if user_signed_in? %>
+                <li><%= link_to "Home", reviews_path, class: 'nav-link px-3 text-secondary fw-semibold' %></li>
+                <li><%= link_to "About", about_path, class: 'nav-link px-3 text-secondary fw-semibold' %></li>
+                <li><%= link_to 'マイページ', users_mypage_path(current_user.id), class: 'nav-link px-3 text-secondary fw-semibold' %></li>
+                <li><%= link_to 'レビュー投稿', new_review_path, class: 'nav-link px-3 text-secondary fw-semibold' %></li>
+                <li><%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: 'nav-link px-3 text-danger small' %></li>
+              <% else %>
+                <li><%= link_to "Home", root_path, class: 'nav-link px-3 text-secondary fw-semibold' %></li>
+                <li><%= link_to "About", about_path, class: 'nav-link px-3 text-secondary fw-semibold' %></li>
+                <li><%= link_to "ログイン", new_user_session_path, class: 'nav-link px-3 text-secondary fw-semibold' %></li>
+                <li><%= link_to "新規登録", new_user_registration_path, class: 'btn btn-warning btn-sm ms-2 rounded-pill px-3 shadow-sm' %></li>
+              <% end %>
+            </ul>
+
+            <% if user_signed_in? %>
+              <%= form_with url: search_path, local: true, method: :get, class: "col-12 col-lg-auto mb-3 mb-lg-0 d-flex align-items-center bg-light p-1 rounded-pill" do |f| %>
+                <%= f.text_field :word, class: "form-control form-control-sm border-0 bg-transparent ps-3", placeholder: "検索..." %>
+                <%= f.select :range, options_for_select([['User'], ['Review']]), {}, class: "form-select form-select-sm border-0 bg-transparent text-muted" %>
+                <%= f.select :search, options_for_select([["一致","perfect_match"], ["前方","forward_match"], ["後方","backward_match"], ["部分","partial_match"]]), {}, class: "form-select form-select-sm border-0 bg-transparent text-muted d-none d-sm-block" %>
+                <%= f.submit "検索", class: "btn btn-sm btn-warning rounded-pill px-3 fw-bold" %>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+      </nav>
     </header>
     <%= yield %>
+      <footer class="py-5 mt-5" style="background-color: #f8f9fa; border-top: 5px solid #ffc107;">
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-md-4 mb-4 mb-md-0 text-center text-center">
+              <div class="mb-3">
+                <%# ロゴ %>
+                  <%= image_tag('logo.png', size: '150x50', alt: 'Best Paw Logo') if Rails.application.assets.find_asset('logo.png') %>
+                  <h3 class="fw-bold text-warning d-inline-block align-middle ms-2">Best Paw</h3>
+              </div>
+              <p class="text-secondary small">
+                大切な家族である愛犬との毎日を、<br>
+                もっと楽しく、もっと幸せを共有するレビューサイト。
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <hr class="my-4 text-secondary opacity-25">
+
+        <div class="text-center">
+          <p class="text-secondary small mb-0">&copy; 2026 Best Paw Inc. All Rights Reserved.</p>
+        </div>
+        </div>
+      </footer>
   </body>
 </html>

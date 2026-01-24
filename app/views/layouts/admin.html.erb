@@ -12,21 +12,18 @@
     <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
-<head>
-  <title>Admin - BestPaw</title>
-  <%= csrf_meta_tags %>
-  <%= csp_meta_tag %>
-  <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-  <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-</head>
-<body>
-  <% if admin_signed_in? %>
-  <div class="content">
-    <div class="text-right">
-      <%= link_to 'ログアウト', destroy_admin_session_path, method: :delete %>
-    </div>
-  </div>
-  <% end %>
+  <body>
+    <header class="p-3">
+      <nav class="navbar bg-secondary-subtle">
+        <div class="container">
+          <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+            <% if admin_signed_in? %>
+              <%= link_to 'ログアウト', destroy_admin_session_path, method: :delete %>
+            <% end %>
+          </div>
+        </div>
+      </nav>
+    </header>
   <%= yield %>
-</body>
+  </body>
 </html>

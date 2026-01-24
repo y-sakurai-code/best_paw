@@ -1,37 +1,100 @@
-<div class="content">
-<h2>Sign up</h2>
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-7 col-lg-6">
+      <div class="card border-0 shadow-sm rounded-4 p-4 p-md-5">
+        
+        <%# ヘッダーエリア %>
+        <div class="text-center mb-5">
+          <div class="bg-warning-subtle rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+            <i class="fa-solid fa-dog fa-2x text-warning"></i>
+          </div>
+          <h2 class="fw-bold text-dark">新規ユーザー登録</h2>
+          <p class="text-secondary small">ようこそ Best Paw へ！<br>愛犬にぴったりのグッズをみんなで見つけましょう</p>
+        </div>
 
-<%= form_with model: @user, url: user_registration_path do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
+        <%= form_with model: @user, url: user_registration_path, local: true do |f| %>
+          <%# エラーメッセージ（Devise標準をBootstrap風にラップ） %>
+          <% if resource.errors.any? %>
+            <div class="alert alert-danger border-0 rounded-4 small mb-4">
+              <%= render "devise/shared/error_messages", resource: resource %>
+            </div>
+          <% end %>
 
-  <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name, autofocus: true, autocomplete: "name" %>
+          <%# ユーザーネーム %>
+          <div class="mb-4">
+            <%= f.label :name, "ユーザーネーム", class: "form-label fw-bold small" %>
+            <div class="input-group">
+              <span class="input-group-text bg-light border-0 rounded-start-3 text-secondary">
+                <i class="fa-solid fa-user"></i>
+              </span>
+              <%= f.text_field :name, autofocus: true, autocomplete: "name", class: "form-control bg-light border-0 rounded-end-3 py-2", placeholder: "ポチパパ" %>
+            </div>
+          </div>
+
+          <%# メールアドレス %>
+          <div class="mb-4">
+            <%= f.label :email, "メールアドレス", class: "form-label fw-bold small" %>
+            <div class="input-group">
+              <span class="input-group-text bg-light border-0 rounded-start-3 text-secondary">
+                <i class="fa-solid fa-envelope"></i>
+              </span>
+              <%= f.email_field :email, autocomplete: "email", class: "form-control bg-light border-0 rounded-end-3 py-2", placeholder: "example@bestpaw.com" %>
+            </div>
+          </div>
+
+          <%# パスワード %>
+          <div class="mb-4">
+            <div class="d-flex justify-content-between align-items-center mb-1">
+              <%= f.label :password, "パスワード", class: "form-label fw-bold small mb-0" %>
+              <% if @minimum_password_length %>
+                <span class="text-muted" style="font-size: 0.7rem;">※<%= @minimum_password_length %>文字以上</span>
+              <% end %>
+            </div>
+            <div class="input-group">
+              <span class="input-group-text bg-light border-0 rounded-start-3 text-secondary">
+                <i class="fa-solid fa-lock"></i>
+              </span>
+              <%= f.password_field :password, autocomplete: "new-password", class: "form-control bg-light border-0 rounded-end-3 py-2", placeholder: "パスワードを入力" %>
+            </div>
+          </div>
+
+          <%# パスワード確認 %>
+          <div class="mb-5">
+            <%= f.label :password_confirmation, "パスワード（確認用）", class: "form-label fw-bold small" %>
+            <div class="input-group">
+              <span class="input-group-text bg-light border-0 rounded-start-3 text-secondary">
+                <i class="fa-solid fa-shield-check"></i>
+              </span>
+              <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control bg-light border-0 rounded-end-3 py-2", placeholder: "もう一度入力" %>
+            </div>
+          </div>
+
+          <%# 登録ボタン %>
+          <div class="d-grid mb-4">
+            <%= f.submit "アカウントを作成する", class: "btn btn-warning btn-lg rounded-pill fw-bold shadow-sm py-2" %>
+          </div>
+        <% end %>
+
+        <%# 共有リンク %>
+        <div class="text-center mt-3 pt-3 border-top border-light">
+          <div class="small text-secondary mb-2">既にアカウントをお持ちですか？</div>
+          <%= render "devise/shared/links" %>
+        </div>
+
+      </div>
+    </div>
   </div>
-
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password %>
-    <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
-    <% end %><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Sign up" %>
-  </div>
-<% end %>
-
-<%= render "devise/shared/links" %>
-
 </div>
+
+<style>
+  /* 共有リンクのスタイル統一 */
+  .text-center a {
+    text-decoration: none;
+    color: #ffc107;
+    font-weight: bold;
+    font-size: 0.9rem;
+  }
+  .text-center a:hover {
+    text-decoration: underline;
+  }
+</style>

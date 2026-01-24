@@ -1,5 +1,50 @@
-<div class="content">
-  <h3>すべての愛犬に、「本当に合うもの」を。</h3>
-  <br>
-  <h4>「Best Paw」は、愛犬家同士が犬用グッズの正直な評価を共有し<br>一匹一匹の個性にぴったりの商品選びをサポートする犬専用レビューコミュニティサイトです。</h4>
+<div class="container py-5">
+  <div class="text-center mb-5">
+    <h2 class="fw-bold text-warning mb-3">About Best Paw</h2>
+    <div class="display-6 fw-bold mb-4" style="line-height: 1.4;">
+      すべての愛犬に、<br class="d-md-none">「本当に合うもの」を。
+    </div>
+    <p class="text-secondary mx-auto" style="max-width: 700px;">
+      「Best Paw」は、愛犬家同士が犬用グッズの正直な評価を共有し、<br class="d-none d-md-block">
+      一匹一匹の個性にぴったりの商品選びをサポートする犬専用レビュー共有コミュニティです。
+    </p>
+  </div>
+
+  <div class="row g-4 py-5">
+    <div class="col-md-4">
+      <div class="card h-100 border-0 shadow-sm rounded-4 p-4 text-center">
+        <div class="bg-warning-subtle rounded-circle d-inline-flex align-items-center justify-content-center mx-auto mb-3" style="width: 80px; height: 80px;">
+          <i class="fa-solid fa-comments fa-2x text-warning"></i>
+        </div>
+        <h5 class="fw-bold">正直なレビュー</h5>
+        <p class="small text-secondary mb-0">良い点も気になる点も。飼い主さんの「生の声」が集まるから、失敗しない買い物をサポートします。</p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card h-100 border-0 shadow-sm rounded-4 p-4 text-center">
+        <div class="bg-warning-subtle rounded-circle d-inline-flex align-items-center justify-content-center mx-auto mb-3" style="width: 80px; height: 80px;">
+          <i class="fa-solid fa-dog fa-2x text-warning"></i>
+        </div>
+        <h5 class="fw-bold">犬種・個性に合う</h5>
+        <p class="small text-secondary mb-0">大型犬から小型犬、年齢や性格まで。自分の愛犬に近い子のレビューを参考にできます。</p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card h-100 border-0 shadow-sm rounded-4 p-4 text-center">
+        <div class="bg-warning-subtle rounded-circle d-inline-flex align-items-center justify-content-center mx-auto mb-3" style="width: 80px; height: 80px;">
+          <i class="fa-solid fa-heart fa-2x text-warning"></i>
+        </div>
+        <h5 class="fw-bold">愛犬との時間を豊かに</h5>
+        <p class="small text-secondary mb-0">良いグッズとの出会いを通じて、愛犬との毎日をもっと楽しく、もっと快適に。</p>
+      </div>
+    </div>
+  </div>
+
+  <% unless user_signed_in? %>
+    <div class="bg-warning rounded-4 p-5 text-center shadow-sm mt-4 text-white">
+      <h3 class="fw-bold mb-3">あなたも参加しませんか？</h3>
+      <p class="mb-4">愛犬のお気に入りをシェアして、仲間と繋がりましょう。</p>
+      <%= link_to "新規ユーザー登録", new_user_registration_path, class: "btn btn-light btn-lg rounded-pill fw-bold px-5 py-2 text-warning" %>
+    </div>
+  <% end %>
 </div>

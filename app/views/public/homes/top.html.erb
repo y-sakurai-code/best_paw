@@ -1,3 +1,25 @@
-<div class="content">
-  <i class="fa-solid fa-paw fa-5x"></i>
+<div class="container py-5">
+  <div class="row align-items-center g-5">
+    <div class="col-lg-6 text-center text-lg-start">
+      <h1 class="display-4 fw-bold lh-1 mb-3 text-warning">
+        <i class="fa-solid fa-paw me-2"></i>Best Paw
+      </h1>
+      <p class="lead fw-normal text-secondary mb-4">
+        Best Pawは、犬を愛する人たちのための、<br>
+        優しくて温かいレビュー共有サイトです。
+      </p>
+      <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+        <%= link_to "今すぐ始める（新規登録）", new_user_registration_path, class: "btn btn-warning btn-lg px-4 me-md-2 rounded-pill fw-bold shadow-sm" %>
+        <%= link_to "ログイン", new_user_session_path, class: "btn btn-outline-secondary btn-lg px-4 rounded-pill" %>
+      </div>
+    </div>
+
+    <div class="col-10 col-sm-8 col-lg-6 mx-auto">
+      <div class="p-5 bg-warning-subtle rounded-circle shadow-sm text-center">
+        <i class="fa-solid fa-paw fa-10x text-white opacity-75"></i>
+        <%# 後日犬の画像orイラストで差し替え予定 %>
+        <%# <%= image_tag 'top_image.png', class: 'img-fluid d-block mx-lg-auto', alt: 'Happy Pets' %>
+      </div>
+    </div>
+  </div>
 </div>

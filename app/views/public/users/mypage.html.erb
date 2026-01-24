@@ -1,19 +1,72 @@
-<!-- ユーザー情報リンク -->
-<div class="content">
-  <%= link_to "ユーザー情報詳細", user_path(current_user.id) %>
-</div>
+<div class="container py-5">
+  <div class="row g-4">
+    
+    <div class="col-lg-4">
+      <div class="card border-0 shadow-sm rounded-4 overflow-hidden sticky-top" style="top: 20px;">
+        <div class="bg-warning text-center py-5">
+          <i class="fa-solid fa-circle-user fa-5x text-white"></i>
+        </div>
+        <div class="card-body p-4 text-center">
+          <h4 class="fw-bold mb-1"><%= current_user.name %></h4>
+          <p class="text-secondary small mb-4">Best Paw 会員</p>
+          
+          <div class="d-grid gap-2">
+            <%= link_to user_path(current_user.id), class: "btn btn-outline-warning rounded-pill fw-bold" do %>
+              <i class="fa-solid fa-gear me-1"></i>ユーザー情報詳細
+            <% end %>
+          </div>
+        </div>
+        <div class="card-footer bg-white border-0 p-4 pt-0">
+          <div class="row text-center border-top pt-3">
+            <div class="col">
+              <div class="fw-bold text-warning fs-4"><%= @reviews.count %></div>
+              <div class="small text-secondary">Reviews</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-<!-- ユーザーの投稿一覧 -->
-<div class="content">
-<h3>レビュー 一覧</h3>
-<% @reviews.each do |review| %>
-  <p>レビュータイトル：<%= review.title %></p>
-  <p>レビュー本文：<%= review.body %></p>
-  <br>
-  <p><%= "#{review.review_comments.count} コメント" %></p>
-  <br>
-  <%= link_to "Show", review_path(review.id) %>
-  <%= link_to "Edit", edit_review_path(review.id) %>
-  <%= link_to "Destroy", review_path(review.id), method: :delete, "data-confirm" => "Are you sure ?" %>
-<% end %>
+    <div class="col-lg-8">
+      <div class="d-flex align-items-center mb-4">
+        <i class="fa-solid fa-list-ul text-warning fs-3 me-2"></i>
+        <h3 class="fw-bold mb-0">あなたの投稿一覧</h3>
+      </div>
+
+      <% if @reviews.any? %>
+        <div class="row row-cols-1 row-cols-md-2 g-3">
+          <% @reviews.each do |review| %>
+            <div class="col">
+              <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden">
+                <div class="card-body p-4 d-flex flex-column">
+                  <h5 class="fw-bold mb-2"><%= review.title %></h5>
+                  <p class="text-secondary small flex-grow-1 line-clamp-2 mb-3">
+                    <%= review.body %>
+                  </p>
+                  
+                  <div class="d-flex justify-content-between align-items-center mt-auto">
+                    <span class="small text-muted">
+                      <i class="fa-solid fa-comment me-1"></i><%= review.review_comments.count %>
+                    </span>
+                    <div class="btn-group">
+                      <%= link_to "Show", review_path(review.id), class: "btn btn-sm btn-outline-warning rounded-start-pill px-3" %>
+                      <%= link_to "Edit", edit_review_path(review.id), class: "btn btn-sm btn-outline-warning px-3" %>
+                      <%= link_to "Destroy", review_path(review.id), method: :delete, data: { confirm: "削除してもよろしいですか？" }, class: "btn btn-sm btn-outline-danger rounded-end-pill px-3" %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <% else %>
+        <div class="text-center py-5 bg-white rounded-4 shadow-sm">
+          <i class="fa-solid fa-paw fa-3x text-light mb-3"></i>
+          <p class="text-secondary">まだレビューを投稿していません。<br>愛犬のお気に入りグッズをシェアしてみませんか？</p>
+          <%= link_to "レビューを投稿する", new_review_path, class: "btn btn-warning rounded-pill fw-bold" %>
+        </div>
+      <% end %>
+    </div>
+
+  </div>
 </div>

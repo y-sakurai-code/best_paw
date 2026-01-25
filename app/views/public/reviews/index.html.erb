@@ -15,6 +15,7 @@
             <div class="position-relative bg-warning-subtle d-flex align-items-center justify-content-center" style="height: 160px;">
               <div class="p-3 text-center">
                 <h5 class="fw-bold text-dark mb-0"><%= review.title %></h5>
+                <%= render 'public/reviews/static_rate', review: review %>
               </div>
 
               <span class="position-absolute top-0 end-0 m-3 badge rounded-pill bg-white text-warning shadow-sm">

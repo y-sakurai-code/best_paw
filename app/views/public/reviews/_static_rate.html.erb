@@ -1,0 +1,22 @@
+<div class="d-flex align-items-center">
+  <div id="star-show-<%= review.id %>"></div>
+  <span class="ms-2 small text-secondary">(<%= review.star %>)</span>
+</div>
+
+<script>
+  $(document).on('turbolinks:load turbo:load', function() {
+    let elem = document.querySelector('#star-show-<%= review.id %>');
+    if (elem == null) return;
+
+    elem.innerHTML = "";
+    let opt = {
+      starOn:   "<%= asset_path('star-on.png') %>",
+      starOff: "<%= asset_path('star-off.png') %>",
+      starHalf: "<%= asset_path('star-half.png') %>",
+      score: <%= review.star || 0 %>,
+      readOnly: true,
+      half: true,
+    };
+    raty(elem, opt);
+  });
+</script>

@@ -2,6 +2,8 @@ class Review < ApplicationRecord
 
   validates :title, presence: true
   validates :body, presence: true
+  validates :star, presence: true
+
 
   belongs_to :user
   has_many :review_comments, dependent: :destroy

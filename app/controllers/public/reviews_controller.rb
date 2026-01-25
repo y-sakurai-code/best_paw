@@ -47,7 +47,7 @@ class Public::ReviewsController < ApplicationController
 
   private
   def review_params
-    params.require(:review).permit(:title, :body)
+    params.require(:review).permit(:title, :body, :star)
   end
 
   def is_matching_login_user

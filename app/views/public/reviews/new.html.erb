@@ -33,6 +33,38 @@
             <%= f.text_area :body, class: "form-control bg-light border-0 rounded-3", rows: 6, placeholder: "使い心地や、愛犬の反応を詳しく教えてね" %>
           </div>
 
+          <% if @review.id.nil? %>
+            <div class="form-group" id="star">
+              <%= f.label :star, "評価" %>
+              <%= f.hidden_field :star, id: :review_star %>
+              <div id="post_raty"></div>
+            </div>
+
+            <script>
+              $(document).on('turbolinks:load turbo:load', function() {
+                let elem = document.querySelector('#post_raty');
+                if (elem == null) return;
+
+                elem.innerHTML = "";
+
+                let opt = {
+                  starOn: "<%= asset_path('star-on.png') %>",
+                  starOff: "<%= asset_path('star-off.png') %>",
+                  starHalf: "<%= asset_path('star-half.png') %>",
+                  scoreName: 'review[star]',
+                  half: true,
+                };
+                raty(elem, opt);
+              });
+            </script>
+
+          <% else %>
+            <div class="form-group">
+              <label>評価</label>
+              <%= render "static_rate", review: @review %>
+            </div>
+          <% end %>
+
           <div class="d-grid gap-2 mt-5">
             <%= f.submit 'レビューを投稿する', class: "btn btn-warning btn-lg rounded-pill fw-bold shadow-sm py-3" %>
             <%= link_to '戻る', reviews_path, class: "btn btn-link text-secondary text-decoration-none small" %>

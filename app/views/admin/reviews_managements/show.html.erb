@@ -1,2 +1,99 @@
-<h1>Admin::ReviewsManagements#show</h1>
-<p>Find me in app/views/admin/reviews_managements/show.html.erb</p>
+<div class="container py-4">
+  <%# 戻るリンク %>
+  <div class="mb-4">
+    <%= link_to admin_reviews_managements_path, class: "text-decoration-none text-secondary small" do %>
+      <i class="fa-solid fa-arrow-left me-1"></i>レビュー一覧へ戻る
+    <% end %>
+  </div>
+
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      
+      <%# レビュー詳細メインカード %>
+      <div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-4">
+        <div class="card-header bg-dark py-3 px-4">
+          <h5 class="text-white mb-0 fw-bold">
+            <i class="fa-solid fa-magnifying-glass me-2 text-secondary"></i>レビュー詳細情報
+          </h5>
+        </div>
+        
+        <div class="card-body p-4 p-md-5">
+          <div class="row mb-4">
+            <div class="col-sm-4 text-secondary small fw-bold">レビューID</div>
+            <div class="col-sm-8 text-dark">#<%= @review.id %></div>
+          </div>
+
+          <div class="row mb-4">
+            <div class="col-sm-4 text-secondary small fw-bold">投稿ユーザー</div>
+            <div class="col-sm-8">
+              <span class="fw-bold text-dark"><%= @review.user.name %></span>
+              <span class="text-muted small ms-2">(ユーザーID: #<%= @review.user_id %>)</span>
+            </div>
+          </div>
+
+          <div class="row mb-4">
+            <div class="col-sm-4 text-secondary small fw-bold">タイトル</div>
+            <div class="col-sm-8">
+              <span class="fs-5 fw-bold text-dark"><%= @review.title %></span>
+            </div>
+          </div>
+
+          <div class="row mb-4">
+            <div class="col-sm-4 text-secondary small fw-bold">評価スコア</div>
+            <div class="col-sm-8">
+              <%= render 'public/reviews/static_rate', review: @review %>
+            </div>
+          </div>
+
+          <div class="row mb-4">
+            <div class="col-sm-4 text-secondary small fw-bold">投稿日時</div>
+            <div class="col-sm-8 text-secondary">
+              <%= @review.created_at.strftime('%Y年 %m月 %d日 %H:%M') %>
+            </div>
+          </div>
+
+          <div class="row mb-4">
+            <div class="col-sm-4 text-secondary small fw-bold">レビュー内容</div>
+            <div class="col-sm-8">
+              <div class="p-3 bg-light rounded-3 text-dark border-start border-4 border-warning-subtle" style="white-space: pre-wrap; line-height: 1.6;"><%= @review.body %></div>
+            </div>
+          </div>
+
+          <hr class="my-4 opacity-25">
+
+          <%# 管理アクション %>
+          <div class="d-flex justify-content-between align-items-center mt-5">
+            <div class="text-muted small pe-3">
+              <i class="fa-solid fa-circle-info me-1"></i>不適切な内容を含む場合は、右のボタンからこの投稿を完全に削除してください。
+            </div>
+            
+            <%= link_to admin_reviews_management_path(id: @review.id), method: :delete, data: { confirm: '本当にこのレビューを削除しますか？削除したデータは復元できません。' }, class: "btn btn-outline-danger rounded-pill px-4 fw-bold flex-shrink-0" do %>
+              <i class="fa-solid fa-trash-can me-1"></i>この投稿を削除
+            <% end %>
+          </div>
+        </div>
+      </div>
+
+      <% if @review.review_comments.any? %>
+        <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+          <div class="card-header bg-secondary bg-opacity-10 py-3 px-4">
+            <h6 class="mb-0 fw-bold text-secondary">
+              <i class="fa-solid fa-comments me-2"></i>紐付いているコメント一覧
+            </h6>
+          </div>
+          <div class="list-group list-group-flush">
+            <% @review.review_comments.each do |comment| %>
+              <div class="list-group-item p-4">
+                <div class="d-flex justify-content-between mb-2">
+                  <span class="fw-bold small"><%= comment.user.name %></span>
+                  <span class="text-muted small"><%= comment.created_at.strftime('%Y/%m/%d') %></span>
+                </div>
+                <p class="small text-secondary mb-0"><%= comment.comment %></p>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

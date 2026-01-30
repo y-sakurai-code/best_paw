@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
 
+  namespace :admin do
+    get 'reviews_managements/index'
+    get 'reviews_managements/show'
+  end
   scope module: :public do
     devise_for :users
     get "search" => "searches#search"
@@ -19,6 +23,7 @@ Rails.application.routes.draw do
   namespace :admin do
     get 'dashboards', to: 'dashboards#index'
     resources :users, only: [:show, :destroy]
+    resources :reviews_managements, only: [:index, :show, :destroy]
   end
   
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html

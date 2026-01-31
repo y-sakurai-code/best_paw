@@ -3,7 +3,7 @@ class Public::UsersController < ApplicationController
 
   def mypage
     @user = current_user
-    @reviews = Review.where(user_id: current_user.id)
+    @reviews = Review.where(user_id: current_user.id).order(created_at: :desc)
   end
 
   def edit

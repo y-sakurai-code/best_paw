@@ -10,19 +10,32 @@
         </div>
 
         <div class="card-body p-4 p-md-5">
-          <div class="d-flex justify-content-between align-items-start mb-3">
-            <h2 class="fw-bold mb-0"><%= @review.title %></h2>
-              <%= render 'static_rate', review: @review %>
-                <span class="badge rounded-pill bg-warning text-dark px-3 py-2">
-                  <i class="fa-solid fa-clock me-1"></i><%= @review.created_at.strftime('%Y/%m/%d') %>
-                </span>
+          <div class="mb-3">
+            <h2 class="fw-bold mb-2"><%= @review.title %></h2>
+    
+          <div class="mb-3">
+            <%= link_to reviews_path(category: @review.category), class: "badge border border-warning text-warning text-decoration-none rounded-pill px-3 py-2 hover-bg-warning" do %>
+              <i class="fa-solid fa-tag me-1 small"></i><%= @review.category %>
+            <% end %>
           </div>
+        </div>
 
-          <p class="text-secondary mb-4" style="font-size: 1.1rem; line-height: 1.8;">
-            <%= @review.body %>
-          </p>
+        <div class="d-flex align-items-center justify-content-between mb-4 bg-light p-3 rounded-3">
+          <div class="d-flex align-items-center">
+            <span class="small text-secondary me-2">評価:</span>
+            <%= render 'static_rate', review: @review %>
+            <span class="ms-2 fw-bold text-dark"><%= @review.star %></span>
+          </div>
+          <div class="text-secondary small">
+            <i class="fa-solid fa-clock me-1"></i><%= @review.created_at.strftime('%Y/%m/%d') %>
+          </div>
+        </div>
 
-          <hr class="my-4 opacity-25">
+        <div class="review-body mb-5">
+          <p class="text-dark" style="font-size: 1.1rem; line-height: 1.9; white-space: pre-wrap;"><%= @review.body %></p>
+        </div>
+
+        <hr class="my-4 opacity-25">
 
           <div class="d-flex justify-content-between align-items-center">
             <%= link_to reviews_path, class: "btn btn-outline-secondary rounded-pill px-4" do %>

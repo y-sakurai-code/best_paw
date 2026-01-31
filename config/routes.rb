@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   end
   scope module: :public do
     devise_for :users
+    get 'tagsearches/search', to: 'tagsearches#search'
     get "search" => "searches#search"
     get 'users/mypage'
     root to: 'homes#top'

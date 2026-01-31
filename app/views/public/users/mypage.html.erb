@@ -37,34 +37,12 @@
         <div class="row row-cols-1 row-cols-md-2 g-3">
           <% @reviews.each do |review| %>
             <div class="col">
-              <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden">
-                <div class="card-body p-4 d-flex flex-column">
-                  <h5 class="fw-bold mb-1"><%= review.title %></h5>
-
-                    <div class="mb-3">
-                      <%= render 'public/reviews/static_rate', review: review %>
-                    </div>
-
-                    <p class="text-secondary small flex-grow-1 line-clamp-2 mb-3">
-                      <%= review.body %>
-                    </p>
-
-                    <div class="d-flex justify-content-between align-items-center mt-auto">
-                      <span class="small text-muted">
-                        <i class="fa-solid fa-comment me-1"></i><%= review.review_comments.count %>
-                      </span>
-                      <div class="btn-group">
-                        <%= link_to "Show", review_path(review.id), class: "btn btn-sm btn-outline-warning rounded-start-pill px-3" %>
-                        <%= link_to "Edit", edit_review_path(review.id), class: "btn btn-sm btn-outline-warning px-3" %>
-                        <%= link_to "Destroy", review_path(review.id), method: :delete, data: { confirm: "削除してもよろしいですか？" }, class: "btn btn-sm btn-outline-danger rounded-end-pill px-3" %>
-                      </div>
-                    </div>
-                </div>
-              </div>
+              <%= render 'public/reviews/review_card', review: review %>
             </div>
           <% end %>
         </div>
       <% else %>
+
         <div class="text-center py-5 bg-white rounded-4 shadow-sm">
           <i class="fa-solid fa-paw fa-3x text-light mb-3"></i>
           <p class="text-secondary">まだレビューを投稿していません。<br>愛犬のお気に入りグッズをシェアしてみませんか？</p>

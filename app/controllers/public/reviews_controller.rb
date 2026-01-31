@@ -16,7 +16,11 @@ class Public::ReviewsController < ApplicationController
   end
 
   def index
-    @reviews = Review.all
+    if params[:tag_name].present?
+    @reviews = Review.where('category LIKE ?', "%#{params[:tag_name]}%").order(created_at: :desc)
+  else
+    @reviews = Review.all.order(created_at: :desc)
+  end
   end
 
   def show
@@ -47,7 +51,7 @@ class Public::ReviewsController < ApplicationController
 
   private
   def review_params
-    params.require(:review).permit(:title, :body, :star)
+    params.require(:review).permit(:title, :body, :star, :category)
   end
 
   def is_matching_login_user

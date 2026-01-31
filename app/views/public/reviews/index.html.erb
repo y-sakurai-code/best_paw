@@ -7,45 +7,22 @@
       <p class="text-secondary">みんなが投稿した最新のレビューをチェックしよう</p>
     </div>
 
+    <div class="row justify-content-center mb-5">
+      <div class="col-md-6 col-lg-5">
+        <%= form_with url: reviews_path, method: :get, local: true, class: "input-group shadow-sm rounded-pill overflow-hidden" do |f| %>
+          <span class="input-group-text bg-white border-0 ps-3">
+            <i class="fa-solid fa-tag text-warning"></i>
+          </span>
+          <%= f.text_field :tag_name, placeholder: "タグで検索", class: "form-control border-0 py-2 shadow-none" %>
+          <%= f.submit "検索", class: "btn btn-warning px-4 fw-bold" %>
+        <% end %>
+      </div>
+    </div>
+
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
       <% @reviews.each do |review| %>
         <div class="col">
-          <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden">
-            
-            <div class="position-relative bg-warning-subtle d-flex align-items-center justify-content-center" style="height: 160px;">
-              <div class="p-3 text-center">
-                <h5 class="fw-bold text-dark mb-0"><%= review.title %></h5>
-                <%= render 'public/reviews/static_rate', review: review %>
-              </div>
-
-              <span class="position-absolute top-0 end-0 m-3 badge rounded-pill bg-white text-warning shadow-sm">
-                <i class="fa-solid fa-comment me-1"></i><%= review.review_comments.count %>
-              </span>
-            </div>
-
-            <div class="card-body d-flex flex-column">
-              <p class="card-text text-secondary small mb-4 flex-grow-1 line-clamp-2">
-                <%= review.body %>
-              </p>
-
-              <div class="d-flex justify-content-between align-items-center mt-auto">
-                <div class="small text-muted">
-                  <i class="fa-solid fa-user-circle me-1"></i><%= review.user.name %>
-                </div>
-
-                <div class="btn-group">
-                  <%= link_to "詳細", review_path(review.id), class: "btn btn-sm btn-outline-warning rounded-start-pill px-3" %>
-                  <% if review.user_id == current_user.id %>
-                    <%= link_to "編集", edit_review_path(review.id), class: "btn btn-sm btn-outline-warning px-3" %>
-                    <%= link_to "削除", review_path(review.id), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "btn btn-sm btn-outline-danger rounded-end-pill px-3" %>
-                  <% else %>
-                    <%# 自分の投稿じゃない場合は詳細ボタンを角丸にするための調整 %>
-                    <style>.btn-group > .btn:last-child:not(:first-child) { border-top-right-radius: 50rem; border-bottom-right-radius: 50rem; }</style>
-                  <% end %>
-                </div>
-              </div>
-            </div>
-          </div>
+          <%= render 'public/reviews/review_card', review: review %>
         </div>
       <% end %>
     </div>

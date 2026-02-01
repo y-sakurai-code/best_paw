@@ -19,10 +19,34 @@
       </div>
     </div>
 
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
-      <% @reviews.each do |review| %>
-        <div class="col">
-          <%= render 'public/reviews/review_card', review: review %>
+    <div class="container py-5">
+      <div class="d-flex align-items-center mb-4">
+        <i class="fa-solid fa-list-ul text-warning fs-3 me-2"></i>
+        <h3 class="fw-bold mb-0">
+          <% if @search_word.present? %>
+            「<%= @search_word %>」のタグ検索結果
+          <% else %>
+            投稿一覧
+          <% end %>
+        </h3>
+      </div>
+
+      <% if @reviews.any? %>
+        <div class="row row-cols-1 row-cols-md-2 g-4">
+          <% @reviews.each do |review| %>
+            <div class="col">
+              <%= render 'public/reviews/review_card', review: review %>
+            </div>
+          <% end %>
+        </div>
+      <% else %>
+        <div class="text-center py-5 bg-white rounded-4 shadow-sm mt-4">
+          <i class="fa-solid fa-magnifying-glass fa-3x text-light mb-3"></i>
+          <p class="text-secondary fs-5">
+            「<strong><%= @search_word %></strong>」に一致するタグは見つかりませんでした。
+          </p>
+          <p class="text-muted small">別のタグキーワードで試してみてください。</p>
+          <%= link_to "全件表示に戻る", reviews_path, class: "btn btn-outline-warning rounded-pill mt-2" %>
         </div>
       <% end %>
     </div>

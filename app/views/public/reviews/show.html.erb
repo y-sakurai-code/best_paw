@@ -14,9 +14,9 @@
             <h2 class="fw-bold mb-2"><%= @review.title %></h2>
     
           <div class="mb-3">
-            <%= link_to reviews_path(category: @review.category), class: "badge border border-warning text-warning text-decoration-none rounded-pill px-3 py-2 hover-bg-warning" do %>
+            <div class="badge border border-warning text-warning text-decoration-none rounded-pill px-3 py-2 hover-bg-warning">
               <i class="fa-solid fa-tag me-1 small"></i><%= @review.category %>
-            <% end %>
+            </div>
           </div>
         </div>
 

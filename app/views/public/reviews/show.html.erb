@@ -20,6 +20,22 @@
           </div>
         </div>
 
+        <% if @review.favorites_reviews_by?(current_user) %>
+          <p>
+            <%= link_to review_favorites_reviews_path(@review), method: :delete do %>
+              <i class="fas fa-heart" aria-hidden="true" style="color: red;"></i>
+              <%= @review.favorites_reviews.count %>
+            <% end %>
+          </p>
+        <% else %>
+          <p>
+            <%= link_to review_favorites_reviews_path(@review), method: :post do %>
+              <i class="far fa-heart"></i>
+              <%= @review.favorites_reviews.count %>
+            <% end %>
+          </p>
+        <% end %>
+
         <div class="d-flex align-items-center justify-content-between mb-4 bg-light p-3 rounded-3">
           <div class="d-flex align-items-center">
             <span class="small text-secondary me-2">評価:</span>

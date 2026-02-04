@@ -13,9 +13,12 @@ Rails.application.routes.draw do
     get 'homes/about', to: 'homes#about', as: :about
     resources :users, only: [:index, :show, :edit, :update, :destroy]
     resources :reviews, only: [:new, :index, :show, :edit, :create, :update, :destroy] do
+      resource :favorite_reviews, only: [:create, :destroy]
       resources :review_comments, only: [:create, :destroy]
-      resource :favorites_reviews, only: [:create, :destroy]
     end
+      resources :review_comments do
+        resource :favorite_comments, only: [:create, :destroy]
+      end
   end
 
   devise_for :admin, skip: [:registrations, :password], controllers: {

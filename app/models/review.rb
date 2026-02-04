@@ -8,7 +8,7 @@ class Review < ApplicationRecord
 
   belongs_to :user
   has_many :review_comments, dependent: :destroy
-  has_many :favorites_reviews, dependent: :destroy
+  has_many :favorite_reviews, dependent: :destroy
 
   def self.looks(search, word)
     if search == "perfect_match"
@@ -24,7 +24,7 @@ class Review < ApplicationRecord
     end
   end
 
-  def favorites_reviews_by?(user)
-    favorites_reviews.exists?(user_id: user.id)
+  def favorite_reviews_by?(user)
+    favorite_reviews.exists?(user_id: user.id)
   end
 end

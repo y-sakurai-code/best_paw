@@ -20,18 +20,18 @@
           </div>
         </div>
 
-        <% if @review.favorites_reviews_by?(current_user) %>
+        <% if @review.favorite_reviews_by?(current_user) %>
           <p>
-            <%= link_to review_favorites_reviews_path(@review), method: :delete do %>
+            <%= link_to review_favorite_reviews_path(@review), method: :delete do %>
               <i class="fas fa-heart" aria-hidden="true" style="color: red;"></i>
-              <%= @review.favorites_reviews.count %>
+              <%= @review.favorite_reviews.count %>
             <% end %>
           </p>
         <% else %>
           <p>
-            <%= link_to review_favorites_reviews_path(@review), method: :post do %>
+            <%= link_to review_favorite_reviews_path(@review), method: :post do %>
               <i class="far fa-heart"></i>
-              <%= @review.favorites_reviews.count %>
+              <%= @review.favorite_reviews.count %>
             <% end %>
           </p>
         <% end %>
@@ -86,6 +86,22 @@
                 <span class="fw-bold text-dark">
                   <i class="fa-solid fa-user-circle me-1"></i><%= review_comment.user.name %>
                 </span>
+
+                <% if review_comment.favorite_comments_by?(current_user) %>
+                  <p>
+                    <%= link_to review_comment_favorite_comments_path(review_comment), method: :delete do %>
+                      <i class="fas fa-heart" aria-hidden="true" style="color: red;"></i>
+                      <%= review_comment.favorite_comments.count %>
+                    <% end %>
+                  </p>
+                <% else %>
+                  <p>
+                    <%= link_to review_comment_favorite_comments_path(review_comment), method: :post do %>
+                      <i class="far fa-heart"></i>
+                      <%= review_comment.favorite_comments.count %>
+                    <% end %>
+                  </p>
+                <% end %>
 
                 <div class="d-flex align-items-center">
                   <span class="small text-muted me-2" style="font-size: 0.75rem;">

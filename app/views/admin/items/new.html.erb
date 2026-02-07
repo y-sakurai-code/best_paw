@@ -1,0 +1,19 @@
+<%= form_with model: [:admin, @item] do |f| %>
+
+  <label>商品名</label>
+  <%= f.text_field :name, placeholder: "例：わんわんおもちゃ" %>
+
+  <label>商品説明文</label>
+  <%= f.text_field :introduction %>
+
+  <label>商品画像</label>
+  <%= f.file_field :item_image, accept: "image/*" %>
+
+  <label>想定する犬の大きさ（目安）</label>
+  <%= f.select :estimated_dog_size, Item.estimated_dog_sizes.keys, {include_blank: "選択してください"} %>
+
+  <label>販売ステータス</label>
+  <%= f.select :is_active, Item.is_actives.keys %>
+
+  <%= f.submit "登録する" %>
+<% end %>

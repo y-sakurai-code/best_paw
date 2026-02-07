@@ -1,0 +1,37 @@
+<h2>商品一覧</h2>
+
+<%= link_to '新規登録', new_admin_item_path, class: "btn btn-success" %>
+
+<table border="1" style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+  <thead>
+    <tr style="background-color: #f2f2f2;">
+      <th>商品ID</th>
+      <th>画像</th>
+      <th>商品名</th>
+      <th>サイズ目安</th>
+      <th>ステータス</th>
+      <th>詳細</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @items.each do |item| %>
+      <tr>
+        <td><%= item.id %></td>
+        <td>
+          <% if item.item_image.attached? %>
+            <%= image_tag item.item_image, size: "50x50" %>
+          <% else %>
+            <span>なし</span>
+          <% end %>
+        </td>
+        <td><%= item.name %></td>
+        <td><%= item.estimated_dog_size %></td>
+        <td><%= item.is_active %></td>
+        <td>
+          <%= link_to '表示', admin_item_path(item) %>
+          <%= link_to '編集', edit_admin_item_path(item) %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

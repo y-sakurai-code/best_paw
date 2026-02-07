@@ -5,5 +5,7 @@ class Admin < ApplicationRecord
          :recoverable, :rememberable, :validatable
   
   devise authentication_keys: [:email]
+
+  has_many :items
   
 end

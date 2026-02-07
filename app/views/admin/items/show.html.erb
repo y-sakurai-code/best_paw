@@ -1,0 +1,37 @@
+<h2>商品詳細</h2>
+
+<div>
+  <strong>商品画像</strong><br>
+  <% if @item.item_image.attached? %>
+    <%= image_tag @item.item_image, size: "200x200" %>
+  <% else %>
+    <p>画像はありません</p>
+  <% end %>
+</div>
+
+<hr>
+
+<p>
+  <strong>商品名:</strong>
+  <%= @item.name %>
+</p>
+
+<p>
+  <strong>商品説明文:</strong>
+  <%= @item.introduction %>
+</p>
+
+<p>
+  <strong>想定する犬の大きさ（目安）:</strong>
+  <%= @item.estimated_dog_size %>
+</p>
+
+<p>
+  <strong>販売ステータス:</strong>
+  <%= @item.is_active %>
+</p>
+
+<hr>
+
+<%= link_to '編集する', edit_admin_item_path(@item) %> |
+<%= link_to '一覧に戻る', admin_items_path %>

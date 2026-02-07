@@ -16,7 +16,7 @@ class Admin::ItemsController < ApplicationController
     if @item.save
       redirect_to admin_item_path(@item), notice: "商品を登録しました"
     else
-      render plain: @item.errors.full_messages
+      render :new
     end
   end
 
@@ -38,12 +38,15 @@ class Admin::ItemsController < ApplicationController
   end
 
   def destroy
+    item = Item.find(params[:id])
+    item.destroy
+    redirect_to admin_items_path, notice: "商品を削除しました"
   end
 
   private
 
   def item_params
-    params.require(:item).permit(:name, :introduction, :estimated_dog_size, :is_active, :item_image)
+    params.require(:item).permit(:name, :genre_id, :introduction, :estimated_dog_size, :is_active, :item_image)
   end
 
 end

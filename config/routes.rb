@@ -26,6 +26,7 @@ Rails.application.routes.draw do
     get 'reviews_managements/index'
     get 'reviews_managements/show'
     resources :users, only: [:show, :destroy]
+    resources :users_managements, only: [:index, :show, :destroy]
     resources :reviews_managements, only: [:index, :show, :destroy]
     resources :items, only: [:new, :index, :show, :edit, :create, :update, :destroy]
     resources :genres, only: [:index, :create, :edit, :update, :destroy]

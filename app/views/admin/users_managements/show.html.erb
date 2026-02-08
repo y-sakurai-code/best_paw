@@ -1,7 +1,7 @@
 <div class="container py-4">
   <%# 戻るリンク %>
   <div class="mb-4">
-    <%= link_to admin_dashboards_path, class: "text-decoration-none text-secondary small" do %>
+    <%= link_to admin_users_managements_path, class: "text-decoration-none text-secondary small" do %>
       <i class="fa-solid fa-arrow-left me-1"></i>会員一覧へ戻る
     <% end %>
   </div>
@@ -20,7 +20,7 @@
         <div class="card-body p-4 p-md-5">
           <div class="row mb-4">
             <div class="col-sm-4 text-secondary small fw-bold">ユーザーID</div>
-            <div class="col-sm-8 text-dark">#<%= @user.id %></div>
+            <div class="col-sm-8 text-dark"><%= @user.id %></div>
           </div>
 
           <div class="row mb-4">
@@ -52,7 +52,7 @@
               <i class="fa-solid fa-circle-info me-1"></i>このユーザーを完全に削除する場合は右のボタンを押してください。
             </div>
             
-            <%= link_to admin_user_path(@user), method: :delete, data: { confirm: '本当にこのユーザーを削除しますか？紐づく投稿もすべて削除されます。' }, class: "btn btn-outline-danger rounded-pill px-4 fw-bold" do %>
+            <%= link_to admin_users_management_path(@user), method: :delete, data: { confirm: '本当にこのユーザーを削除しますか？紐づく投稿もすべて削除されます。' }, class: "btn btn-outline-danger rounded-pill px-4 fw-bold" do %>
               <i class="fa-solid fa-user-slash me-1"></i>このユーザーを削除
             <% end %>
           </div>

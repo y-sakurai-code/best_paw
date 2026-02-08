@@ -89,6 +89,7 @@
                   <span class="text-muted small"><%= comment.created_at.strftime('%Y/%m/%d') %></span>
                 </div>
                 <p class="small text-secondary mb-0"><%= comment.comment %></p>
+                <%= link_to 'コメント削除', destroy_comment_admin_reviews_management_path(review_comment_id: comment.id), method: :delete, data: { confirm: '本当に削除しますか？' } %>
               </div>
             <% end %>
           </div>

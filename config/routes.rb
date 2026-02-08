@@ -22,14 +22,16 @@ Rails.application.routes.draw do
   }
 
   namespace :admin do
-    get 'dashboards', to: 'dashboards#index'
-    get 'reviews_managements/index'
-    get 'reviews_managements/show'
+    root to: 'dashboards#index'
     resources :users, only: [:show, :destroy]
     resources :users_managements, only: [:index, :show, :destroy]
-    resources :reviews_managements, only: [:index, :show, :destroy]
-    resources :items, only: [:new, :index, :show, :edit, :create, :update, :destroy]
+    resources :items
     resources :genres, only: [:index, :create, :edit, :update, :destroy]
+    resources :reviews_managements, only: [:index, :show, :destroy] do
+      member do
+        delete :destroy_comment
+      end
+    end
   end
   
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html

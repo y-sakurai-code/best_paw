@@ -15,5 +15,12 @@ class Admin::ReviewsManagementsController < ApplicationController
     review.destroy
     redirect_to admin_reviews_managements_index_path, notice: "レビューを削除しました"
   end
-  
+
+  def destroy_comment
+    review_comment = ReviewComment.find(params[:review_comment_id])
+    review = review_comment.review
+    review_comment.destroy
+    redirect_to admin_reviews_management_path(review), notice: "レビューコメントを削除しました"
+  end
+
 end

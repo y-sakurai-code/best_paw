@@ -8,6 +8,14 @@ Rails.application.routes.draw do
     root to: 'homes#top'
     get 'homes/about', to: 'homes#about', as: :about
     resources :users, only: [:index, :show, :edit, :update, :destroy]
+    resources :dogs do
+      collection do
+        get :memorial
+      end
+      member do
+        patch :archive
+      end
+    end
     resources :reviews, only: [:new, :index, :show, :edit, :create, :update, :destroy] do
       resource :favorite_reviews, only: [:create, :destroy]
       resources :review_comments, only: [:create, :destroy]

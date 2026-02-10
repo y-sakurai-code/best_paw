@@ -1,0 +1,36 @@
+<div class="container py-5 text-center">
+  <h2 class="fw-bold mb-5" style="color: #888;">虹の橋のふもと（思い出箱）</h2>
+  
+  <div class="row justify-content-center">
+    <% @archived_dogs.each do |dog| %>
+      <div class="col-md-3 mb-4">
+        <div class="card border-0 shadow-sm rounded-4 p-4 text-center">
+          <% if dog.dog_image.attached? %>
+            <%= image_tag dog.dog_image, class: "rounded-circle border border-3 border-white shadow-sm mx-auto d-block mb-3", style: "width: 120px; height: 120px; object-fit: cover;" %>
+          <% else %>
+            <%= image_tag 'no_image.jpg', class: "rounded-circle border border-3 border-white shadow-sm mx-auto d-block mb-3", style: "width: 120px; height: 120px;" %>
+          <% end %>
+
+          <h4 class="fw-bold mb-1"><%= dog.name %></h4>
+          <div class="text-secondary small">
+            <% if dog.archived_date.present? %>
+              虹の橋を渡った日：<%= dog.archived_date.strftime("%Y年%m月%d日") %><br>
+              その時の年齢：<%= dog.archived_age %> 歳
+            <% else %>
+              <%= dog.age %> 歳
+            <% end %>
+            <% if dog.male? %>
+              <i class="fa-solid fa-mars text-primary small me-2"></i>
+            <% elsif dog.female? %>
+              <i class="fa-solid fa-venus text-danger small me-2"></i>
+            <% end %>
+          </div>
+
+          <%= link_to 'プロフィールへ戻す', archive_dog_path(dog), method: :patch, class: "btn btn-sm btn-link mt-3 text-decoration-none" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  
+  <%= link_to 'マイページへ戻る', users_mypage_path, class: "mt-5 d-block text-secondary" %>
+</div>

@@ -1,36 +1,83 @@
 <div class="container py-5">
   <div class="row g-4">
     
-    <div class="col-lg-4">
-      <div class="card border-0 shadow-sm rounded-4 overflow-hidden sticky-top" style="top: 20px;">
-        <div class="bg-warning text-center py-5">
-          <i class="fa-solid fa-circle-user fa-5x text-white"></i>
-        </div>
-        <div class="card-body p-4 text-center">
-          <h4 class="fw-bold mb-1"><%= current_user.name %></h4>
-          <p class="text-secondary small mb-4">Best Paw 会員</p>
-          
-          <div class="d-grid gap-2">
-            <%= link_to user_path(current_user.id), class: "btn btn-outline-warning rounded-pill fw-bold" do %>
-              <i class="fa-solid fa-gear me-1"></i>ユーザー情報詳細
+<div class="col-lg-4">
+  <div class="card border-0 shadow-sm rounded-4 overflow-hidden sticky-top" style="top: 20px;">
+    
+    <div class="bg-warning p-4 text-center">
+      <div class="d-flex justify-content-center flex-wrap gap-2">
+        <% if @dogs.where(is_archived: false).any? %>
+          <% @dogs.where(is_archived: false).each do |dog| %>
+            <% if dog.dog_image.attached? %>
+              <%= image_tag dog.dog_image, class: "rounded-circle border border-3 border-white shadow-sm", style: "width: 80px; height: 80px; object-fit: cover;" %>
+            <% else %>
+              <%= image_tag 'no_image.jpg', class: "rounded-circle border border-3 border-white shadow-sm", style: "width: 80px; height: 80px;" %>
             <% end %>
+          <% end %>
+        <% else %>
+          <div class="text-white py-3">
+            <i class="fa-solid fa-paw fa-3x mb-2"></i>
           </div>
-        </div>
-        <div class="card-footer bg-white border-0 p-4 pt-0">
-          <div class="row text-center border-top pt-3">
-            <div class="col">
-              <div class="fw-bold text-warning fs-4"><%= @reviews.count %></div>
-              <div class="small text-secondary">Reviews</div>
-            </div>
-          </div>
-        </div>
+        <% end %>
       </div>
     </div>
 
+    <div class="card-body p-4">
+      <div class="family-info mb-4">
+        
+        <div class="d-flex align-items-center mb-3">
+          <span class="badge bg-dark-subtle text-dark rounded-pill me-2 fw-normal" style="font-size: 0.7rem;">USER</span>
+          <div class="fs-5 fw-bold text-dark"><%= current_user.name %></div>
+        </div>
+
+        <% if @dogs.where(is_archived: false).any? %>
+          <div class="border-top pt-3 mt-2">
+            <span class="text-secondary small fw-bold mb-2 d-block">FAMILY</span>
+            <% @dogs.where(is_archived: false).each do |dog| %>
+              <div class="d-flex align-items-center mb-2">
+                <i class="fa-solid fa-paw text-warning me-2" style="font-size: 0.8rem;"></i>
+                <div class="fw-bold me-2"><%= dog.name %></div>
+                <div class="text-secondary small"><%= dog.age %></div>
+                <% if dog.male? %>
+                  <i class="fa-solid fa-mars text-primary small me-2"></i>
+                <% elsif dog.female? %>
+                  <i class="fa-solid fa-venus text-danger small me-2"></i>
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+
+      <hr>
+
+      <div class="d-grid gap-2 mt-3">
+        <%= link_to user_path(current_user), class: "btn btn-outline-dark btn-sm rounded-pill" do %>
+          <i class="fa-solid fa-user-gear me-1"></i>ユーザー設定
+        <% end %>
+        
+        <% @dogs.where(is_archived: false).each do |dog| %>
+          <%= link_to edit_dog_path(dog), class: "btn btn-outline-warning btn-sm rounded-pill" do %>
+            <i class="fa-solid fa-pen me-1"></i><%= dog.name %>の編集
+          <% end %>
+        <% end %>
+
+        <%= link_to new_dog_path, class: "btn btn-warning btn-sm rounded-pill fw-bold" do %>
+          <i class="fa-solid fa-plus me-1"></i>新しい家族を登録
+        <% end %>
+
+        <%= link_to memorial_dogs_path, class: "btn btn-link btn-sm text-secondary mt-2 text-decoration-none" do %>
+          <i class="fa-solid fa-box-archive me-1"></i>思い出箱（虹の橋）
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
     <div class="col-lg-8">
       <div class="d-flex align-items-center mb-4">
-        <i class="fa-solid fa-list-ul text-warning fs-3 me-2"></i>
-        <h3 class="fw-bold mb-0">あなたの投稿一覧</h3>
+        <i class="fa-solid fa-paper-plane text-warning fs-3 me-2"></i>
+        <h3 class="fw-bold mb-0"><%= current_user.name %> さんの投稿一覧</h3>
       </div>
 
       <% if @reviews.any? %>
@@ -42,14 +89,12 @@
           <% end %>
         </div>
       <% else %>
-
         <div class="text-center py-5 bg-white rounded-4 shadow-sm">
           <i class="fa-solid fa-paw fa-3x text-light mb-3"></i>
-          <p class="text-secondary">まだレビューを投稿していません。<br>愛犬のお気に入りグッズをシェアしてみませんか？</p>
+          <p class="text-secondary">まだレビューを投稿していません。</p>
           <%= link_to "レビューを投稿する", new_review_path, class: "btn btn-warning rounded-pill fw-bold" %>
         </div>
       <% end %>
     </div>
-
   </div>
 </div>

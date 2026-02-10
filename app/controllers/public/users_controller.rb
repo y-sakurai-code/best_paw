@@ -3,6 +3,7 @@ class Public::UsersController < ApplicationController
 
   def mypage
     @user = current_user
+    @dogs = @user.dogs
     @reviews = Review.where(user_id: current_user.id).order(created_at: :desc)
   end
 
@@ -21,12 +22,19 @@ class Public::UsersController < ApplicationController
 
   def show
     @user = current_user
+    @dogs = @user.dogs
   end
 
   def destroy
     user = current_user
     user.destroy
     redirect_to new_user_registration_path, notice: "退会処理が完了しました"
+  end
+
+  def archive
+    @dog = current_user.dogs.find(params[:id])
+    @dog.update(is_archived: true)
+    redirect_to users_mypage_path(current_user), notice: "#{@dog.name}を思い出箱へ移動しました。"
   end
 
   private

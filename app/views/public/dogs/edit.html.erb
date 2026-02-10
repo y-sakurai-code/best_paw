@@ -1,0 +1,53 @@
+<% provide(:button_text, '更新する') %>
+
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      
+      <div class="d-flex align-items-center mb-4">
+        <i class="fa-solid fa-pen-to-square text-warning fs-3 me-2"></i>
+        <h3 class="fw-bold mb-0">愛犬情報の編集</h3>
+      </div>
+
+      <div class="card border-0 shadow-sm rounded-4 p-4 mb-3">
+        <%= render 'dog_form', dog: @dog %>
+        
+        <div class="text-center mt-4">
+          <%= link_to users_mypage_path, class: "btn btn-link text-secondary text-decoration-none" do %>
+            <i class="fa-solid fa-angle-left me-1"></i>マイページに戻る
+          <% end %>
+        </div>
+      </div>
+
+      <div class="card border-0 shadow-sm rounded-4 overflow-hidden mt-4">
+        <div class="card-header bg-light border-0 py-3">
+          <h5 class="fw-bold mb-0 text-secondary" style="font-size: 0.9rem;">
+            <i class="fa-solid fa-gears me-1"></i>ステータス管理
+          </h5>
+        </div>
+        <div class="card-body p-4 text-center">
+          <div class="row g-3">
+            <div class="col-md-6">
+              <% if !@dog.is_archived %>
+                <%= link_to archive_dog_path(@dog), method: :patch, data: { confirm: "大切な思い出として『思い出箱』に移動します。よろしいですか？" }, class: "btn btn-outline-info w-100 rounded-pill py-2" do %>
+                  <i class="fa-solid fa-box-archive me-1"></i>思い出箱へ移動
+                <% end %>
+              <% else %>
+                <%= link_to archive_dog_path(@dog), method: :patch, class: "btn btn-outline-secondary w-100 rounded-pill py-2" do %>
+                  <i class="fa-solid fa-arrow-rotate-left me-1"></i>プロフィールに戻す
+                <% end %>
+              <% end %>
+            </div>
+
+            <div class="col-md-6">
+              <%= link_to dog_path(@dog), method: :delete, data: { confirm: "本当に削除しますか？\n（この操作は取り消せません）" }, class: "btn btn-outline-danger w-100 rounded-pill py-2" do %>
+                <i class="fa-solid fa-trash-can me-1"></i>データを完全に削除
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

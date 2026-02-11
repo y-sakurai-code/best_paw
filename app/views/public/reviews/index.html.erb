@@ -1,54 +1,70 @@
-<div class="album py-5 bg-light">
+<div class="bg-light py-5">
   <div class="container">
+    
     <div class="text-center mb-5">
-      <h2 class="fw-bold text-warning mb-2">
-        <i class="fa-solid fa-paw me-2"></i>レビュー 一覧
-      </h2>
-      <p class="text-secondary">みんなが投稿した最新のレビューをチェックしよう</p>
+      <div class="bg-warning-subtle rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 70px; height: 70px;">
+        <i class="fa-solid fa-paw fa-2x text-warning"></i>
+      </div>
+      <h2 class="fw-bold">レビュー一覧</h2>
+      <p class="text-secondary small">愛犬家のみんなが投稿した最新のレビューをチェックしよう</p>
     </div>
 
     <div class="row justify-content-center mb-5">
-      <div class="col-md-6 col-lg-5">
-        <%= form_with url: reviews_path, method: :get, local: true, class: "input-group shadow-sm rounded-pill overflow-hidden" do |f| %>
-          <span class="input-group-text bg-white border-0 ps-3">
-            <i class="fa-solid fa-tag text-warning"></i>
-          </span>
-          <%= f.text_field :tag_name, placeholder: "タグで検索", class: "form-control border-0 py-2 shadow-none" %>
-          <%= f.submit "検索", class: "btn btn-warning px-4 fw-bold" %>
+      <div class="col-md-7 col-lg-6">
+        <%= form_with url: reviews_path, method: :get, local: true, class: "shadow-sm rounded-pill overflow-hidden d-flex bg-white border border-2 border-warning-subtle" do |f| %>
+          <div class="d-flex align-items-center ps-3 text-warning">
+            <i class="fa-solid fa-tag"></i>
+          </div>
+          <%= f.text_field :tag_name, value: @search_word, placeholder: "気になるタグ（おもちゃ、フードなど）で検索", class: "form-control border-0 py-3 shadow-none bg-transparent", style: "font-size: 0.95rem;" %>
+          <%= f.submit "検索", class: "btn btn-warning px-4 fw-bold text-dark", style: "letter-spacing: 0.1rem;" %>
         <% end %>
       </div>
     </div>
 
-    <div class="container py-5">
-      <div class="d-flex align-items-center mb-4">
-        <i class="fa-solid fa-list-ul text-warning fs-3 me-2"></i>
-        <h3 class="fw-bold mb-0">
-          <% if @search_word.present? %>
-            「<%= @search_word %>」のタグ検索結果
-          <% else %>
-            投稿一覧
-          <% end %>
-        </h3>
-      </div>
+    <div class="row justify-content-center">
+      <div class="col-lg-10"> <%# 幅を他のページと合わせる %>
+        
+        <%# リストのタイトル（検索時のみ表示される状態を整理） %>
+        <div class="d-flex align-items-center justify-content-between mb-4 px-2">
+          <div class="d-flex align-items-center">
+            <i class="fa-solid fa-list-ul text-warning me-2"></i>
+            <h4 class="fw-bold mb-0" style="font-size: 1.25rem;">
+              <% if @search_word.present? %>
+                「<span class="text-warning"><%= @search_word %></span>」の検索結果
+              <% else %>
+                新着レビュー
+              <% end %>
+            </h4>
+          </div>
+          <div class="text-secondary small fw-bold">
+            全 <%= @reviews.count %> 件
+          </div>
+        </div>
 
-      <% if @reviews.any? %>
-        <div class="row row-cols-1 row-cols-md-2 g-4">
-          <% @reviews.each do |review| %>
-            <div class="col">
-              <%= render 'public/reviews/review_card', review: review %>
+        <% if @reviews.any? %>
+          <%# レビューカード一覧 %>
+          <div class="row row-cols-1 row-cols-md-2 g-4">
+            <% @reviews.each do |review| %>
+              <div class="col">
+                <%= render 'public/reviews/review_card', review: review %>
+              </div>
+            <% end %>
+          </div>
+        <% else %>
+          <div class="text-center py-5 bg-white rounded-4 shadow-sm mt-2 border border-2 border-dashed border-warning-subtle">
+            <div class="mb-3 opacity-25">
+              <i class="fa-solid fa-magnifying-glass fa-4x text-warning"></i>
             </div>
-          <% end %>
-        </div>
-      <% else %>
-        <div class="text-center py-5 bg-white rounded-4 shadow-sm mt-4">
-          <i class="fa-solid fa-magnifying-glass fa-3x text-light mb-3"></i>
-          <p class="text-secondary fs-5">
-            「<strong><%= @search_word %></strong>」に一致するタグは見つかりませんでした。
-          </p>
-          <p class="text-muted small">別のタグキーワードで試してみてください。</p>
-          <%= link_to "全件表示に戻る", reviews_path, class: "btn btn-outline-warning rounded-pill mt-2" %>
-        </div>
-      <% end %>
+            <p class="text-dark fw-bold mb-1">一致するレビューが見つかりませんでした</p>
+            <p class="text-secondary small mb-4">別のキーワードで試してみるか、全件表示に戻ってください。</p>
+            <%= link_to reviews_path, class: "btn btn-outline-warning rounded-pill px-4 fw-bold" do %>
+              <i class="fa-solid fa-rotate-left me-1"></i>全件表示に戻る
+            <% end %>
+          </div>
+        <% end %>
+
+      </div>
     </div>
+
   </div>
 </div>

@@ -1,52 +1,73 @@
-<div class="card border-0 shadow-sm rounded-4 overflow-hidden h-100">
-  <div class="row g-0">
+<div class="card border-0 shadow-sm rounded-4 overflow-hidden h-100 border-start border-4 border-warning">
+  
+  <div class="bg-warning-subtle p-3 border-bottom border-white">
+    <div class="d-flex justify-content-between align-items-center">
+      <div class="d-flex align-items-center">
+        <% if review.dogs.any? %>
+          <% dog = review.dogs.first %>
+          <div class="shadow-sm rounded-circle border border-2 border-white overflow-hidden bg-white" style="width: 50px; height: 50px; flex-shrink: 0;">
+            <% if dog.dog_image.attached? %>
+              <%= image_tag dog.dog_image, class: "w-100 h-100", style: "object-fit: cover;" %>
+            <% else %>
+              <div class="w-100 h-100 d-flex align-items-center justify-content-center text-secondary">
+                <i class="fa-solid fa-dog" style="font-size: 0.8rem;"></i>
+              </div>
+            <% end %>
+          </div>
+          
+          <div class="ms-2">
+            <div class="fw-bold text-dark d-flex align-items-center" style="font-size: 0.85rem;">
+              <%= dog.name %>
+              <span class="ms-1">
+                <% if dog.male? %>
+                  <i class="fa-solid fa-mars text-primary" style="font-size: 0.7rem;"></i>
+                <% elsif dog.female? %>
+                  <i class="fa-solid fa-venus text-danger" style="font-size: 0.7rem;"></i>
+                <% end %>
+              </span>
+            </div>
+            <div class="text-secondary" style="font-size: 0.7rem; line-height: 1.2;">
+              <%= dog.breed %> / <%= (Date.today.strftime('%Y%m%d').to_i - dog.birthday.strftime('%Y%m%d').to_i) / 10000 %>歳
+            </div>
+          </div>
+        <% end %>
+      </div>
+      
+      <div class="bg-white px-2 py-1 rounded-pill shadow-sm">
+        <%= render 'public/reviews/static_rate', review: review %>
+      </div>
+    </div>
+  </div>
 
-    <div class="col-md-3 bg-warning-subtle d-flex flex-column align-items-center justify-content-center py-4 position-relative">
-      <i class="fa-solid fa-paw fa-3x text-white opacity-75"></i>
-      <span class="badge rounded-pill bg-warning text-dark mt-2 shadow-sm">
-        <%= review.category %>
-      </span>
+  <div class="card-body p-4 d-flex flex-column">
+    <div class="mb-2">
+      <div class="badge bg-white border border-warning text-warning fw-normal rounded-pill px-2 py-1 mb-2" style="font-size: 0.65rem;">
+        <i class="fa-solid fa-tag me-1"></i><%= review.category %>
+      </div>
+      <h5 class="fw-bold mb-0">
+        <%= link_to review.title, review_path(review.id), class: "text-dark text-decoration-none stretched-link" %>
+      </h5>
     </div>
 
+    <p class="text-secondary small mb-3 flex-grow-1" style="display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; line-height: 1.6;">
+      <%= review.body %>
+    </p>
 
-    <div class="col-md-9">
-      <div class="card-body p-4 d-flex flex-column h-100">
-        <div class="d-flex justify-content-between align-items-start mb-2 gap-2">
-          <h5 class="fw-bold mb-0">
-            <%= link_to review.title, review_path(review.id), class: "text-dark text-decoration-none" %>
-          </h5>
-          <div class="text-end flex-shrink-0">
-            <%= render 'public/reviews/static_rate', review: review %>
-          </div>
-        </div>
+    <div class="d-flex justify-content-between align-items-center pt-3 border-top mt-auto" style="position: relative; z-index: 2;">
+      <div class="text-muted" style="font-size: 0.75rem;">
+        <i class="fa-solid fa-calendar-day me-1 opacity-50"></i><%= review.created_at.strftime('%Y/%m/%d') %>
+      </div>
 
-        <p class="card-text text-secondary small mb-3 flex-grow-1" style="display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; line-height: 1.5; height: 3em;">
-          <%= review.body %>
-        </p>
+      <div class="d-flex gap-2">
+        <% if review.user == current_user %>
+          <%= link_to edit_review_path(review.id), class: "btn btn-sm btn-light text-warning rounded-circle shadow-sm border", title: "編集" do %>
+            <i class="fa-solid fa-pen" style="font-size: 0.8rem;"></i>
+          <% end %>
+          <%= link_to review_path(review.id), method: :delete, data: { confirm: "削除してもよろしいですか？" }, class: "btn btn-sm btn-light text-danger rounded-circle shadow-sm border", title: "削除" do %>
+            <i class="fa-solid fa-trash" style="font-size: 0.8rem;"></i>
+          <% end %>
+        <% end %>
 
-        <div class="d-flex justify-content-between align-items-center pt-3 border-top mt-auto">
-          <div class="small text-muted">
-            <i class="fa-solid fa-user-circle me-1"></i><%= review.user.name %>
-            <span class="ms-2 small opacity-75"><%= review.created_at.strftime('%Y/%m/%d') %></span>
-          </div>
-
-          <div class="btn-group shadow-sm">
-            <%= link_to review_path(review.id), class: "btn btn-sm btn-outline-warning rounded-start-pill px-3", title: "詳細" do %>
-              <i class="fa-solid fa-eye"></i>
-            <% end %>
-
-            <% if review.user == current_user %>
-              <%= link_to edit_review_path(review.id), class: "btn btn-sm btn-outline-warning px-3", title: "編集" do %>
-                <i class="fa-solid fa-pen"></i>
-              <% end %>
-              <%= link_to review_path(review.id), method: :delete, data: { confirm: "削除してもよろしいですか？" }, class: "btn btn-sm btn-outline-danger rounded-end-pill px-3", title: "削除" do %>
-                <i class="fa-solid fa-trash"></i>
-              <% end %>
-            <% else %>
-              <style>.btn-group > .btn:first-child:last-child { border-radius: 50rem !important; }</style>
-            <% end %>
-          </div>
-        </div>
       </div>
     </div>
   </div>

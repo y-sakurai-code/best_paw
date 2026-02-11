@@ -2,6 +2,8 @@ class Dog < ApplicationRecord
   has_one_attached :dog_image
 
   belongs_to :user
+  has_many :dog_reviews, dependent: :destroy
+  has_many :reviews, through: :dog_reviews
 
   enum size: { "超小型": 0, "小型": 1, "中型": 2, "大型": 3 }
   enum gender: { unknown: 0, male: 1, female: 2 }

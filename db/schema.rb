@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2026_02_10_111316) do
+ActiveRecord::Schema.define(version: 2026_02_11_064416) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -50,6 +50,15 @@ ActiveRecord::Schema.define(version: 2026_02_10_111316) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["email"], name: "index_admins_on_email", unique: true
     t.index ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true
+  end
+
+  create_table "dog_reviews", force: :cascade do |t|
+    t.integer "dog_id", null: false
+    t.integer "review_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["dog_id"], name: "index_dog_reviews_on_dog_id"
+    t.index ["review_id"], name: "index_dog_reviews_on_review_id"
   end
 
   create_table "dogs", force: :cascade do |t|
@@ -131,4 +140,6 @@ ActiveRecord::Schema.define(version: 2026_02_10_111316) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "dog_reviews", "dogs"
+  add_foreign_key "dog_reviews", "reviews"
 end

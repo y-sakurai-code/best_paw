@@ -1,57 +1,104 @@
 <div class="container py-5">
   <div class="row justify-content-center">
     <div class="col-md-9">
-      
-      <%# --- レビューメインカード --- %>
+
+      <div class="text-center mb-4">
+        <div class="bg-warning-subtle rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 70px; height: 70px;">
+          <i class="fa-solid fa-file-lines fa-2x text-warning"></i>
+        </div>
+        <h2 class="fw-bold">レビュー詳細</h2>
+        <p class="text-secondary small">愛犬との素敵な思い出をチェックしましょう</p>
+      </div>
+
       <div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-5">
-        <%# フェーズ３で犬画像を設定していると変更できるようにする予定 %>
-        <div class="bg-warning-subtle text-center py-5">
-          <i class="fa-solid fa-paw fa-5x text-white opacity-75"></i>
+        
+        <div class="bg-warning-subtle p-3 border-bottom border-white">
+          <div class="d-flex align-items-center mb-2 px-2">
+            <i class="fa-solid fa-paw text-warning me-2"></i>
+            <span class="text-warning-emphasis fw-bold small" style="letter-spacing: 0.1rem;">REVIEW TARGET DOGS</span>
+          </div>
+          
+          <div class="d-flex flex-wrap gap-3 px-2">
+            <% if @review.dogs.any? %>
+              <% @review.dogs.each do |dog| %>
+                <div class="d-flex align-items-center bg-white rounded-pill pe-3 py-1 shadow-sm border border-light">
+                  <% if dog.dog_image.attached? %>
+                    <%= image_tag dog.dog_image, class: "rounded-circle border border-2 border-white", style: "width: 75px; height: 75px; object-fit: cover;" %>
+                  <% else %>
+                    <div class="rounded-circle bg-light d-flex align-items-center justify-content-center border border-2 border-white" style="width: 75px; height: 75px;">
+                      <i class="fa-solid fa-dog text-secondary" style="font-size: 0.8rem;"></i>
+                    </div>
+                  <% end %>
+                  
+                  <div class="ms-2">
+                    <div class="fw-bold text-dark" style="font-size: 0.75rem;">
+                      <%= dog.name %> 
+                      <% if dog.male? %>
+                        <i class="fa-solid fa-mars text-primary" style="font-size: 0.6rem;"></i>
+                      <% elsif dog.female? %>
+                        <i class="fa-solid fa-venus text-danger" style="font-size: 0.6rem;"></i>
+                      <% end %>
+                    </div>
+                    <div class="text-secondary" style="font-size: 0.65rem;">
+                      <%= dog.breed %> / <%= (Date.today.strftime('%Y%m%d').to_i - dog.birthday.strftime('%Y%m%d').to_i) / 10000 %>歳
+                    </div>
+                  </div>
+                </div>
+              <% end %>
+            <% else %>
+              <span class="text-muted small px-2">紐付けられた愛犬はいません</span>
+            <% end %>
+          </div>
         </div>
 
         <div class="card-body p-4 p-md-5">
-          <div class="mb-3">
-            <h2 class="fw-bold mb-2"><%= @review.title %></h2>
-    
-          <div class="mb-3">
-            <div class="badge border border-warning text-warning text-decoration-none rounded-pill px-3 py-2 hover-bg-warning">
+          <div class="d-flex justify-content-between align-items-baseline mb-3 flex-wrap">
+            <h2 class="fw-bold text-dark mb-0 me-3"><%= @review.title %></h2>
+            <div class="d-flex align-items-center text-secondary small bg-light px-3 py-2 rounded-pill shadow-sm">
+              <div class="d-flex align-items-center me-3 border-end pe-3">
+                <i class="fa-solid fa-circle-user text-warning me-2 fs-5"></i>
+                <span class="fw-bold text-dark"><%= @review.user.name %></span>
+                <span class="ms-1">さんの投稿</span>
+              </div>
+              <div class="d-flex align-items-center">
+                <i class="fa-solid fa-calendar-day me-2"></i>
+                <%= @review.created_at.strftime('%Y年%m月%d日') %>
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-4">
+            <div class="badge border border-warning text-warning rounded-pill px-3 py-2">
               <i class="fa-solid fa-tag me-1 small"></i><%= @review.category %>
             </div>
           </div>
-        </div>
 
-        <% if @review.favorite_reviews_by?(current_user) %>
-          <p>
-            <%= link_to review_favorite_reviews_path(@review), method: :delete do %>
-              <i class="fas fa-heart" aria-hidden="true" style="color: red;"></i>
-              <%= @review.favorite_reviews.count %>
-            <% end %>
-          </p>
-        <% else %>
-          <p>
-            <%= link_to review_favorite_reviews_path(@review), method: :post do %>
-              <i class="far fa-heart"></i>
-              <%= @review.favorite_reviews.count %>
-            <% end %>
-          </p>
-        <% end %>
-
-        <div class="d-flex align-items-center justify-content-between mb-4 bg-light p-3 rounded-3">
-          <div class="d-flex align-items-center">
-            <span class="small text-secondary me-2">評価:</span>
-            <%= render 'static_rate', review: @review %>
-            <span class="ms-2 fw-bold text-dark"><%= @review.star %></span>
+          <div class="review-body mb-5">
+            <p class="text-dark" style="font-size: 1.1rem; line-height: 1.9; white-space: pre-wrap;"><%= @review.body %></p>
           </div>
-          <div class="text-secondary small">
-            <i class="fa-solid fa-clock me-1"></i><%= @review.created_at.strftime('%Y/%m/%d') %>
+
+          <div class="d-flex align-items-center justify-content-between bg-light p-3 rounded-4 shadow-sm mb-5">
+            <div class="d-flex align-items-center">
+              <span class="fw-bold text-secondary me-3 small">満足度：</span>
+              <%= render 'static_rate', review: @review %>
+            </div>
+
+            <div class="d-flex align-items-center border-start ps-4">
+              <% if @review.favorite_reviews_by?(current_user) %>
+                <%= link_to review_favorite_reviews_path(@review), method: :delete, class: "text-decoration-none d-flex align-items-center gap-2" do %>
+                  <i class="fas fa-heart fs-4 text-danger"></i>
+                  <span class="fw-bold text-danger"><%= @review.favorite_reviews.count %></span>
+                <% end %>
+              <% else %>
+                <%= link_to review_favorite_reviews_path(@review), method: :post, class: "text-decoration-none d-flex align-items-center gap-2 text-secondary" do %>
+                  <i class="far fa-heart fs-4"></i>
+                  <span class="fw-bold"><%= @review.favorite_reviews.count %></span>
+                <% end %>
+              <% end %>
+            </div>
           </div>
-        </div>
 
-        <div class="review-body mb-5">
-          <p class="text-dark" style="font-size: 1.1rem; line-height: 1.9; white-space: pre-wrap;"><%= @review.body %></p>
-        </div>
-
-        <hr class="my-4 opacity-25">
+          <hr class="my-4 opacity-25">
 
           <div class="d-flex justify-content-between align-items-center">
             <%= link_to reviews_path, class: "btn btn-outline-secondary rounded-pill px-4" do %>
@@ -79,9 +126,8 @@
 
         <div class="mb-5">
           <% @review.review_comments.each do |review_comment| %>
-            <div class="bg-white p-3 rounded-4 shadow-sm mb-3"> <%# カード状の囲み %>
+            <div class="bg-white p-3 rounded-4 shadow-sm mb-3">
       
-            <%# 1. ヘッダー部分：名前と日付セットを左右に分ける %>
               <div class="d-flex justify-content-between align-items-center mb-2">
                 <span class="fw-bold text-dark">
                   <i class="fa-solid fa-user-circle me-1"></i><%= review_comment.user.name %>

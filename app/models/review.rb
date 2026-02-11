@@ -9,6 +9,8 @@ class Review < ApplicationRecord
   belongs_to :user
   has_many :review_comments, dependent: :destroy
   has_many :favorite_reviews, dependent: :destroy
+  has_many :dog_reviews, dependent: :destroy
+  has_many :dogs, through: :dog_reviews
 
   def self.looks(search, word)
     if search == "perfect_match"

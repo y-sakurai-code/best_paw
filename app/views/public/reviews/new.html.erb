@@ -1,82 +1,17 @@
 <div class="container py-5">
   <div class="row justify-content-center">
-    <div class="col-md-8 col-lg-6">
-      <div class="card border-0 shadow-sm rounded-4 p-4 p-md-5">
-        
-        <div class="text-center mb-4">
-          <div class="bg-warning-subtle rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 70px; height: 70px;">
-            <i class="fa-solid fa-pen-to-square fa-2x text-warning"></i>
-          </div>
-          <h2 class="fw-bold">新規レビュー投稿</h2>
-          <p class="text-secondary small">愛犬との思い出や、おすすめグッズを教えてください</p>
+    <div class="col-md-10 col-lg-9">
+
+      <div class="text-center mb-4">
+        <div class="bg-warning-subtle rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 70px; height: 70px;">
+          <i class="fa-solid fa-pen-to-square fa-2x text-warning"></i>
         </div>
-
-        <% if @review.errors.any? %>
-          <div class="alert alert-danger border-0 rounded-4 shadow-sm mb-4">
-            <div class="fw-bold mb-1"><%= @review.errors.count %>件のエラーが発生しました</div>
-            <ul class="mb-0 small">
-              <% @review.errors.full_messages.each do |message| %>
-                <li><%= message %></li>
-              <% end %>
-            </ul>
-          </div>
-        <% end %>
-
-        <%= form_with model: @review, local: true do |f| %>
-          <div class="mb-4">
-            <%= f.label :title, "レビュータイトル", class: "form-label fw-bold" %>
-            <%= f.text_field :title, class: "form-control form-control-lg bg-light border-0 rounded-3", placeholder: "例：このおもちゃ、大喜びでした！" %>
-          </div>
-
-          <div class="mb-4">
-            <%= f.label :body, "レビュー本文", class: "form-label fw-bold" %>
-            <%= f.text_area :body, class: "form-control bg-light border-0 rounded-3", rows: 6, placeholder: "使い心地や、愛犬の反応を詳しく教えてね" %>
-          </div>
-
-          <div class="fmb-4">
-            <%= f.label :category, "タグ", class: "form-label fw-bold" %>
-            <%= f.text_field :category, class: "form-control form-control-lg bg-light border-0 rounded-3", placeholder: "検索しやすいタグをつけてね" %>
-          </div>
-
-          <% if @review.id.nil? %>
-            <div class="form-group" id="star">
-              <%= f.label :star, "評価" %>
-              <%= f.hidden_field :star, id: :review_star %>
-              <div id="post_raty"></div>
-            </div>
-
-            <script>
-              $(document).on('turbolinks:load turbo:load', function() {
-                let elem = document.querySelector('#post_raty');
-                if (elem == null) return;
-
-                elem.innerHTML = "";
-
-                let opt = {
-                  starOn: "<%= asset_path('star-on.png') %>",
-                  starOff: "<%= asset_path('star-off.png') %>",
-                  starHalf: "<%= asset_path('star-half.png') %>",
-                  scoreName: 'review[star]',
-                  half: true,
-                };
-                raty(elem, opt);
-              });
-            </script>
-
-          <% else %>
-            <div class="form-group">
-              <label>評価</label>
-              <%= render "static_rate", review: @review %>
-            </div>
-          <% end %>
-
-          <div class="d-grid gap-2 mt-5">
-            <%= f.submit 'レビューを投稿する', class: "btn btn-warning btn-lg rounded-pill fw-bold shadow-sm py-3" %>
-            <%= link_to '戻る', reviews_path, class: "btn btn-link text-secondary text-decoration-none small" %>
-          </div>
-        <% end %>
-
+        <h2 class="fw-bold">新規レビュー投稿</h2>
+        <p class="text-secondary small">愛犬との思い出や、おすすめグッズを教えてください</p>
       </div>
+
+      <%= render 'form', review: @review %>
+      
     </div>
   </div>
 </div>

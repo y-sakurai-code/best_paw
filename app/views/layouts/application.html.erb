@@ -46,8 +46,7 @@
             <% if user_signed_in? %>
               <%= form_with url: search_path, local: true, method: :get, class: "col-12 col-lg-auto mb-3 mb-lg-0 d-flex align-items-center bg-light p-1 rounded-pill" do |f| %>
                 <%= f.text_field :word, class: "form-control form-control-sm border-0 bg-transparent ps-3", placeholder: "検索..." %>
-                <%= f.select :range, options_for_select([['User'], ['Review']]), {}, class: "form-select form-select-sm border-0 bg-transparent text-muted" %>
-                <%= f.select :search, options_for_select([["一致","perfect_match"], ["前方","forward_match"], ["後方","backward_match"], ["部分","partial_match"]]), {}, class: "form-select form-select-sm border-0 bg-transparent text-muted d-none d-sm-block" %>
+                <%= f.select :range, options_for_select([['Dog'], ['Review']]), {}, class: "form-select form-select-sm border-0 bg-transparent text-muted" %>
                 <%= f.submit "検索", class: "btn btn-sm btn-warning rounded-pill px-3 fw-bold" %>
               <% end %>
             <% end %>

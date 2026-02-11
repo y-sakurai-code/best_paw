@@ -5,10 +5,10 @@ class Public::SearchesController < ApplicationController
     @range = params[:range]
     @word = params[:word]
 
-    if @range == "User"
-      @users = User.looks(params[:search], params[:word])
+    if @range == "Dog"
+      @reviews = Review.joins(user: :dogs).where("dogs.breed LIKE ?", "%#{@word}%").distinct
     else
-      @reviews = Review.looks(params[:search], params[:word])
+      @reviews = Review.where("title LIKE ? OR body LIKE ?", "%#{@word}%", "%#{@word}%")
     end
   end
 end

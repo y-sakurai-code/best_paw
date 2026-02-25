@@ -4,6 +4,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  include Discard::Model
+
   has_many :dogs, dependent: :destroy
   has_many :reviews, dependent: :destroy
   has_many :review_comments, dependent: :destroy
@@ -17,4 +19,9 @@ class User < ApplicationRecord
       @dog = Dog.all
     end
   end
+
+  def active_for_authentication?
+    super && !discarded?
+  end
+  
 end

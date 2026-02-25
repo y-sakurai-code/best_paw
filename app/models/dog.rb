@@ -6,7 +6,7 @@ class Dog < ApplicationRecord
   has_many :reviews, through: :dog_reviews
 
   enum size: { "超小型": 0, "小型": 1, "中型": 2, "大型": 3 }
-  enum gender: { unknown: 0, male: 1, female: 2 }
+  enum gender: { male: 0, female: 1 }
 
   validates :name, presence: true
   validates :size, presence: true

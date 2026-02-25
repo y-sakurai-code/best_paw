@@ -27,8 +27,14 @@ class Public::UsersController < ApplicationController
 
   def destroy
     user = current_user
-    user.destroy
+    user.withdraw
+    reset_session
     redirect_to new_user_registration_path, notice: "退会処理が完了しました"
+  end
+
+  def withdraw
+    update(email: "#{email}_deleted_#{Time.current.to_i}")
+    discard
   end
 
   def archive

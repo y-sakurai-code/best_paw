@@ -1,13 +1,18 @@
 Rails.application.routes.draw do
 
+  root to: 'public/homes#top'
+
   scope module: :public do
     devise_for :users
     get 'tagsearches/search', to: 'tagsearches#search'
     get "search" => "searches#search"
     get 'users/mypage'
-    root to: 'homes#top'
     get 'homes/about', to: 'homes#about', as: :about
-    resources :users, only: [:index, :show, :edit, :update, :destroy]
+    resources :users, only: [:index, :show, :edit, :update, :destroy] do
+      member do
+        patch :withdraw
+      end
+    end
     resources :dogs do
       collection do
         get :memorial
@@ -31,7 +36,11 @@ Rails.application.routes.draw do
 
   namespace :admin do
     root to: 'dashboards#index'
-    resources :users, only: [:show, :destroy]
+    resources :users, only: [:show, :destroy] do
+      member do
+        patch :withdraw
+      end
+    end
     resources :users_managements, only: [:index, :show, :destroy]
     resources :items
     resources :genres, only: [:index, :create, :edit, :update, :destroy]

@@ -23,5 +23,9 @@ class User < ApplicationRecord
   def active_for_authentication?
     super && !discarded?
   end
-  
+
+  after_discard do
+    reviews.discard_all
+  end
+
 end

@@ -16,7 +16,7 @@ class Admin::UsersManagementsController < ApplicationController
     user = current_user
     user.withdraw
     reset_session
-    redirect_to new_user_registration_path, notice: "退会処理が完了しました"
+    redirect_to admin_dashboards_path, notice: "退会処理が完了しました"
   end
 
   def withdraw

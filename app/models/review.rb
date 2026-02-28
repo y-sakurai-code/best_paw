@@ -1,4 +1,5 @@
 class Review < ApplicationRecord
+  include Discard::Model
 
   validates :title, presence: true
   validates :body, presence: true

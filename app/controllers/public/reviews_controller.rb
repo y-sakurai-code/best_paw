@@ -18,15 +18,15 @@ class Public::ReviewsController < ApplicationController
   def index
     if params[:tag_name].present?
       @search_word = params[:tag_name]
-      @reviews = Review.where('category LIKE ?', "%#{params[:tag_name]}%").order(created_at: :desc)
+      @reviews = Review.kept.joins(:user).merge(User.kept).where('category LIKE ?', "%#{params[:tag_name]}%").order(created_at: :desc)
     else
-      @reviews = Review.all.order(created_at: :desc)
+      @reviews = Review.kept.joins(:user).merge(User.kept).order(created_at: :desc)
       @search_word = nil
     end
   end
 
   def show
-    @review = Review.find(params[:id])
+    @review = Review.kept.find(params[:id])
     @review_comment = ReviewComment.new
     @review_comments = @review.review_comments
   end

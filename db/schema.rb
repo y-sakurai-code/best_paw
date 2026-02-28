@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2026_02_25_110827) do
+ActiveRecord::Schema.define(version: 2026_02_26_102929) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -123,6 +123,8 @@ ActiveRecord::Schema.define(version: 2026_02_25_110827) do
     t.datetime "updated_at", precision: 6, null: false
     t.float "star"
     t.string "category"
+    t.datetime "discarded_at"
+    t.index ["discarded_at"], name: "index_reviews_on_discarded_at"
   end
 
   create_table "users", force: :cascade do |t|

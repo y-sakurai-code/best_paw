@@ -36,12 +36,13 @@ Rails.application.routes.draw do
 
   namespace :admin do
     root to: 'dashboards#index'
-    resources :users, only: [:show, :destroy] do
+    resources :users_managements, only: [:index, :show, :destroy]do
       member do
+        patch :soft_destroy
+        patch :undiscard
         patch :withdraw
       end
     end
-    resources :users_managements, only: [:index, :show, :destroy]
     resources :items
     resources :genres, only: [:index, :create, :edit, :update, :destroy]
     resources :reviews_managements, only: [:index, :show, :destroy] do

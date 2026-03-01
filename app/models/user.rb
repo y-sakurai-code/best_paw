@@ -20,12 +20,27 @@ class User < ApplicationRecord
     end
   end
 
+  def withdraw
+    update(email: "#{email}_deleted_#{Time.current.to_i}")
+    discard
+  end
+
+  def restore
+    new_email = self.email.sub(/_deleted_\d+$/, '')
+    update(email: new_email)
+    undiscard
+  end
+
   def active_for_authentication?
     super && !discarded?
   end
 
   after_discard do
     reviews.discard_all
+  end
+
+  after_undiscard do
+    reviews.undiscard_all
   end
 
 end

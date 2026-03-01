@@ -32,11 +32,6 @@ class Public::UsersController < ApplicationController
     redirect_to new_user_registration_path, notice: "退会処理が完了しました"
   end
 
-  def withdraw
-    update(email: "#{email}_deleted_#{Time.current.to_i}")
-    discard
-  end
-
   def archive
     @dog = current_user.dogs.find(params[:id])
     @dog.update(is_archived: true)

@@ -3,8 +3,10 @@ class Public::FavoriteReviewsController < ApplicationController
   def create
     @review = Review.find(params[:review_id])
     favorite = current_user.favorite_reviews.new(review_id: @review.id)
-    favorite.save
-    redirect_to review_path(@review)
+    if favorite.save
+      review.create_notification_favorite_reviews!(current_user)
+    end
+      redirect_to review_path(@review)
   end
 
   def destroy

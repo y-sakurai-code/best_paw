@@ -2,7 +2,6 @@
 <html lang="ja">
   <head>
     <meta charset="UTF-8" />
-    <link rel="stylesheet" href="application.css" />
     <title>BestPaw</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <%= csrf_meta_tags %>
@@ -30,13 +29,11 @@
           <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start w-100">
             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0 align-items-center">
               <% if user_signed_in? %>
-                <li><%= link_to "Home", reviews_path, class: 'nav-link px-3 text-secondary fw-semibold' %></li>
                 <li><%= link_to "About", about_path, class: 'nav-link px-3 text-secondary fw-semibold' %></li>
                 <li><%= link_to 'マイページ', users_mypage_path(current_user.id), class: 'nav-link px-3 text-secondary fw-semibold' %></li>
                 <li><%= link_to 'レビュー投稿', new_review_path, class: 'nav-link px-3 text-secondary fw-semibold' %></li>
                 <li><%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: 'nav-link px-3 text-danger small' %></li>
               <% else %>
-                <li><%= link_to "Home", root_path, class: 'nav-link px-3 text-secondary fw-semibold' %></li>
                 <li><%= link_to "About", about_path, class: 'nav-link px-3 text-secondary fw-semibold' %></li>
                 <li><%= link_to "ログイン", new_user_session_path, class: 'nav-link px-3 text-secondary fw-semibold' %></li>
                 <li><%= link_to "新規登録", new_user_registration_path, class: 'btn btn-warning btn-sm ms-2 rounded-pill px-3 shadow-sm' %></li>
@@ -49,7 +46,18 @@
                 <%= f.select :range, options_for_select([['Dog'], ['Review']]), {}, class: "form-select form-select-sm border-0 bg-transparent text-muted" %>
                 <%= f.submit "検索", class: "btn btn-sm btn-warning rounded-pill px-3 fw-bold" %>
               <% end %>
+              <li class="nav-item">
+                <%= link_to notifications_path, class: "nav-link position-relative" do %>
+                  <i class="fa-regular fa-bell fs-5"></i>
+                  <% if current_user.passive_notifications.where(checked: false).any? %>
+                    <span class="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle">
+                      <span class="visually-hidden">未読あり</span>
+                    </span>
+                  <% end %>
+                <% end %>
+              </li>
             <% end %>
+
           </div>
         </div>
       </nav>
@@ -75,7 +83,6 @@
 
         <div class="text-center">
           <p class="text-secondary small mb-0">&copy; 2026 Best Paw Inc. All Rights Reserved.</p>
-        </div>
         </div>
       </footer>
   </body>

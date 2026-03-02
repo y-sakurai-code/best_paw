@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     get "search" => "searches#search"
     get 'users/mypage'
     get 'homes/about', to: 'homes#about', as: :about
+    resources :notifications, only: [:index]
     resources :users, only: [:index, :show, :edit, :update, :destroy] do
       member do
         patch :withdraw

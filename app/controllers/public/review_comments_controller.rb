@@ -5,7 +5,7 @@ class Public::ReviewCommentsController < ApplicationController
     comment = current_user.review_comments.new(review_comment_params)
     comment.review_id = review.id
     if comment.save
-      review.create_notification_comment!(current_user, @comment.id)
+      review.create_notification_comment!(current_user, comment.id)
     end
     redirect_to review_path(review)
   end

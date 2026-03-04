@@ -13,34 +13,33 @@
 <% end %>
 
 <div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-5">
-  <div class="bg-warning-subtle p-3 p-md-4 border-bottom border-white shadow-inner">
-    <div class="d-flex align-items-center mb-3 px-2">
-      <i class="fa-solid fa-paw text-warning me-2"></i>
-      <span class="text-warning-emphasis fw-bold small" style="letter-spacing: 0.1rem;">SELECT TARGET FAMILY</span>
-    </div>
-    
-    <div class="d-flex flex-wrap gap-3 px-2">
-      <% current_user.dogs.where(is_archived: false).each do |dog| %>
-        <div class="dog-select-item">
-          <%= check_box_tag "review[dog_ids][]", dog.id, review.dog_ids.include?(dog.id), id: "dog_#{dog.id}", class: "btn-check", autocomplete: "off" %>
-          <label class="btn btn-outline-warning p-1 pe-3 rounded-pill d-flex align-items-center bg-white shadow-sm" for="dog_<%= dog.id %>" style="border-width: 2px;">
-            <% if dog.dog_image.attached? %>
-              <%= image_tag dog.dog_image, class: "rounded-circle border border-2 border-white", style: "width: 45px; height: 45px; object-fit: cover;" %>
-            <% else %>
-              <div class="rounded-circle bg-light d-flex align-items-center justify-content-center border border-2 border-white" style="width: 45px; height: 45px;">
-                <i class="fa-solid fa-dog text-secondary"></i>
-              </div>
-            <% end %>
-
-            <div class="ms-2 fw-bold"><%= dog.name %></div>
-          </label>
-        </div>
-      <% end %>
-    </div>
-
-  <div class="card-body p-4 p-md-5">
-    <%= form_with model: review, local: true do |f| %>
+  <%= form_with model: review, local: true do |f| %>
+    <div class="bg-warning-subtle p-3 p-md-4 border-bottom border-white shadow-inner">
+      <div class="d-flex align-items-center mb-3 px-2">
+        <i class="fa-solid fa-paw text-warning me-2"></i>
+        <span class="text-warning-emphasis fw-bold small" style="letter-spacing: 0.1rem;">SELECT TARGET FAMILY</span>
+      </div>
       
+      <div class="d-flex flex-wrap gap-3 px-2">
+        <% current_user.dogs.where(is_archived: false).each do |dog| %>
+          <div class="dog-select-item">
+            <%= check_box_tag "review[dog_ids][]", dog.id, review.dog_ids.include?(dog.id), id: "dog_#{dog.id}", class: "btn-check", autocomplete: "off" %>
+            <label class="btn btn-outline-warning p-1 pe-3 rounded-pill d-flex align-items-center bg-white shadow-sm" for="dog_<%= dog.id %>" style="border-width: 2px;">
+              <% if dog.dog_image.attached? %>
+                <%= image_tag dog.dog_image, class: "rounded-circle border border-2 border-white", style: "width: 45px; height: 45px; object-fit: cover;" %>
+              <% else %>
+                <div class="rounded-circle bg-light d-flex align-items-center justify-content-center border border-2 border-white" style="width: 45px; height: 45px;">
+                  <i class="fa-solid fa-dog text-secondary"></i>
+                </div>
+              <% end %>
+              <div class="ms-2 fw-bold"><%= dog.name %></div>
+            </label>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="card-body p-4 p-md-5">
       <div class="mb-4">
         <%= f.label :title, class: "form-label mb-2" do %>
           <span class="badge bg-warning text-dark fw-normal px-3 py-2">レビュータイトル</span>
@@ -86,23 +85,32 @@
           </div>
         </div>
       </div>
-
-      <script>
-        $(document).on('turbolinks:load turbo:load', function() {
-          let elem = document.querySelector('#post_raty');
-          if (elem == null) return;
-          elem.innerHTML = "";
-          let opt = {
-            starOn: "<%= asset_path('star-on.png') %>",
-            starOff: "<%= asset_path('star-off.png') %>",
-            starHalf: "<%= asset_path('star-half.png') %>",
-            scoreName: 'review[star]',
-            half: true,
-            score: <%= review.star.present? ? review.star : 0 %>,
-          };
-          raty(elem, opt);
-        });
-      </script>
-    <% end %>
-  </div>
+    </div>
+  <% end %>
 </div>
+
+<script>
+  $(document).on('turbolinks:load', function() {
+    let elem = document.querySelector('#post_raty');
+    if (elem == null) return;
+
+    elem.innerHTML = "";
+    let opt = {
+    starType: 'i',
+      starOn: 'fa-solid fa-star text-warning fs-3',
+      starOff: 'fa-regular fa-star text-secondary fs-3',
+      starHalf: 'fa-solid fa-star-half-stroke text-warning fs-3',
+      scoreName: 'review[star]',
+      half: true,
+      score: <%= review.star.presence || 0 %>,
+
+      click: function(score, e) {
+        $("#review_star").val(score);
+      }
+    };
+
+    if (typeof window.raty === 'function') {
+      window.raty(elem, opt);
+    }
+  });
+</script>

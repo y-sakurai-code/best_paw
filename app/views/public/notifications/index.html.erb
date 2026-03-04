@@ -1,0 +1,45 @@
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <h3 class="fw-bold mb-4">
+        <i class="fa-regular fa-bell me-2 text-warning"></i>通知一覧
+      </h3>
+
+      <% if @notifications.exists? %>
+        <div class="list-group shadow-sm border-0">
+          <% @notifications.each do |notification| %>
+            <div class="list-group-item list-group-item-action border-0 border-bottom p-3">
+              <div class="d-flex align-items-center">
+
+                <strong class="me-2"><%= notification.visitor.name %></strong> さんが
+                
+                <span>
+                  <% case notification.action %>
+                  <% when 'favorite_reviews' %>
+                    あなたのレビューに <i class="fa-solid fa-star text-warning"></i> いいねしました
+                  <% when 'comment' %>
+                    あなたのレビューに <i class="fa-regular fa-comment text-secondary"></i> コメントしました
+                  <% end %>
+                </span>
+
+                <span class="ms-auto text-muted small">
+                  <%= time_ago_in_words(notification.created_at) %>前
+                </span>
+              </div>
+              
+              <% if notification.review.present? %>
+                <div class="mt-2">
+                  <%= link_to "「#{notification.review.title}」を確認する", review_path(notification.review), class: "text-decoration-none small text-warning fw-bold" %>
+                </div>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      <% else %>
+        <div class="text-center py-5 bg-light rounded-4">
+          <p class="text-secondary mb-0">通知はありません</p>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

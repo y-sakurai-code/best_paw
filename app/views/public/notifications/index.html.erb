@@ -6,13 +6,15 @@
       </h3>
 
       <% if @notifications.exists? %>
+        <div class="text-end mb-3">
+          <%= link_to "通知を全て削除", destroy_all_notifications_path, method: :delete, data: { confirm: "本当にすべての通知を削除しますか？" }, class: "btn btn-outline-danger btn-sm rounded-pill" %>
+        </div>
+
         <div class="list-group shadow-sm border-0">
           <% @notifications.each do |notification| %>
             <div class="list-group-item list-group-item-action border-0 border-bottom p-3">
               <div class="d-flex align-items-center">
-
                 <strong class="me-2"><%= notification.visitor.name %></strong> さんが
-                
                 <span>
                   <% case notification.action %>
                   <% when 'favorite_reviews' %>
@@ -25,8 +27,12 @@
                 <span class="ms-auto text-muted small">
                   <%= time_ago_in_words(notification.created_at) %>前
                 </span>
+
+                <%= link_to notification_path(notification), method: :delete, class: "text-secondary ms-3" do %>
+                  <i class="fa-solid fa-trash-can"></i>
+                <% end %>
               </div>
-              
+
               <% if notification.review.present? %>
                 <div class="mt-2">
                   <%= link_to "「#{notification.review.title}」を確認する", review_path(notification.review), class: "text-decoration-none small text-warning fw-bold" %>
@@ -35,11 +41,13 @@
             </div>
           <% end %>
         </div>
+
       <% else %>
         <div class="text-center py-5 bg-light rounded-4">
           <p class="text-secondary mb-0">通知はありません</p>
         </div>
       <% end %>
+
     </div>
   </div>
 </div>

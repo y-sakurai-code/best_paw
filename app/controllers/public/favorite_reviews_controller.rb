@@ -6,7 +6,7 @@ class Public::FavoriteReviewsController < ApplicationController
     if favorite.save
       @review.create_notification_favorite_reviews!(current_user)
     end
-      redirect_to review_path(@review)
+    redirect_to review_path(@review)
   end
 
   def destroy

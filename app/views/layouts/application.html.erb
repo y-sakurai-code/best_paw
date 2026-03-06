@@ -46,16 +46,51 @@
                 <%= f.select :range, options_for_select([['Dog'], ['Review']]), {}, class: "form-select form-select-sm border-0 bg-transparent text-muted" %>
                 <%= f.submit "検索", class: "btn btn-sm btn-warning rounded-pill px-3 fw-bold" %>
               <% end %>
-              <li class="nav-item">
-                <%= link_to notifications_path, class: "nav-link position-relative" do %>
+
+              <div class="dropdown ms-3">
+                <a href="#" class="nav-link position-relative text-secondary" id="notificationDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                   <i class="fa-regular fa-bell fs-5"></i>
                   <% if current_user.passive_notifications.where(checked: false).any? %>
-                    <span class="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle">
-                      <span class="visually-hidden">未読あり</span>
-                    </span>
+                    <span class="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle"></span>
                   <% end %>
-                <% end %>
-              </li>
+                </a>
+
+                <ul class="dropdown-menu dropdown-menu-end shadow border-0 py-0 mt-2" aria-labelledby="notificationDropdown" style="width: 280px; max-height: 400px; overflow-y: auto;">
+                  <li class="p-2 border-bottom bg-light">
+                    <span class="small fw-bold text-secondary">通知</span>
+                  </li>
+                  
+                  <% if current_user.passive_notifications.any? %>
+                    <%# 最新の5件を表示 %>
+                    <% current_user.passive_notifications.order(created_at: :desc).limit(5).each do |notification| %>
+                      <li>
+                        <%= link_to review_path(notification.subject_id), class: "dropdown-item py-2 border-bottom" do %>
+                          <div class="d-flex align-items-center">
+                            <div class="small">
+                              <% case notification.subject_type %>
+                              <% when 'Review' %>
+                                <strong><%= notification.visitor.name %></strong> さんがあなたのレビューにいいねしました
+                              <% when 'ReviewComment' %>
+                                <% if notification.action == 'comment' %>
+                                  <strong><%= notification.visitor.name %></strong> さんがあなたのレビューにコメントしました
+                                <% elsif notification.action == 'favorite_comment' %>
+                                  <strong><%= notification.visitor.name %></strong> さんがあなたのコメントにいいねしました
+                                <% end %>
+                              <% end %>
+                              <div class="text-muted" style="font-size: 0.7rem;"><%= time_ago_in_words(notification.created_at) %>前</div>
+                            </div>
+                          </div>
+                        <% end %>
+                      </li>
+                    <% end %>
+                    <li>
+                      <%= link_to "すべての通知を見る", notifications_path, class: "dropdown-item text-center small text-warning fw-bold py-2" %>
+                    </li>
+                  <% else %>
+                    <li class="p-3 text-center text-muted small">通知はありません</li>
+                  <% end %>
+                </ul>
+              </div>
             <% end %>
 
           </div>
@@ -68,8 +103,7 @@
           <div class="row justify-content-center">
             <div class="col-md-4 mb-4 mb-md-0 text-center text-center">
               <div class="mb-3">
-                <%# ロゴ %>
-                  <h3 class="fw-bold text-warning d-inline-block align-middle ms-2">Best Paw</h3>
+                <h3 class="fw-bold text-warning d-inline-block align-middle ms-2">Best Paw</h3>
               </div>
               <p class="text-secondary small">
                 大切な家族である愛犬との毎日を、<br>

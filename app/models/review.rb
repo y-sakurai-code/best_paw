@@ -28,14 +28,12 @@ class Review < ApplicationRecord
   end
 
   def create_notification_comment!(current_user, review_comment_id)
-  
     notification = current_user.active_notifications.new(
-      review_id: id,
-      review_comment_id: review_comment_id,
+      subject_id: review_comment_id,
+      subject_type: 'ReviewComment',
       visited_id: user_id,
       action: 'comment'
     )
-
     if notification.visitor_id == notification.visited_id
       notification.checked = true
     end
@@ -43,13 +41,39 @@ class Review < ApplicationRecord
   end
 
   def create_notification_favorite_reviews!(current_user)
-    temp = Notification.where(["visitor_id = ? and visited_id = ? and review_id = ? and action = ? ", current_user.id, user_id, id, 'favorite_reviews'])
-  
+    temp = Notification.where(
+      visitor_id: current_user.id,
+      visited_id: user_id,
+      subject_id: id,
+      subject_type: 'Review',
+      action: 'favorite_reviews'
+    )
+    
     if temp.blank?
       notification = current_user.active_notifications.new(
-        review_id: id,
+        subject_id: id,
+        subject_type: 'Review',
         visited_id: user_id,
         action: 'favorite_reviews'
+      )
+      if notification.visitor_id == notification.visited_id
+        notification.checked = true
+      end
+      notification.save if notification.valid?
+    end
+  end
+
+  def create_notification_favorite_comment!(current_user)
+    temp = Notification.where(
+      ["visitor_id = ? AND visited_id = ? AND subject_id = ? AND subject_type = ? AND action = ?",
+      current_user.id, user_id, id, 'ReviewComment', 'favorite_comment']
+    )
+    if temp.blank?
+      notification = current_user.active_notifications.new(
+        subject_id: id,
+        subject_type: 'ReviewComment',
+        visited_id: user_id,
+        action: 'favorite_comment'
       )
 
       if notification.visitor_id == notification.visited_id

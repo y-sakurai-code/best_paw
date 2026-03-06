@@ -8,7 +8,11 @@ Rails.application.routes.draw do
     get "search" => "searches#search"
     get 'users/mypage'
     get 'homes/about', to: 'homes#about', as: :about
-    resources :notifications, only: [:index]
+    resources :notifications, only: [:index, :destroy] do
+      collection do
+        delete 'destroy_all'
+      end
+    end
     resources :users, only: [:index, :show, :edit, :update, :destroy] do
       member do
         patch :withdraw

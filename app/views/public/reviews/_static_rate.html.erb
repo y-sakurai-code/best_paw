@@ -9,10 +9,9 @@
 
     elem.innerHTML = "";
     let opt = {
-      starType: 'i',
-      starOn: 'fa-solid fa-star text-warning fs-3',
-      starOff: 'fa-regular fa-star text-secondary fs-3',
-      starHalf: 'fa-solid fa-star-half-stroke text-warning fs-3',
+      starOn: "<%= asset_path('star-on.png') %>",
+      starOff: "<%= asset_path('star-off.png') %>",
+      starHalf: "<%= asset_path('star-half.png') %>",
       score: "<%= review.star || 0 %>",
       readOnly: true,
       half: true,

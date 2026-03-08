@@ -8,7 +8,6 @@
             <% @dog_images.each do |image| %>
               <div class="swiper-slide">
                 <%= image_tag image['url'], alt: "わんこ画像" %>
-                  
                 <div class="image-overlay">
                   <div class="overlay-content">
                     <span class="badge bg-warning text-dark mb-2">今日のわんこ</span>
@@ -25,7 +24,7 @@
       </div>
     </div>
 
-    <div class="row justify-content-center mb-5">
+        <div class="row justify-content-center mb-5">
       <div class="col-md-7 col-lg-6">
         <%= form_with url: reviews_path, method: :get, local: true, class: "shadow-sm rounded-pill overflow-hidden d-flex bg-white border border-2 border-warning-subtle" do |f| %>
           <div class="d-flex align-items-center ps-3 text-warning">
@@ -37,6 +36,7 @@
       </div>
     </div>
 
+
     <div class="row justify-content-center">
       <div class="col-lg-10">
         
@@ -44,14 +44,14 @@
           <div class="d-flex align-items-center">
             <i class="fa-solid fa-list-ul text-warning me-2"></i>
             <h4 class="fw-bold mb-0" style="font-size: 1.25rem;">
-              <% if @search_word.present? %>
-                「<span class="text-warning"><%= @search_word %></span>」の検索結果
+              <% if params[:keyword].present? %>
+                「<span class="text-warning master-font"><%= params[:keyword] %></span>」の検索結果
               <% else %>
                 新着レビュー
               <% end %>
             </h4>
           </div>
-          <div class="text-secondary small fw-bold">
+          <div class="text-secondary small fw-bold bg-white px-3 py-1 rounded-pill shadow-sm">
             全 <%= @reviews.count %> 件
           </div>
         </div>

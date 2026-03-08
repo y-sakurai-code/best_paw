@@ -70,7 +70,7 @@ class Public::ReviewsController < ApplicationController
 
   private
   def review_params
-    params.require(:review).permit(:title, :body, :star, :category, dog_ids: [])
+    params.require(:review).permit(:item_name, :genre_id, :title, :body, :star, :category, dog_ids: [])
   end
 
   def is_matching_login_user

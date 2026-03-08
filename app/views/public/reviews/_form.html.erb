@@ -24,15 +24,20 @@
         <% current_user.dogs.where(is_archived: false).each do |dog| %>
           <div class="dog-select-item">
             <%= check_box_tag "review[dog_ids][]", dog.id, review.dog_ids.include?(dog.id), id: "dog_#{dog.id}", class: "btn-check", autocomplete: "off" %>
-            <label class="btn btn-outline-warning p-1 pe-3 rounded-pill d-flex align-items-center bg-white shadow-sm" for="dog_<%= dog.id %>" style="border-width: 2px;">
-              <% if dog.dog_image.attached? %>
-                <%= image_tag dog.dog_image, class: "rounded-circle border border-2 border-white", style: "width: 45px; height: 45px; object-fit: cover;" %>
-              <% else %>
-                <div class="rounded-circle bg-light d-flex align-items-center justify-content-center border border-2 border-white" style="width: 45px; height: 45px;">
-                  <i class="fa-solid fa-dog text-secondary"></i>
+            <label class="dog-card-label" for="dog_<%= dog.id %>">
+              <div class="dog-image-wrapper">
+                <% if dog.dog_image.attached? %>
+                  <%= image_tag dog.dog_image, class: "dog-avatar" %>
+                <% else %>
+                  <div class="dog-avatar-empty">
+                    <i class="fa-solid fa-dog"></i>
+                  </div>
+                <% end %>
+                <div class="check-badge">
+                  <i class="fa-solid fa-check"></i>
                 </div>
-              <% end %>
-              <div class="ms-2 fw-bold"><%= dog.name %></div>
+              </div>
+              <div class="dog-name"><%= dog.name %></div>
             </label>
           </div>
         <% end %>
@@ -40,6 +45,26 @@
     </div>
 
     <div class="card-body p-4 p-md-5">
+      <div class="row g-3 mb-4">
+        <div class="col-md-8">
+          <%= f.label :product_name, class: "form-label mb-2" do %>
+            <span class="badge bg-warning text-dark fw-normal px-3 py-2">商品名</span>
+          <% end %>
+          <div class="input-group">
+            <span class="input-group-text border-0 bg-light text-warning rounded-start-3">
+              <i class="fa-solid fa-cart-shopping"></i>
+            </span>
+            <%= f.text_field :product_name, class: "form-control border-0 bg-light rounded-end-3 shadow-sm", placeholder: "愛犬がお気に入りの商品名を入力してください" %>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <%= f.label :genre_id, class: "form-label mb-2" do %>
+            <span class="badge border border-warning text-warning fw-normal px-3 py-2">ジャンル</span>
+          <% end %>
+          <%= f.collection_select :genre_id, Genre.all, :id, :name, { include_blank: "選択してください" }, { class: "form-select border-0 bg-light rounded-3 shadow-sm text-secondary", style: "height: 46px;" } %>
+        </div>
+      </div>
+
       <div class="mb-4">
         <%= f.label :title, class: "form-label mb-2" do %>
           <span class="badge bg-warning text-dark fw-normal px-3 py-2">レビュータイトル</span>
@@ -48,7 +73,7 @@
       </div>
 
       <div class="row mb-4">
-        <div class="col-md-5">
+        <div class="col-md-6">
           <%= f.label :category, class: "form-label mb-2" do %>
             <span class="badge border border-warning text-warning fw-normal px-3 py-2">タグ</span>
           <% end %>
@@ -56,7 +81,7 @@
             <span class="input-group-text border-0 bg-light rounded-start-3 text-warning">
               <i class="fa-solid fa-tag"></i>
             </span>
-            <%= f.text_field :category, class: "form-control border-0 bg-light rounded-end-3 shadow-sm", placeholder: "例：おもちゃ, フード" %>
+            <%= f.text_field :category, class: "form-control border-0 bg-light rounded-end-3 shadow-sm", placeholder: "例：無添加、シニア犬など" %>
           </div>
         </div>
       </div>
@@ -113,3 +138,72 @@
     }
   });
 </script>
+
+<style>
+  .dog-card-label {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+    width: 80px;
+  }
+
+  .dog-image-wrapper {
+    position: relative;
+    width: 65px;
+    height: 65px;
+    margin: 0 auto 8px;
+  }
+
+  .dog-avatar, .dog-avatar-empty {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid white;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    background-color: #f8f9fa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .check-badge {
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    background-color: #ffc107;
+    color: white;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    border: 2px solid white;
+    transform: scale(0);
+    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+
+  .btn-check:checked + .dog-card-label .dog-avatar {
+    border-color: #ffc107;
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(255, 193, 7, 0.3);
+  }
+
+  .btn-check:checked + .dog-card-label .check-badge {
+    transform: scale(1);
+  }
+
+  .dog-name {
+    font-size: 0.85rem;
+    font-weight: bold;
+    color: #6c757d;
+    transition: color 0.3s ease;
+  }
+
+  .btn-check:checked + .dog-card-label .dog-name {
+    color: #ff9800;
+  }
+</style>

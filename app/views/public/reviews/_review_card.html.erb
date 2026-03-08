@@ -19,9 +19,9 @@
             <div class="fw-bold text-dark d-flex align-items-center" style="font-size: 0.85rem;">
               <%= dog.name %>
               <span class="ms-1">
-                <% if dog.male? %>
+                <% if dog.respond_to?(:male?) && dog.male? %>
                   <i class="fa-solid fa-mars text-primary" style="font-size: 0.7rem;"></i>
-                <% elsif dog.female? %>
+                <% elsif dog.respond_to?(:female?) && dog.female? %>
                   <i class="fa-solid fa-venus text-danger" style="font-size: 0.7rem;"></i>
                 <% end %>
               </span>
@@ -40,10 +40,22 @@
   </div>
 
   <div class="card-body p-4 d-flex flex-column">
-    <div class="mb-2">
-      <div class="badge bg-white border border-warning text-warning fw-normal rounded-pill px-2 py-1 mb-2" style="font-size: 0.65rem;">
-        <i class="fa-solid fa-tag me-1"></i><%= review.category %>
+    <div class="mb-3">
+      <div class="d-flex flex-wrap gap-1 mb-2">
+        <span class="badge bg-warning text-dark fw-bold rounded-pill px-2 py-1" style="font-size: 0.65rem;">
+          <i class="fa-solid fa-folder-open me-1"></i><%= review.genre&.name || "未設定" %>
+        </span>
+        <% if review.category.present? %>
+          <span class="badge bg-white border border-warning text-warning fw-normal rounded-pill px-2 py-1" style="font-size: 0.65rem;">
+            <i class="fa-solid fa-tag me-1"></i><%= review.category %>
+          </span>
+        <% end %>
       </div>
+
+      <div class="mb-1 text-secondary small fw-bold">
+        <i class="fa-solid fa-cart-shopping me-1"></i><%= review.item_name %>
+      </div>
+      
       <h5 class="fw-bold mb-0">
         <%= link_to review.title, review_path(review.id), class: "text-dark text-decoration-none stretched-link" %>
       </h5>
@@ -67,7 +79,6 @@
             <i class="fa-solid fa-trash" style="font-size: 0.8rem;"></i>
           <% end %>
         <% end %>
-
       </div>
     </div>
   </div>

@@ -8,6 +8,7 @@ class Review < ApplicationRecord
 
 
   belongs_to :user
+  belongs_to :genre
   has_many :review_comments, dependent: :destroy
   has_many :favorite_reviews, dependent: :destroy
   has_many :dog_reviews, dependent: :destroy

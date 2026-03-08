@@ -67,3 +67,4 @@ gem "net-smtp"
 gem "net-pop"
 gem "net-imap"
 gem 'discard', '~> 1.3'
+gem 'dotenv-rails', groups: [:development, :test]

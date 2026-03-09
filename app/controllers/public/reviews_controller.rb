@@ -17,7 +17,7 @@ class Public::ReviewsController < ApplicationController
 
   def index
     @dog_images = Rails.cache.fetch('dog_images_daily', expires_in: 24.hours) do
-      uri = URI.parse("https://api.thedogapi.com/v1/images/search?limit=5size=small")
+      uri = URI.parse("https://api.thedogapi.com/v1/images/search?limit=5&size=small")
       request = Net::HTTP::Get.new(uri)
       request["x-api-key"] = ENV['DOG_API_KEY']
 
@@ -39,6 +39,7 @@ class Public::ReviewsController < ApplicationController
       @reviews = Review.kept.joins(:user).merge(User.kept).order(created_at: :desc)
       @search_word = nil
     end
+    @reviews = @reviews.order(created_at: :desc).page(params[:page]).per(10)
   end
 
   def show

@@ -3,7 +3,7 @@ class Admin::UsersManagementsController < ApplicationController
   layout 'admin'
 
   def index
-    @users = User.with_discarded.order(created_at: :desc)
+    @users = User.with_discarded.order(created_at: :desc).page(params[:page]).per(20)
   end
 
   def destroy

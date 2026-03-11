@@ -1,85 +1,134 @@
 <div class="container py-4">
   <div class="mb-4">
-    <%= link_to admin_users_managements_path, class: "text-decoration-none text-secondary small" do %>
-      <i class="fa-solid fa-arrow-left me-1"></i>会員一覧へ戻る
+    <%= link_to admin_users_managements_path, class: "text-decoration-none text-secondary small d-inline-flex align-items-center" do %>
+      <i class="fa-solid fa-arrow-left me-2"></i>会員一覧へ戻る
     <% end %>
   </div>
 
   <div class="row justify-content-center">
-    <div class="col-lg-8">
+    <div class="col-lg-9">
       
       <div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-4">
-        <div class="card-header bg-dark py-3 px-4">
-          <h5 class="text-white mb-0 fw-bold">
-            <i class="fa-solid fa-id-card me-2 text-secondary"></i>会員詳細情報
+        <div class="card-header bg-white py-3 px-4 border-bottom">
+          <h5 class="fw-bold mb-0 text-dark">
+            <i class="fa-solid fa-user-tag me-2 text-secondary"></i>会員詳細
           </h5>
         </div>
         
         <div class="card-body p-4 p-md-5">
-          <div class="row mb-4">
-            <div class="col-sm-4 text-secondary small fw-bold">ユーザーID</div>
-            <div class="col-sm-8 text-dark"><%= @user.id %></div>
+          <div class="mb-5">
+            <% if @user.discarded? %>
+              <span class="badge rounded-pill bg-danger-subtle text-danger border border-danger-subtle px-3 py-2">
+                <i class="fa-solid fa-user-slash me-1"></i>退会済み
+              </span>
+            <% else %>
+              <span class="badge rounded-pill bg-success-subtle text-success border border-success-subtle px-3 py-2">
+                <i class="fa-solid fa-check-circle me-1"></i>有効な会員
+              </span>
+            <% end %>
           </div>
 
-          <div class="row mb-4">
-            <div class="col-sm-4 text-secondary small fw-bold">ユーザーネーム</div>
-            <div class="col-sm-8">
-              <span class="fs-5 fw-bold text-dark"><%= @user.name %></span>
-            </div>
+          <div class="row mb-4 border-bottom pb-3">
+            <div class="col-sm-4 text-secondary fw-bold small">ユーザーネーム</div>
+            <div class="col-sm-8 fw-bold fs-5 text-dark"><%= @user.name %></div>
           </div>
 
-          <div class="row mb-4">
-            <div class="col-sm-4 text-secondary small fw-bold">メールアドレス</div>
-            <div class="col-sm-8">
-              <span class="text-dark"><%= @user.email %></span>
-            </div>
+          <div class="row mb-4 border-bottom pb-3">
+            <div class="col-sm-4 text-secondary fw-bold small">メールアドレス</div>
+            <div class="col-sm-8 text-dark"><%= @user.email %></div>
           </div>
 
-          <div class="row mb-4">
-            <div class="col-sm-4 text-secondary small fw-bold">登録日時</div>
-            <div class="col-sm-8 text-secondary">
-              <%= @user.created_at.strftime('%Y年 %m月 %d日 %H:%M') %>
+          <div class="row mb-0">
+            <div class="col-sm-4 text-secondary fw-bold small">登録日</div>
+            <div class="col-sm-8 text-dark"><%= @user.created_at.strftime('%Y年 %m月 %d日') %></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card border-0 shadow-sm rounded-4 bg-white border-start border-danger border-4 mb-5">
+        <div class="card-header bg-white border-bottom py-3 px-4">
+          <h6 class="fw-bold mb-0 text-danger">
+            <i class="fa-solid fa-gears me-2"></i>管理用操作パネル
+          </h6>
+        </div>
+        <div class="card-body p-4">
+          <div class="d-flex align-items-center justify-content-between mb-4 pb-4 border-bottom">
+            <div>
+              <p class="fw-bold mb-1 text-dark">
+                <%= @user.discarded? ? "会員の復旧" : "退会処理（一時停止）" %>
+              </p>
+              <p class="text-secondary small mb-0">
+                <%= @user.discarded? ? "データを保持したまま、利用可能な状態に戻します。" : "データを残したまま、ログインと投稿を制限します。" %>
+              </p>
             </div>
+            <% if @user.discarded? %>
+              <%= link_to undiscard_admin_users_management_path(@user), method: :patch, data: { confirm: 'この会員を復旧させますか？' }, class: "btn btn-outline-success rounded-pill px-4 fw-bold shadow-sm" do %>
+                <i class="fa-solid fa-user-check me-1"></i>復旧させる
+              <% end %>
+            <% else %>
+              <%= link_to soft_destroy_admin_users_management_path(@user), method: :patch, data: { confirm: '退会処理（利用停止）を行いますか？' }, class: "btn btn-outline-danger rounded-pill px-4 fw-bold shadow-sm" do %>
+                <i class="fa-solid fa-user-slash me-1"></i>退会させる
+              <% end %>
+            <% end %>
           </div>
 
-          <% if @user.discarded? %>
-            <div class="alert alert-warning">
-              このユーザーは退会済みです（退会日時: <%= @user.discarded_at.strftime('%Y年 %m月 %d日 %H:%M') %>）
+          <div class="d-flex align-items-center justify-content-between">
+            <div>
+              <p class="fw-bold mb-1 text-danger">完全な削除（物理削除）</p>
+              <p class="text-secondary small mb-0">データベースから完全に消去します。投稿データ等も消えるため注意してください。</p>
             </div>
-          <% end %>
+            <%= link_to admin_users_management_path(@user), method: :delete, data: { confirm: '【警告】全てのデータが永久に削除されます。本当によろしいですか？' }, class: "btn btn-danger rounded-pill px-4 fw-bold shadow-sm" do %>
+              <i class="fa-solid fa-trash-can me-1"></i>完全に削除
+            <% end %>
+          </div>
+        </div>
+      </div>
 
-          <hr class="my-4 opacity-25">
-
-            <div class="d-flex justify-content-between align-items-center mt-5">
-              <% if @user.discarded? %>
-                <div class="text-success small">
-                  <i class="fa-solid fa-circle-info me-1"></i>このユーザーは現在退会済みです。復旧させる場合は右のボタンを押してください。
-                </div>
-    
-                <%= link_to undiscard_admin_users_management_path(@user), method: :patch, data: { confirm: 'このユーザーを復旧させますか？' }, class: "btn btn-outline-success rounded-pill px-4 fw-bold" do %>
-                  <i class="fa-solid fa-user-check me-1"></i>このユーザーを復旧
+      <div class="row g-4">
+        <div class="col-12">
+          <div class="card border-0 shadow-sm rounded-4 bg-white">
+            <div class="card-header bg-white py-3 px-4 border-bottom">
+              <h6 class="fw-bold mb-0 text-dark">
+                <i class="fa-solid fa-pen-nib me-2 text-warning"></i>投稿したレビュー
+              </h6>
+            </div>
+            <div class="list-group list-group-flush">
+              <% if @user.reviews.any? %>
+                <% @user.reviews.each do |review| %>
+                  <%= link_to admin_reviews_management_path(review), class: "list-group-item list-group-item-action py-3 px-4 d-flex justify-content-between align-items-center" do %>
+                    <span class="text-dark"><%= review.title %></span>
+                    <i class="fa-solid fa-chevron-right text-light small"></i>
+                  <% end %>
                 <% end %>
-
               <% else %>
-                <div class="text-muted small">
-                  <i class="fa-solid fa-circle-info me-1"></i>このユーザーを退会させる場合は右のボタンを押してください。
-                </div>
-    
-                <%= link_to soft_destroy_admin_users_management_path(@user), method: :patch, data: { confirm: '本当にこのユーザーを退会させますか？' }, class: "btn btn-outline-danger rounded-pill px-4 fw-bold" do %>
-                  <i class="fa-solid fa-user-slash me-1"></i>このユーザーを退会
-                <% end %>
+                <div class="p-4 text-center text-muted small">投稿されたレビューはありません</div>
               <% end %>
             </div>
+          </div>
+        </div>
 
-            <div class="d-flex justify-content-between align-items-center mt-5">
-              <div class="text-muted small">
-                <i class="fa-solid fa-circle-info me-1"></i>このユーザーを完全に削除する場合は右のボタンを押してください。
-              </div>
-            
-              <%= link_to admin_users_management_path(@user), method: :delete, data: { confirm: '本当にこのユーザーを削除しますか？' }, class: "btn btn-outline-danger rounded-pill px-4 fw-bold" do %>
-                <i class="fa-solid fa-user-slash me-1"></i>このユーザーを削除
+        <div class="col-12">
+          <div class="card border-0 shadow-sm rounded-4 bg-white">
+            <div class="card-header bg-white py-3 px-4 border-bottom">
+              <h6 class="fw-bold mb-0 text-dark">
+                <i class="fa-solid fa-comments me-2 text-info"></i>コメントしたレビュー
+              </h6>
+            </div>
+            <div class="list-group list-group-flush">
+              <% if @user.review_comments.any? %>
+                <% @user.review_comments.map(&:review).uniq.each do |review| %>
+                  <%= link_to admin_reviews_management_path(review), class: "list-group-item list-group-item-action py-3 px-4 d-flex justify-content-between align-items-center" do %>
+                    <span class="text-dark"><%= review.title %></span>
+                    <span class="badge rounded-pill bg-light text-secondary fw-normal">
+                      件数: <%= @user.review_comments.where(review_id: review.id).count %>
+                    </span>
+                  <% end %>
+                <% end %>
+              <% else %>
+                <div class="p-4 text-center text-muted small">コメント履歴はありません</div>
               <% end %>
             </div>
+          </div>
         </div>
       </div>
 

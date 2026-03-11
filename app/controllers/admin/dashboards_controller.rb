@@ -9,7 +9,7 @@ class Admin::DashboardsController < ApplicationController
     @total_item_count = Item.count
     @total_review_count = Review.count
 
-    @recent_reviews = Review.includes(:user).order(created_at: :desc).limit(5)
+    @recent_reviews = Review.includes(:user).order(created_at: :desc).limit(10)
   end
 
 end

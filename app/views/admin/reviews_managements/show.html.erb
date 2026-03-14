@@ -1,100 +1,93 @@
 <div class="container py-4">
-  <%# 戻るリンク %>
   <div class="mb-4">
-    <%= link_to admin_reviews_managements_path, class: "text-decoration-none text-secondary small" do %>
-      <i class="fa-solid fa-arrow-left me-1"></i>レビュー一覧へ戻る
+    <%= link_to admin_reviews_managements_path, class: "text-decoration-none text-secondary small d-inline-flex align-items-center" do %>
+      <i class="fa-solid fa-arrow-left me-2"></i>レビュー一覧へ戻る
     <% end %>
   </div>
 
   <div class="row justify-content-center">
-    <div class="col-lg-8">
+    <div class="col-lg-9">
       
-      <%# レビュー詳細メインカード %>
       <div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-4">
-        <div class="card-header bg-dark py-3 px-4">
-          <h5 class="text-white mb-0 fw-bold">
-            <i class="fa-solid fa-magnifying-glass me-2 text-secondary"></i>レビュー詳細情報
+        <div class="card-header bg-white py-3 px-4 border-bottom">
+          <h5 class="fw-bold mb-0 text-dark">
+            <i class="fa-solid fa-file-lines me-2 text-secondary"></i>レビュー詳細
           </h5>
         </div>
         
         <div class="card-body p-4 p-md-5">
-          <div class="row mb-4">
-            <div class="col-sm-4 text-secondary small fw-bold">レビューID</div>
-            <div class="col-sm-8 text-dark">#<%= @review.id %></div>
-          </div>
-
-          <div class="row mb-4">
-            <div class="col-sm-4 text-secondary small fw-bold">投稿ユーザー</div>
-            <div class="col-sm-8">
-              <span class="fw-bold text-dark"><%= @review.user.name %></span>
-              <span class="text-muted small ms-2">(ユーザーID: #<%= @review.user_id %>)</span>
+          <div class="row mb-4 border-bottom pb-3">
+            <div class="col-sm-4 text-secondary fw-bold small">レビューID / 投稿者</div>
+            <div class="col-sm-8 text-dark">
+              <span class="badge bg-light text-secondary border fw-normal me-2">#<%= @review.id %></span>
+              <span class="fw-bold"><%= @review.user.name %></span>
+              <span class="text-muted small ms-1">(<%= @review.user.email %>)</span>
             </div>
           </div>
 
-          <div class="row mb-4">
-            <div class="col-sm-4 text-secondary small fw-bold">タイトル</div>
-            <div class="col-sm-8">
-              <span class="fs-5 fw-bold text-dark"><%= @review.title %></span>
-            </div>
+          <div class="row mb-4 border-bottom pb-3">
+            <div class="col-sm-4 text-secondary fw-bold small">タイトル</div>
+            <div class="col-sm-8 fw-bold fs-5 text-dark"><%= @review.title %></div>
           </div>
 
-          <div class="row mb-4">
-            <div class="col-sm-4 text-secondary small fw-bold">評価スコア</div>
+          <div class="row mb-4 border-bottom pb-3">
+            <div class="col-sm-4 text-secondary fw-bold small">評価</div>
             <div class="col-sm-8">
               <%= render 'public/reviews/static_rate', review: @review %>
             </div>
           </div>
 
-          <div class="row mb-4">
-            <div class="col-sm-4 text-secondary small fw-bold">投稿日時</div>
-            <div class="col-sm-8 text-secondary">
-              <%= @review.created_at.strftime('%Y年 %m月 %d日 %H:%M') %>
-            </div>
+          <div class="row mb-4 border-bottom pb-3">
+            <div class="col-sm-4 text-secondary fw-bold small">投稿日時</div>
+            <div class="col-sm-8 text-dark"><%= @review.created_at.strftime('%Y年 %m月 %d日 %H:%M') %></div>
           </div>
 
-          <div class="row mb-4">
-            <div class="col-sm-4 text-secondary small fw-bold">レビュー内容</div>
+          <div class="row mb-0">
+            <div class="col-sm-4 text-secondary fw-bold small">レビュー内容</div>
             <div class="col-sm-8">
-              <div class="p-3 bg-light rounded-3 text-dark border-start border-4 border-warning-subtle" style="white-space: pre-wrap; line-height: 1.6;"><%= @review.body %></div>
+              <div class="p-3 bg-light rounded-3 text-dark border-start border-4 border-warning" style="white-space: pre-wrap; line-height: 1.8;"><%= @review.body %></div>
             </div>
           </div>
+        </div>
 
-          <hr class="my-4 opacity-25">
-
-          <%# 管理アクション %>
-          <div class="d-flex justify-content-between align-items-center mt-5">
-            <div class="text-muted small pe-3">
-              <i class="fa-solid fa-circle-info me-1"></i>不適切な内容を含む場合は、右のボタンからこの投稿を完全に削除してください。
-            </div>
-            
-            <%= link_to admin_reviews_management_path(id: @review.id), method: :delete, data: { confirm: '本当にこのレビューを削除しますか？削除したデータは復元できません。' }, class: "btn btn-outline-danger rounded-pill px-4 fw-bold flex-shrink-0" do %>
-              <i class="fa-solid fa-trash-can me-1"></i>この投稿を削除
+        <div class="card-footer bg-white py-4 px-4 border-top">
+          <div class="d-flex align-items-center justify-content-between">
+            <span class="text-muted small"><i class="fa-solid fa-triangle-exclamation me-1 text-danger"></i>不適切な投稿の場合は削除してください</span>
+            <%= link_to admin_reviews_management_path(@review), method: :delete, data: { confirm: 'このレビューを完全に削除します。よろしいですか？' }, class: "btn btn-danger rounded-pill px-4 fw-bold shadow-sm" do %>
+              <i class="fa-solid fa-trash-can me-1"></i>このレビューを削除
             <% end %>
           </div>
         </div>
       </div>
 
-      <% if @review.review_comments.any? %>
-        <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
-          <div class="card-header bg-secondary bg-opacity-10 py-3 px-4">
-            <h6 class="mb-0 fw-bold text-secondary">
-              <i class="fa-solid fa-comments me-2"></i>紐付いているコメント一覧
-            </h6>
-          </div>
-          <div class="list-group list-group-flush">
+      <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+        <div class="card-header bg-white py-3 px-4 border-bottom">
+          <h6 class="fw-bold mb-0 text-dark">
+            <i class="fa-solid fa-comments me-2 text-info"></i>このレビューへのコメント (<%= @review.review_comments.count %>)
+          </h6>
+        </div>
+        <div class="list-group list-group-flush">
+          <% if @review.review_comments.any? %>
             <% @review.review_comments.each do |comment| %>
               <div class="list-group-item p-4">
-                <div class="d-flex justify-content-between mb-2">
-                  <span class="fw-bold small"><%= comment.user.name %></span>
-                  <span class="text-muted small"><%= comment.created_at.strftime('%Y/%m/%d') %></span>
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                  <div>
+                    <span class="fw-bold text-dark small"><%= comment.user.name %></span>
+                    <span class="text-muted small ms-2"><%= comment.created_at.strftime('%Y/%m/%d %H:%M') %></span>
+                  </div>
+                  <%= link_to destroy_comment_admin_reviews_management_path(review_comment_id: comment.id), method: :delete, data: { confirm: 'このコメントを削除しますか？' }, class: "btn btn-link text-danger text-decoration-none p-0 small" do %>
+                    <i class="fa-solid fa-xmark me-1"></i>削除
+                  <% end %>
                 </div>
-                <p class="small text-secondary mb-0"><%= comment.comment %></p>
-                <%= link_to 'コメント削除', destroy_comment_admin_reviews_management_path(review_comment_id: comment.id), method: :delete, data: { confirm: '本当に削除しますか？' } %>
+                <div class="text-secondary small bg-light p-2 rounded"><%= comment.comment %></div>
               </div>
             <% end %>
-          </div>
+          <% else %>
+            <div class="p-5 text-center text-muted">コメントはありません</div>
+          <% end %>
         </div>
-      <% end %>
+      </div>
+
     </div>
   </div>
 </div>

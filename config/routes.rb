@@ -49,7 +49,7 @@ Rails.application.routes.draw do
       end
     end
     resources :items
-    resources :genres, only: [:index, :create, :edit, :update, :destroy]
+    resources :genres, only: [:new, :index, :create, :edit, :update, :destroy]
     resources :reviews_managements, only: [:index, :show, :destroy] do
       member do
         delete :destroy_comment

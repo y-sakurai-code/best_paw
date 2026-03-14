@@ -1,0 +1,15 @@
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-5">
+      <div class="mb-3">
+        <%= link_to admin_genres_path, class: "text-decoration-none text-muted small" do %>
+          <i class="fa-solid fa-chevron-left me-1"></i>一覧へ戻る
+        <% end %>
+      </div>
+      <div class="bg-white p-4 border rounded-1 shadow-sm">
+        <h2 class="h5 fw-bold mb-4 text-dark text-center">ジャンル編集</h2>
+        <%= render 'form', genre: @genre %>
+      </div>
+    </div>
+  </div>
+</div>

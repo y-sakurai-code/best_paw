@@ -1,0 +1,30 @@
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-5">
+      <div class="mb-3">
+        <%= link_to admin_genres_path, class: "text-decoration-none text-muted small" do %>
+          <i class="fa-solid fa-chevron-left me-1"></i>ジャンル一覧へ
+        <% end %>
+      </div>
+
+      <div class="bg-white p-4 border rounded-1 shadow-sm">
+        <h2 class="h5 fw-bold mb-4 text-dark text-center">ジャンル新規登録</h2>
+
+        <%= form_with model: [:admin, @genre], local: true do |f| %>
+          <div class="mb-4">
+            <%= f.label :name, "ジャンル名", class: "form-label small fw-bold text-secondary" %>
+            <%= f.text_field :name, class: "form-control", placeholder: "例：おもちゃ、ドッグフード" %>
+            <div class="form-text mt-2" style="font-size: 0.75rem;">
+              ※商品登録時に選択できるようになる名称です。
+            </div>
+          </div>
+
+          <div class="pt-2">
+            <%= f.submit "登録する", class: "btn btn-dark w-100 fw-bold py-2" %>
+          </div>
+        <% end %>
+      </div>
+
+    </div>
+  </div>
+</div>

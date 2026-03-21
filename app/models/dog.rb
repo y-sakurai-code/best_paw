@@ -8,8 +8,7 @@ class Dog < ApplicationRecord
   enum size: { "超小型": 0, "小型": 1, "中型": 2, "大型": 3 }
   enum gender: { male: 0, female: 1 }
 
-  validates :name, presence: true
-  validates :size, presence: true
+  validates :name, :breed, :birthday, :size, :gender, presence: true
 
   def age
     return "不明" if birthday.blank?

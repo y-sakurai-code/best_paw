@@ -9,7 +9,7 @@ class Public::ReviewsController < ApplicationController
     @review = Review.new(review_params)
     @review.user_id = current_user.id
     if @review.save
-      redirect_to review_path(@review.id)
+      redirect_to review_path(@review.id), notice: 'レビューを投稿しました'
     else
       render :new
     end
@@ -65,7 +65,7 @@ class Public::ReviewsController < ApplicationController
   def destroy
     @review = Review.find(params[:id])
     @review.destroy
-    redirect_to users_mypage_path(current_user)
+    redirect_to users_mypage_path
   end
 
 

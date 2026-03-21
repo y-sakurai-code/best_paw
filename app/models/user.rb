@@ -6,6 +6,8 @@ class User < ApplicationRecord
 
   include Discard::Model
 
+  validates :name, presence: true
+
   has_many :dogs, dependent: :destroy
   has_many :reviews, dependent: :destroy
   has_many :review_comments, dependent: :destroy

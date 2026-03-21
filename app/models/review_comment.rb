@@ -5,7 +5,7 @@ class ReviewComment < ApplicationRecord
   has_many :favorite_comments, dependent: :destroy
 
   
-  validates :comment, presence: true
+  validates :comment, presence: true, length: { maximum: 200 }
   
 
   def favorite_comments_by?(user)

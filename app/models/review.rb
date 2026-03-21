@@ -3,8 +3,10 @@ class Review < ApplicationRecord
 
   validates :title, presence: true
   validates :body, presence: true
-  validates :star, presence: true
   validates :category, presence: true
+  validates :item_name, presence: true
+  validates :star, presence: true, numericality: { greater_than_or_equal_to: 0.5, less_than_or_equal_to: 5 }
+  validates :dogs, presence: { message: "を選択してください" }
 
 
   belongs_to :user

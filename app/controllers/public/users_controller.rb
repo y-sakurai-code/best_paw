@@ -4,7 +4,7 @@ class Public::UsersController < ApplicationController
   def mypage
     @user = current_user
     @dogs = @user.dogs
-    @reviews = Review.where(user_id: current_user.id).order(created_at: :desc)
+    @reviews = @user.reviews.order(created_at: :desc)
   end
 
   def edit
@@ -14,14 +14,15 @@ class Public::UsersController < ApplicationController
   def update
     @user = User.find(params[:id])
     if @user.update(user_params)
-      redirect_to edit_user_path(current_user.id), notice: "更新しました"
+      bypass_sign_in(@user)
+      redirect_to user_path(current_user.id), notice: "更新しました"
     else
       render :edit
     end
   end
 
   def show
-    @user = current_user
+    @user = User.find(params[:id])
     @dogs = @user.dogs
   end
 

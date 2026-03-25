@@ -20,6 +20,13 @@ RSpec.describe '[STEP1] ユーザログイン前のテスト', type: :system do
         expect(page).to have_link '新規登録', href: new_user_registration_path
       end
     end
+
+    context 'リンクの遷移確認' do
+      it 'ロゴ（Best Paw）を押すとトップ画面に遷移する' do
+        click_link 'Best Paw'
+        expect(current_path).to eq root_path
+      end
+    end
   end
 
   describe 'アバウト画面のテスト' do
@@ -39,18 +46,18 @@ RSpec.describe '[STEP1] ユーザログイン前のテスト', type: :system do
       visit root_path
     end
 
-    context '表示内容の確認' do
-      it 'Best Paw(ロゴ)リンクが表示される' do
-        expect(page).to have_link 'Best Paw', href: root_path
+    context 'リンクの表示・遷移確認' do
+      it 'Aboutリンクを押すとアバウト画面に遷移する' do
+        click_link 'About'
+        expect(current_path).to eq about_path
       end
-      it 'Aboutリンクが表示される' do
-        expect(page).to have_link 'About', href: about_path
+      it '新規登録リンクを押すと新規登録画面に遷移する' do
+        click_link '新規登録'
+        expect(current_path).to eq new_user_registration_path
       end
-      it '新規登録リンクが表示される' do
-        expect(page).to have_link '新規登録', href: new_user_registration_path
-      end
-      it 'ログインリンクが表示される' do
-        expect(page).to have_link 'ログイン', href: new_user_session_path
+      it 'ログインリンクを押すとログイン画面に遷移する' do
+        click_link 'ログイン', match: :first
+        expect(current_path).to eq new_user_session_path
       end
     end
   end
@@ -107,6 +114,16 @@ RSpec.describe '[STEP1] ユーザログイン前のテスト', type: :system do
 
     before do
       visit new_user_session_path
+    end
+
+    context '表示内容の確認' do
+      it 'emailとpasswordフォームが表示される' do
+        expect(page).to have_field 'user[email]'
+        expect(page).to have_field 'user[password]'
+      end
+      it 'ログインボタンが表示される' do
+        expect(page).to have_button 'ログイン'
+      end
     end
 
     context 'ログイン成功のテスト' do

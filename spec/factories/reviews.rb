@@ -4,7 +4,7 @@ FactoryBot.define do
       review.dogs << build(:dog, user: review.user) if review.dogs.blank?
     end
 
-    title { "とても良い商品です" }
+    sequence(:title) { |n| "レビュータイトル#{n}" }
     body { "愛犬がとても喜んで遊んでいます。作りもしっかりしています。" }
     star { 0.5 }
     category { "おもちゃ" }

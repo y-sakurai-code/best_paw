@@ -43,7 +43,7 @@ class Public::DogsController < ApplicationController
         @dog.update(is_archived: true, archived_date: Date.today)
         notice_message = "思い出箱に移動しました。"
       end
-      redirect_back fallback_location: users_mypage_path, notice: notice_message
+      redirect_back fallback_location: users_mypage_path, notice: "思い出箱に移動しました。"
   end
 
   def destroy

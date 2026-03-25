@@ -80,9 +80,9 @@
         <h3 class="fw-bold mb-0"><%= current_user.name %> さんの投稿一覧</h3>
       </div>
 
-      <% if @reviews.any? %>
+      <% if @user.reviews.any? %>
         <div class="row row-cols-1 row-cols-md-2 g-3">
-          <% @reviews.each do |review| %>
+          <% @user.reviews.each do |review| %>
             <div class="col">
               <%= render 'public/reviews/review_card', review: review %>
             </div>

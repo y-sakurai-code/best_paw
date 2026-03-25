@@ -89,7 +89,7 @@ describe '[STEP3] 仕上げのテスト' do
   end
 
   describe 'アイコンのテスト' do
-    it 'ヘッダーに肉球アイコンが表示されている' do
+    it 'TOPに肉球アイコンが表示されている' do
       visit root_path
       expect(page).to have_selector '.fa-solid.fa-paw'
     end

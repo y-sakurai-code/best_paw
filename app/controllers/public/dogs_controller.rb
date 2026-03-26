@@ -1,5 +1,6 @@
 class Public::DogsController < ApplicationController
   before_action :authenticate_user!
+  before_action :ensure_guest_user, only: [:new, :create]
 
   def new
     @dog = Dog.new
@@ -61,6 +62,12 @@ class Public::DogsController < ApplicationController
   def dog_params
     params.require(:dog).permit(:name, :breed, :birthday, :size, :dog_image, :gender).tap do |d|
       d[:size] = d[:size].to_i if d[:size].present?
+    end
+  end
+
+  def ensure_guest_user
+    if current_user.guest_user?
+      redirect_to reviews_path, alert: 'ゲストユーザーは愛犬登録ができません。'
     end
   end
 

@@ -1,4 +1,5 @@
 class Public::ReviewCommentsController < ApplicationController
+  before_action :ensure_guest_user, only: [:create, :destroy]
 
   def create
     review = Review.find(params[:review_id])
@@ -19,6 +20,12 @@ class Public::ReviewCommentsController < ApplicationController
 
   def review_comment_params
    params.require(:review_comment).permit(:comment)
+  end
+
+  def ensure_guest_user
+    if current_user.guest_user?
+      redirect_to review_path(params[:review_id]), alert: 'ゲストユーザーはコメントできません。'
+    end
   end
 
 end

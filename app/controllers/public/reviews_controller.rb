@@ -1,5 +1,6 @@
 class Public::ReviewsController < ApplicationController
   before_action :is_matching_login_user, only: [:edit, :update]
+  before_action :ensure_guest_user, only: [:new, :create]
 
   def new
     @review = Review.new
@@ -78,6 +79,12 @@ class Public::ReviewsController < ApplicationController
     @review = Review.find(params[:id])
     unless @review.user_id == current_user.id
       redirect_to reviews_path
+    end
+  end
+
+  def ensure_guest_user
+    if current_user.guest_user?
+      redirect_to reviews_path, alert: 'ゲストユーザーは新規投稿は制限されています。'
     end
   end
 

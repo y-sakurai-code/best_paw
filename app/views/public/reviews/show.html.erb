@@ -168,14 +168,20 @@
           <p class="text-muted small ps-2">まだコメントはありません。最初のコメントを投稿してみましょう！</p>
         <% end %>
         <div class="card border-0 shadow-sm rounded-4 p-4 bg-light">
-        <%= form_with model: [@review, @review_comment] do |f| %>
-          <div class="mb-3">
-            <%= f.label :comment, "コメントを投稿する", class: "form-label fw-bold small" %>
-            <%= f.text_area :comment, rows: '3', class: "form-control border-0 rounded-3", placeholder: "愛犬家同士、優しくアドバイスや感想を伝えましょう！" %>
+        <% if current_user.guest_user? %>
+          <div class="alert alert-info mt-3">
+            <i class="fa-solid fa-circle-info"></i> ゲストユーザーはコメントを投稿できません。
           </div>
-          <div class="text-end">
-            <%= f.submit "送信する", class: "btn btn-warning rounded-pill px-4 fw-bold shadow-sm" %>
-          </div>
+        <% else %>
+          <%= form_with model: [@review, @review_comment], local: true do |f| %>
+            <div class="mb-3">
+              <%= f.label :comment, "コメントを投稿する", class: "form-label fw-bold small" %>
+              <%= f.text_area :comment, rows: '3', class: "form-control border-0 rounded-3", placeholder: "愛犬家同士、優しくアドバイスや感想を伝えましょう！" %>
+            </div>
+            <div class="text-end">
+              <%= f.submit "送信する", class: "btn btn-warning rounded-pill px-4 fw-bold shadow-sm" %>
+            </div>
+          <% end %>
         <% end %>
       </div>
       </div>

@@ -92,7 +92,11 @@
         <div class="text-center py-5 bg-white rounded-4 shadow-sm">
           <i class="fa-solid fa-paw fa-3x text-light mb-3"></i>
           <p class="text-secondary">まだレビューを投稿していません。</p>
-          <%= link_to "レビューを投稿する", new_review_path, class: "btn btn-warning rounded-pill fw-bold" %>
+          <% if current_user.guest_user? %>
+            <p class="text-danger small">※ゲストユーザーは編集・投稿機能を利用できません。</p>
+          <% else %>
+            <%= link_to "レビューを投稿する", new_review_path, class: "btn btn-warning rounded-pill fw-bold" %>
+          <% end %>
         </div>
       <% end %>
     </div>

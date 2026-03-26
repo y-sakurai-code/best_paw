@@ -1,5 +1,6 @@
 class Public::UsersController < ApplicationController
   before_action :ensure_correct_user, only: [:edit]
+  before_action :ensure_guest_user, only: [:edit, :update, :withdraw, :destroy, :archive, :show]
 
   def mypage
     @user = current_user
@@ -49,6 +50,12 @@ class Public::UsersController < ApplicationController
     @user = User.find_by(id: params[:id])
     if @user.nil? || @user.id != current_user.id
       redirect_to users_mypage_path, notice: "アクセス権限がないか、ユーザーが存在しません。"
+    end
+  end
+
+  def ensure_guest_user
+    if current_user.guest_user?
+      redirect_to reviews_path, alert: 'ゲストユーザーはマイページの編集・退会ができません。'
     end
   end
 

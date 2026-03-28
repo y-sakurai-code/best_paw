@@ -81,7 +81,7 @@
 - RSpec（単体・機能テスト）
 
 ### フロントエンド
-- JavaScript (jQuery)
+- JavaScript
 - Bootstrap 5（レスポンシブデザイン対応）
 - Font Awesome（アイコン）
 

@@ -13,11 +13,11 @@
 
     <style>
       body {
-        background-color: #f4f7f9; /* 管理画面らしい少し落ち着いた背景色 */
+        background-color: #f4f7f9;
         font-family: 'Noto Sans JP', sans-serif;
       }
       .admin-navbar {
-        background-color: #343a40; /* ダークな配色で「管理モード」を強調 */
+        background-color: #343a40;
       }
       .admin-brand {
         font-weight: bold;
@@ -55,9 +55,6 @@
                   <%= link_to 'レビュー管理', admin_reviews_managements_path, class: "nav-link nav-link-admin px-3" %>
                 </li>
                 <li class="nav-item">
-                  <%= link_to '商品管理', admin_items_path, class: "nav-link nav-link-admin px-3" %>
-                </li>
-                <li class="nav-item">
                   <%= link_to 'ジャンル管理', admin_genres_path, class: "nav-link nav-link-admin px-3" %>
                 </li>
                 <li class="nav-item ms-lg-3">
@@ -74,7 +71,6 @@
 
     <%# --- メインコンテンツ --- %>
     <main class="container">
-      <%# 通知メッセージ（Flash）の表示エリア %>
       <% flash.each do |key, value| %>
         <div class="alert alert-<%= key == 'notice' ? 'success' : 'danger' %> alert-dismissible fade show rounded-4 border-0 shadow-sm mb-4" role="alert">
           <%= value %>

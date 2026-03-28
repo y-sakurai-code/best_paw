@@ -51,7 +51,6 @@ Rails.application.routes.draw do
         patch :withdraw
       end
     end
-    resources :items
     resources :genres, only: [:new, :index, :create, :edit, :update, :destroy]
     resources :reviews_managements, only: [:index, :show, :destroy] do
       member do

@@ -1,10 +1,5 @@
 class Public::FavoriteReviewsController < ApplicationController
 
-  belongs_to :user
-  belongs_to :review
-
-  validates :user_id, uniqueness: { scope: :review_id }
-
   def create
     @review = Review.find(params[:review_id])
     favorite = current_user.favorite_reviews.new(review_id: @review.id)

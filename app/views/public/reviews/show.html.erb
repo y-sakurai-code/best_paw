@@ -149,9 +149,25 @@
                   <% end %>
                   <span class="fw-bold small"><%= comment.user.name %></span>
                 </div>
-                <span class="text-secondary" style="font-size: 0.7rem;">
-                  <%= comment.created_at.strftime('%Y/%m/%d') %>
-                </span>
+                <div class="d-flex flex-column align-items-end">
+                  <div class="d-flex align-items-center gap-1 mb-1">
+                    <% if comment.favorite_comments_by?(current_user) %>
+                      <%= link_to review_review_comment_favorite_comments_path(@review, comment), method: :delete, class: "text-decoration-none text-danger small d-flex align-items-center gap-1" do %>
+                        <i class="fas fa-heart"></i>
+                        <span class="fw-bold"><%= comment.favorite_comments.count %></span>
+                      <% end %>
+                    <% else %>
+                      <%= link_to review_review_comment_favorite_comments_path(@review, comment), method: :post, class: "text-decoration-none text-secondary small d-flex align-items-center gap-1" do %>
+                        <i class="far fa-heart"></i>
+                        <span class="fw-bold"><%= comment.favorite_comments.count %></span>
+                      <% end %>
+                    <% end %>
+                  </div>
+
+                  <span class="text-secondary" style="font-size: 0.7rem;">
+                    <%= comment.created_at.strftime('%Y/%m/%d') %>
+                  </span>
+                </div>
               </div>
               <p class="text-dark mb-0 small" style="line-height: 1.6;"><%= comment.comment %></p>
               

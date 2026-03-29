@@ -31,11 +31,10 @@ Rails.application.routes.draw do
     end
     resources :reviews, only: [:new, :index, :show, :edit, :create, :update, :destroy] do
       resource :favorite_reviews, only: [:create, :destroy]
-      resources :review_comments, only: [:create, :destroy]
-    end
-      resources :review_comments do
+      resources :review_comments, only: [:create, :destroy] do
         resource :favorite_comments, only: [:create, :destroy]
       end
+    end
   end
 
   devise_for :admin, skip: [:registrations, :password], controllers: {

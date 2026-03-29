@@ -89,7 +89,7 @@
 - **OS:** Linux (Ubuntu)
 - **Database:** MySQL[8.0.42]
 - **Web Server:** Nginx / Puma
-- **Infrastructure:** AWS (EC2, S3, RDS) ※デプロイ先
+- **Infrastructure:** AWS (EC2, S3, RDS) ※デプロイ先(予定)
 
 ---
 

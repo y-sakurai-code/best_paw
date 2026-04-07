@@ -86,7 +86,7 @@
 - Font Awesome（アイコン）
 
 ### インフラ・開発環境
-- **OS:** Linux (Ubuntu)
+- **OS:** Linux (Ubuntu [24.04.3] LTS)
 - **Database:** MySQL[8.0.42]
 - **Web Server:** Nginx / Puma
 - **Infrastructure:** AWS (EC2, S3, RDS) ※デプロイ先(予定)

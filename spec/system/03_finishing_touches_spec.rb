@@ -94,4 +94,14 @@ describe '[STEP3] 仕上げのテスト' do
       expect(page).to have_selector '.fa-solid.fa-paw'
     end
   end
+
+  describe 'タイムゾーンの設定確認' do
+    it 'Railsのタイムゾーンが東京に設定されていること' do
+      expect(Time.zone.name).to eq('Tokyo')
+    end
+
+    it '他のタイムゾーン（UTC等）ではないこと' do
+      expect(Time.zone.name).not_to eq('UTC')
+    end
+  end
 end

@@ -60,8 +60,10 @@
         <% Dog.genders.keys.each do |key| %>
         <% next if key == "unknown" %>
           <div class="form-check">
-            <%= f.radio_button :gender, key, class: "form-check-input", id: "gender_#{key}" %>
-            <%= f.label "gender_#{key}", (key == "male" ? "男の子" : "女の子"), class: "form-check-label" %>
+            <%= f.label :gender, value: key, class: "form-check-label" do %>
+              <%= f.radio_button :gender, key, class: "form-check-input" %>
+              <%= key == "male" ? "男の子" : "女の子" %>
+            <% end %>
           </div>
         <% end %>
       </div>

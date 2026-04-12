@@ -120,6 +120,5 @@ Rails.application.configure do
 
   # HTTPSからのリクエストを信頼するように設定
   config.force_ssl = true
-  config.hosts << "best-paw.xyz"
 
 end

@@ -118,10 +118,4 @@ Rails.application.configure do
   # config.active_record.database_resolver = ActiveRecord::Middleware::DatabaseSelector::Resolver
   # config.active_record.database_resolver_context = ActiveRecord::Middleware::DatabaseSelector::Resolver::Session
 
-  config.assume_ssl = true
-
-  config.action_dispatch.default_headers.merge!({
-  'Strict-Transport-Security' => 'max-age=31536000; includeSubDomains'
-  })
-
 end

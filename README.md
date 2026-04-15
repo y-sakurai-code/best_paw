@@ -94,10 +94,10 @@
 ---
 
 ## 設計書
-後ほど追記予定
 - ER図
 ![ER図](doc/er.png)
-- インフラ構成図（AWSの構成イメージ後ほど追記予定）
+- インフラ構成図
+![インフラ構成図](doc/AWS_configuration_diagram.png)
 
 ---
 

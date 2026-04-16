@@ -4,7 +4,7 @@
 「広告ではなく、同じ犬種・年齢・体質の犬を飼う『飼い主の生の声』を知りたい」というニーズに応えるためのレビューサイトです。犬種特有の悩み（噛む力、アレルギー、体格差）に基づいた詳細な情報を一元管理します。
 
 ### アプリURL
-**[デプロイ後のURLをここに貼り付け予定]**
+**[[Best PAW](https://best-paw.xyz/)]**
 
 > **テスト用アカウント（ゲストログイン）：**
 > トップ画面の **「ゲストログイン（閲覧用）」** ボタンから、ログイン操作なしで閲覧・検索機能を体験いただけます。
@@ -87,16 +87,19 @@
 
 ### インフラ・開発環境
 - **OS:** Linux (Ubuntu [24.04.3] LTS)
-- **Database:** MySQL[8.0.42]
+- **Database:** MySQL[8.4.7]
 - **Web Server:** Nginx / Puma
-- **Infrastructure:** AWS (EC2, S3, RDS) ※デプロイ先(予定)
+- **Infrastructure:** AWS(EC2,RDS,S3,IAM,ALB,CloudWatch,Route53)
 
 ---
 
 ## 設計書
 - ER図
+
 ![ER図](doc/er.png)
+
 - インフラ構成図
+
 ![インフラ構成図](doc/AWS_configuration_diagram.png)
 
 ---

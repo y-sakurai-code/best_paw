@@ -316,7 +316,7 @@ describe '[STEP2] ユーザログイン後のテスト' do
       fill_in 'dog[breed]', with: 'ゴールデンレトリバー'
       fill_in 'dog[birthday]', with: '2020-01-01'
       select '大型', from: 'dog[size]'
-      choose 'gender_male'
+      choose '男の子'
 
       click_button '新しく登録する'
 
@@ -375,7 +375,7 @@ describe '[STEP2] ユーザログイン後のテスト' do
     end
 
     it '性別の更新に成功するか' do
-      choose 'gender_male'
+      choose '男の子'
       click_button '更新する'
       dog.reload
       expect(dog.gender).to eq 'male'

@@ -6,9 +6,9 @@ class Public::SearchesController < ApplicationController
     @word = params[:word]
 
     if @range == "Dog"
-      @reviews = Review.joins(user: :dogs).where("dogs.breed LIKE ?", "%#{@word}%").distinct
+      @reviews = Review.joins(user: :dogs).where("dogs.breed LIKE ?", "%#{@word}%").distinct.page(params[:page]).per(10)
     else
-      @reviews = Review.where("title LIKE ? OR body LIKE ?", "%#{@word}%", "%#{@word}%")
+      @reviews = Review.where("title LIKE ? OR body LIKE ?", "%#{@word}%", "%#{@word}%").page(params[:page]).per(10)
     end
   end
 end

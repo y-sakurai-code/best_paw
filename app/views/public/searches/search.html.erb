@@ -9,7 +9,7 @@
       <% else %>
         キーワード <strong>"<%= @word %>"</strong>
       <% end %>
-      （<%= @reviews.count %>件）
+      （<%= @reviews.total_count %>件）
     </p>
   </div>
 
@@ -81,6 +81,9 @@
               </div>
             </div>
           <% end %>
+          <div class="d-flex justify-content-center mt-5">
+            <%= paginate @reviews, params: { range: @range, word: @word } %>
+          </div>
         </div>
       <% else %>
         <%# ヒットしなかった場合 %>

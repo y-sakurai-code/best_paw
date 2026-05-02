@@ -1,8 +1,11 @@
+<%# カードのデザイン部分 %>
 <div class="card border-0 shadow-sm rounded-4 overflow-hidden h-100 border-start border-4 border-warning">
   
   <div class="bg-warning-subtle p-3 border-bottom border-white">
     <div class="d-flex justify-content-between align-items-center">
       <div class="d-flex align-items-center">
+
+        <%# ここからカードの中の設定（レビューの対象犬表示） %>
         <% if review.dogs.any? %>
           <% dog = review.dogs.first %>
           <div class="shadow-sm rounded-circle border border-2 border-white overflow-hidden bg-white" style="width: 50px; height: 50px; flex-shrink: 0;">
@@ -15,6 +18,7 @@
             <% end %>
           </div>
           
+          <%# 犬の名前・性別・年齢 %>
           <div class="ms-2">
             <div class="fw-bold text-dark d-flex align-items-center" style="font-size: 0.85rem;">
               <%= dog.name %>
@@ -33,6 +37,7 @@
         <% end %>
       </div>
       
+      <%# 評価の星を表示（ratyを呼び出し） %>
       <div class="bg-white px-2 py-1 rounded-pill shadow-sm">
         <%= render 'public/reviews/static_rate', review: review %>
       </div>
@@ -41,6 +46,7 @@
 
   <div class="card-body p-4 d-flex flex-column">
     <div class="mb-3">
+      <%# ジャンルとカテゴリ（タグ）表示 %>
       <div class="d-flex flex-wrap gap-1 mb-2">
         <span class="badge bg-warning text-dark fw-bold rounded-pill px-2 py-1" style="font-size: 0.65rem;">
           <i class="fa-solid fa-folder-open me-1"></i><%= review.genre&.name || "未設定" %>
@@ -52,19 +58,23 @@
         <% end %>
       </div>
 
+      <%# 愛犬に与えたグッズ等の商品名 %>
       <div class="mb-1 text-secondary small fw-bold">
         <i class="fa-solid fa-cart-shopping me-1"></i><%= review.item_name %>
       </div>
       
+      <%# タイトル（stretched-linkによって、カードの上から8割ぐらいの範囲はクリックして詳細へ飛べるようになっています） %>
       <h5 class="fw-bold mb-0">
         <%= link_to review.title, review_path(review.id), class: "text-dark text-decoration-none stretched-link" %>
       </h5>
     </div>
 
+    <%# レビュー本文の抜粋：-webkit-line-clamp: 2 によって、長い文でも2行で省略「...」 %>
     <p class="text-secondary small mb-3 flex-grow-1" style="display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; line-height: 1.6;">
       <%= review.body %>
     </p>
 
+    <%# 投稿日と自分の投稿だった場合の編集・削除ボタン（z-index: 2 を指定しているのは、タイトル部分の stretched-link よりも上に重なるようにして編集削除ボタンを押せるようにするため） %>
     <div class="d-flex justify-content-between align-items-center pt-3 border-top mt-auto" style="position: relative; z-index: 2;">
       <div class="text-muted" style="font-size: 0.75rem;">
         <i class="fa-solid fa-calendar-day me-1 opacity-50"></i><%= review.created_at.strftime('%Y/%m/%d') %>
@@ -72,9 +82,11 @@
 
       <div class="d-flex gap-2">
         <% if review.user == current_user %>
+          <%# 編集ボタン %>
           <%= link_to edit_review_path(review.id), class: "btn btn-sm btn-light text-warning rounded-circle shadow-sm border", title: "編集" do %>
             <i class="fa-solid fa-pen" style="font-size: 0.8rem;"></i>
           <% end %>
+          <%# 削除ボタン %>
           <%= link_to review_path(review.id), method: :delete, data: { confirm: "削除してもよろしいですか？" }, class: "btn btn-sm btn-light text-danger rounded-circle shadow-sm border", title: "削除" do %>
             <i class="fa-solid fa-trash" style="font-size: 0.8rem;"></i>
           <% end %>

@@ -9,6 +9,7 @@
         <p class="text-secondary small">愛犬との素敵な思い出をチェックしましょう</p>
       </div>
 
+      <%# レビュー対象の愛犬を表示するヘッダーカード %>
       <div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-5">
         <div class="bg-warning-subtle p-3 border-bottom border-white">
           <div class="d-flex align-items-center mb-2 px-2">
@@ -20,6 +21,7 @@
             <% if @review.dogs.any? %>
               <% @review.dogs.each do |dog| %>
                 <div class="d-flex align-items-center bg-white rounded-pill pe-3 py-1 shadow-sm border border-light">
+                  <%# 犬の表示画像（なければデフォルトアイコン） %>
                   <% if dog.dog_image.attached? %>
                     <%= image_tag dog.dog_image, class: "rounded-circle border border-2 border-white", style: "width: 60px; height: 60px; object-fit: cover;" %>
                   <% else %>
@@ -37,6 +39,7 @@
                         <i class="fa-solid fa-venus text-danger" style="font-size: 0.6rem;"></i>
                       <% end %>
                     </div>
+                    <%# 犬種と年齢計算の表示 %>
                     <div class="text-secondary" style="font-size: 0.65rem;">
                       <%= dog.breed %> / <%= (Date.today.strftime('%Y%m%d').to_i - dog.birthday.strftime('%Y%m%d').to_i) / 10000 %>歳
                     </div>
@@ -49,6 +52,7 @@
           </div>
         </div>
 
+        <%# ジャンルとグッズ（アイテム）名 %>
         <div class="card-body p-4 p-md-5">
           <div class="d-flex justify-content-between align-items-start mb-4 flex-wrap gap-3">
             <div>
@@ -63,6 +67,7 @@
               <h2 class="fw-bold text-dark mb-0"><%= @review.title %></h2>
             </div>
 
+            <%# 投稿者名と投稿日をひとつまとめにした右上表示 %>
             <div class="d-flex align-items-center text-secondary small bg-light px-3 py-2 rounded-pill shadow-sm">
               <div class="d-flex align-items-center me-3 border-end pe-3">
                 <i class="fa-solid fa-circle-user text-warning me-2 fs-5"></i>
@@ -76,6 +81,7 @@
             </div>
           </div>
 
+          <%# カテゴリ（タグ）表示 %>
           <% if @review.category.present? %>
             <div class="mb-4">
               <div class="badge border border-warning text-warning rounded-pill px-3 py-2">
@@ -84,16 +90,19 @@
             </div>
           <% end %>
 
+          <%# レビュー本文：white-space: pre-wrap; で改行を反映 %>
           <div class="review-body mb-5 p-4 bg-light bg-opacity-10 rounded-4 border">
             <p class="text-dark mb-0" style="font-size: 1.05rem; line-height: 2; white-space: pre-wrap;"><%= @review.body %></p>
           </div>
 
+          <%# 星評価(raty)といいねボタン %>
           <div class="d-flex align-items-center justify-content-between bg-light p-3 rounded-4 shadow-sm mb-5">
             <div class="d-flex align-items-center">
               <span class="fw-bold text-secondary me-3 small">満足度：</span>
               <%= render 'static_rate', review: @review %>
             </div>
 
+            <%# いいね機能：ログインユーザーが既にいいねしているかで表示を分岐 %>
             <div class="d-flex align-items-center border-start ps-4">
               <% if @review.favorite_reviews_by?(current_user) %>
                 <%= link_to review_favorite_reviews_path(@review), method: :delete, class: "text-decoration-none d-flex align-items-center gap-2" do %>
@@ -111,6 +120,7 @@
 
           <hr class="my-4 opacity-25">
 
+          <%# 一覧に戻るボタン、投稿者本人のみ編集・削除を表示 %>
           <div class="d-flex justify-content-between align-items-center">
             <%= link_to reviews_path, class: "btn btn-outline-secondary rounded-pill px-4 fw-bold" do %>
               <i class="fa-solid fa-arrow-left me-1"></i>一覧へ戻る
@@ -130,16 +140,19 @@
         </div>
       </div>
 
+      <%# ここからコメントセクション開始 %>
       <div class="mt-5 mb-4">
         <h5 class="fw-bold mb-3">
           <i class="fa-solid fa-comments text-warning me-2"></i>コメント <%= @review.review_comments.count %>件
         </h5>
 
+        <%# コメントの表示 %>
         <% if @review.review_comments.any? %>
           <% @review.review_comments.each do |comment| %>
             <div class="card border-0 shadow-sm rounded-4 p-3 mb-3 bg-white">
               <div class="d-flex justify-content-between align-items-center mb-2">
                 <div class="d-flex align-items-center">
+                  <%# コメントしたユーザーの愛犬アイコン %>
                   <% if comment.user.dogs.any? && comment.user.dogs.first.dog_image.attached? %>
                     <%= image_tag comment.user.dogs.first.dog_image, class: "rounded-circle border border-1 border-light me-2", style: "width: 35px; height: 35px; object-fit: cover;" %>
                   <% else %>
@@ -149,6 +162,8 @@
                   <% end %>
                   <span class="fw-bold small"><%= comment.user.name %></span>
                 </div>
+
+                <%# コメントへのいいねボタン %>
                 <div class="d-flex flex-column align-items-end">
                   <div class="d-flex align-items-center gap-1 mb-1">
                     <% if comment.favorite_comments_by?(current_user) %>
@@ -171,6 +186,7 @@
               </div>
               <p class="text-dark mb-0 small" style="line-height: 1.6;"><%= comment.comment %></p>
               
+              <%# コメント削除ボタン（投稿者本人のみ） %>
               <% if comment.user == current_user %>
                 <div class="text-end">
                   <%= link_to review_review_comment_path(@review, comment), method: :delete, data: { confirm: "コメントを削除しますか？" }, class: "text-danger text-decoration-none small" do %>
@@ -183,6 +199,8 @@
         <% else %>
           <p class="text-muted small ps-2">まだコメントはありません。最初のコメントを投稿してみましょう！</p>
         <% end %>
+
+        <%# コメント投稿フォーム（ゲストログインは投稿不可） %>
         <div class="card border-0 shadow-sm rounded-4 p-4 bg-light">
         <% if current_user.guest_user? %>
           <div class="alert alert-info mt-3">

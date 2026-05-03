@@ -10,6 +10,7 @@
     </div>
   <% end %>
 
+  <%# 愛犬情報登録 %>
   <div class="mb-4">
     <%= f.label :dog_image, "愛犬の写真", class: "form-label fw-bold" %>
     <div class="p-3 border rounded-4 bg-light">
@@ -54,6 +55,7 @@
       <%= f.select :size, Dog.sizes.keys.to_a, { include_blank: "選択してください" }, { class: "form-select rounded-pill" } %>
     </div>
 
+    <%# 性別登録ラジオボタン %>
     <div class="col-md-6 mb-4">
       <label class="form-label fw-bold">性別</label>
       <div class="d-flex gap-5">
@@ -62,7 +64,7 @@
           <div class="form-check">
             <%= f.label :gender, value: key, class: "form-check-label" do %>
               <%= f.radio_button :gender, key, class: "form-check-input" %>
-              <%= key == "male" ? "男の子" : "女の子" %>
+              <%= key == "male" ? "男の子" : "女の子" %>    <%# Enum値を日本語に変換 %>
             <% end %>
           </div>
         <% end %>

@@ -1,3 +1,4 @@
+<%# タイトルとヘッダー %>
 <div class="container py-5">
   <div class="row justify-content-center">
     <div class="col-md-8">
@@ -5,11 +6,13 @@
         <i class="fa-regular fa-bell me-2 text-warning"></i>通知一覧
       </h3>
 
+      <%# ここから通知内容と削除ボタン関係 %>
       <% if @notifications.exists? %>
         <div class="text-end mb-3">
           <%= link_to "通知を全て削除", destroy_all_notifications_path, method: :delete, data: { confirm: "本当にすべての通知を削除しますか？" }, class: "btn btn-outline-danger btn-sm rounded-pill" %>
         </div>
 
+        <%# 通知種類とアイコンとテキストの切り替え関係 %>
         <div class="list-group shadow-sm border-0">
           <% @notifications.each do |notification| %>
             <div class="list-group-item list-group-item-action border-0 border-bottom p-3">
@@ -24,15 +27,18 @@
                   <% end %>
                 </span>
 
+                <%# railsの機能を使った相対時間で通知時間の表示 %>
                 <span class="ms-auto text-muted small">
                   <%= time_ago_in_words(notification.created_at) %>前
                 </span>
 
+                <%# 個別削除ボタン %>
                 <%= link_to notification_path(notification), method: :delete, class: "text-secondary ms-3" do %>
                   <i class="fa-solid fa-trash-can"></i>
                 <% end %>
               </div>
 
+              <%# 通知元のレビューへのリンク %>
               <% if notification.review.present? %>
                 <div class="mt-2">
                   <%= link_to "「#{notification.review.title}」を確認する", review_path(notification.review), class: "text-decoration-none small text-warning fw-bold" %>

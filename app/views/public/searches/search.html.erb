@@ -3,6 +3,8 @@
     <h2 class="fw-bold">
       <i class="fa-solid fa-magnifying-glass text-warning me-2"></i>検索結果
     </h2>
+
+    <%# 検索種類による条件分岐 %>
     <p class="text-secondary">
       <% if @range == "Dog" %>
         犬種 <strong>"<%= @word %>"</strong>
@@ -16,18 +18,21 @@
   <div class="row justify-content-center">
     <div class="col-lg-9">
       
+    <%# 検索結果があった場合 %>
       <% if @reviews.any? %>
         <div class="row row-cols-1 g-4">
           <% @reviews.each do |review| %>
             <div class="col">
               <div class="card border-0 shadow-sm rounded-4 overflow-hidden h-100 transition hover-shadow">
                 
+                <%# レビュー記載者の愛犬達 %>
                 <div class="bg-warning-subtle p-3 border-bottom border-white shadow-inner">
                   <div class="d-flex align-items-center mb-2">
                     <i class="fa-solid fa-paw text-warning me-2"></i>
                     <span class="text-warning-emphasis fw-bold" style="font-size: 0.8rem; letter-spacing: 0.1rem;">FAMILY PROFILE</span>
                   </div>
                   
+                  <%# 愛犬のアイコン画像 %>
                   <div class="d-flex flex-wrap gap-4 px-2">
                     <% review.user.dogs.where(is_archived: false).each do |dog| %>
                       <div class="d-flex align-items-center bg-white rounded-pill pr-3 py-1 shadow-sm border border-light" style="padding-right: 15px;">
@@ -40,7 +45,7 @@
                           </div>
                         <% end %>
                         
-                        <%# 犬名と犬種（横並び） %>
+                        <%# 犬名と犬種 %>
                         <div class="ms-2">
                           <div class="fw-bold text-dark" style="font-size: 0.75rem;"><%= dog.name %></div>
                           <div class="<%= dog.breed.include?(@word) ? 'text-warning fw-bold' : 'text-secondary' %>" style="font-size: 0.7rem;">
@@ -64,12 +69,14 @@
                       
                       <div class="mb-0">
                         <span class="badge bg-light text-secondary mb-2 fw-normal border" style="font-size: 0.7rem;">レビュー本文</span>
+                        <%# レビュー本文を2行まで表示 %>
                         <p class="card-text text-secondary small mb-0" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.6;">
                           <%= review.body %>
                         </p>
                       </div>
                     </div>
 
+                    <%# レビューの詳細へのリンク部分 %>
                     <div class="col-md-3 d-flex align-items-end justify-content-end mt-3 mt-md-0">
                       <%= link_to review_path(review.id), class: "btn btn-warning rounded-pill px-4 fw-bold shadow-sm w-100 w-md-auto" do %>
                         詳しく見る <i class="fa-solid fa-chevron-right ms-1" style="font-size: 0.7rem;"></i>
@@ -81,6 +88,8 @@
               </div>
             </div>
           <% end %>
+
+          <%# ページネーション %>
           <div class="d-flex justify-content-center mt-5">
             <%= paginate @reviews, params: { range: @range, word: @word } %>
           </div>
@@ -96,6 +105,7 @@
   </div>
 </div>
 
+<%# ページネーションの色をサイトの黄色系と合わせるCSS %>
 <style>
   .pagination .page-item.active .page-link {
     background-color: #ffc107;

@@ -7,10 +7,14 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
+    <%# FontAwesomeを管理画面で使うアイコンの読み込み %>
     <script src="https://kit.fontawesome.com/d1b2e80093.js" crossorigin="anonymous"></script>
+
+    <%# RailsのWebpacker経由でCSSとJSを読み込み %>
     <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
 
+    <%# head内に書く方が一般的（最初に読込む為） %>
     <style>
       body {
         background-color: #f4f7f9;
@@ -40,6 +44,7 @@
             <i class="fa-solid fa-unlock-keyhole me-2 text-warning"></i>BestPaw Admin
           <% end %>
 
+          <%# スマホ用ハンバーガーメニューボタン %>
           <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#adminNav">
             <i class="fa-solid fa-bars text-white"></i>
           </button>

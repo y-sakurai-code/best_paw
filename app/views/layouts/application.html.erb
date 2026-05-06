@@ -7,8 +7,13 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
+    <%# Swiper: スライド用の外部CSSライブラリ（今日のわんこ用） %>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+
+    <%# FontAwesomeを使うアイコンの読み込み %>
     <script src="https://kit.fontawesome.com/d1b2e80093.js" crossorigin="anonymous"></script>
+
+    <%# RailsのWebpacker経由でCSSとJSを読み込み %>
     <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
@@ -30,17 +35,20 @@
           <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start w-100">
             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0 align-items-center">
               <% if user_signed_in? %>
+                <%# --- ログイン中のメニュー --- %>
                 <li><%= link_to "About", about_path, class: 'nav-link px-3 text-secondary fw-semibold' %></li>
                 <li><%= link_to 'マイページ', users_mypage_path, class: 'nav-link px-3 text-secondary fw-semibold' %></li>
                 <li><%= link_to 'レビュー投稿', new_review_path, class: 'nav-link px-3 text-secondary fw-semibold' %></li>
                 <li><%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: 'nav-link px-3 text-danger small' %></li>
               <% else %>
+                <%# --- 未ログインのメニュー --- %>
                 <li><%= link_to "About", about_path, class: 'nav-link px-3 text-secondary fw-semibold' %></li>
                 <li><%= link_to "ログイン", new_user_session_path, class: 'nav-link px-3 text-secondary fw-semibold' %></li>
                 <li><%= link_to "新規登録", new_user_registration_path, class: 'btn btn-warning btn-sm ms-2 rounded-pill px-3 shadow-sm' %></li>
               <% end %>
             </ul>
 
+            <%# 犬種とレビュー検索窓部分 %>
             <% if user_signed_in? %>
               <%= form_with url: search_path, local: true, method: :get, class: "col-12 col-lg-auto mb-3 mb-lg-0 d-flex align-items-center bg-light p-1 rounded-pill" do |f| %>
                 <%= f.text_field :word, class: "form-control form-control-sm border-0 bg-transparent ps-3", placeholder: "検索..." %>
@@ -61,6 +69,7 @@
                     <span class="small fw-bold text-secondary">通知</span>
                   </li>
                   
+                  <%# ベルマークの通知部分 %>
                   <% if current_user.passive_notifications.any? %>
                     <%# 最新の5件を表示 %>
                     <% current_user.passive_notifications.order(created_at: :desc).limit(5).each do |notification| %>
@@ -98,12 +107,16 @@
         </div>
       </nav>
     </header>
+
+    <%# フラッシュメッセージ部分 %>
     <% flash.each do |message_type, message| %>
       <div class="alert alert-<%= message_type == 'notice' ? 'success' : 'danger' %>">
         <%= message %>
       </div>
     <% end %>
     <%= yield %>
+
+      <%# フッター部分 %>
       <footer class="py-5 mt-5" style="background-color: #f8f9fa; border-top: 5px solid #ffc107;">
         <div class="container">
           <div class="row justify-content-center">
@@ -126,6 +139,7 @@
         </div>
       </footer>
 
+    <%# スライド機能JSファイルを読込み %>
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   </body>
 </html>

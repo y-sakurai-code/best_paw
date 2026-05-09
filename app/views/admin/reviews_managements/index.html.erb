@@ -13,6 +13,7 @@
       <table class="table table-hover align-middle mb-0">
         <thead class="bg-light">
           <tr>
+            <%# 各列に固定幅(width)を指定し、レイアウトのガタつき防止 %>
             <th class="ps-4 py-3 text-secondary small fw-bold" style="width: 80px;">ID</th>
             <th class="py-3 text-secondary small fw-bold" style="width: 150px;">投稿者</th>
             <th class="py-3 text-secondary small fw-bold">内容</th>
@@ -25,32 +26,45 @@
           <% @reviews.each do |review| %>
             <tr>
               <td class="ps-4 text-secondary small">
+              <%# 名前とメールアドレスを表示 %>
               <td>
                 <div class="fw-bold text-dark small"><%= review.user.name %></div>
                 <div class="text-muted" style="font-size: 0.75rem;"><%= review.user.email %></div>
               </td>
+
+              <%# タイトルと本文を抜粋 %>
               <td>
                 <div class="fw-bold text-dark mb-1"><%= review.title %></div>
                 <div class="text-secondary small text-truncate" style="max-width: 450px;">
                   <%= review.body %>
                 </div>
+
+                <%# コメント数を表示 %>
                 <div class="mt-1">
                   <span class="badge bg-light text-secondary fw-normal border">
                     <i class="fa-regular fa-comment me-1"></i><%= review.review_comments.count %>
                   </span>
                 </div>
               </td>
+
+              <%# 評価 %>
               <td>
                 <%= render 'public/reviews/static_rate', review: review %>
               </td>
+
+              <%# 投稿日 %>
               <td class="text-secondary small">
                 <%= review.created_at.strftime('%Y/%m/%d %H:%M') %>
               </td>
               <td class="pe-4 text-end">
                 <div class="btn-group">
+
+                  <%# 管理者用の詳細確認ページリンク %>
                   <%= link_to admin_reviews_management_path(review), class: "btn btn-sm btn-outline-secondary px-3 rounded-start-pill" do %>
                     詳細
                   <% end %>
+
+                  <%# 強制削除ボタン %>
                   <%= link_to admin_reviews_management_path(review), method: :delete, data: { confirm: "管理者権限でこのレビューを削除しますか？\nこの操作は取り消せません。" }, class: "btn btn-sm btn-outline-danger px-3 rounded-end-pill" do %>
                     <i class="fa-solid fa-trash-can"></i>
                   <% end %>

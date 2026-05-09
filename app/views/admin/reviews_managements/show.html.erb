@@ -15,6 +15,7 @@
           </h5>
         </div>
         
+        <%# IDとメールアドレス %>
         <div class="card-body p-4 p-md-5">
           <div class="row mb-4 border-bottom pb-3">
             <div class="col-sm-4 text-secondary fw-bold small">レビューID / 投稿者</div>
@@ -25,11 +26,13 @@
             </div>
           </div>
 
+          <%# タイトル %>
           <div class="row mb-4 border-bottom pb-3">
             <div class="col-sm-4 text-secondary fw-bold small">タイトル</div>
             <div class="col-sm-8 fw-bold fs-5 text-dark"><%= @review.title %></div>
           </div>
 
+          <%# 評価 %>
           <div class="row mb-4 border-bottom pb-3">
             <div class="col-sm-4 text-secondary fw-bold small">評価</div>
             <div class="col-sm-8">
@@ -37,11 +40,13 @@
             </div>
           </div>
 
+          <%# 投稿日時 %>
           <div class="row mb-4 border-bottom pb-3">
             <div class="col-sm-4 text-secondary fw-bold small">投稿日時</div>
             <div class="col-sm-8 text-dark"><%= @review.created_at.strftime('%Y年 %m月 %d日 %H:%M') %></div>
           </div>
 
+          <%# レビュー本文 %>
           <div class="row mb-0">
             <div class="col-sm-4 text-secondary fw-bold small">レビュー内容</div>
             <div class="col-sm-8">
@@ -50,6 +55,7 @@
           </div>
         </div>
 
+        <%# 管理者用削除 %>
         <div class="card-footer bg-white py-4 px-4 border-top">
           <div class="d-flex align-items-center justify-content-between">
             <span class="text-muted small"><i class="fa-solid fa-triangle-exclamation me-1 text-danger"></i>不適切な投稿の場合は削除してください</span>
@@ -60,6 +66,7 @@
         </div>
       </div>
 
+      <%# コメント一覧 %>
       <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
         <div class="card-header bg-white py-3 px-4 border-bottom">
           <h6 class="fw-bold mb-0 text-dark">
@@ -75,6 +82,7 @@
                     <span class="fw-bold text-dark small"><%= comment.user.name %></span>
                     <span class="text-muted small ms-2"><%= comment.created_at.strftime('%Y/%m/%d %H:%M') %></span>
                   </div>
+                  <%# コメント単位の削除 %>
                   <%= link_to destroy_comment_admin_reviews_management_path(review_comment_id: comment.id), method: :delete, data: { confirm: 'このコメントを削除しますか？' }, class: "btn btn-link text-danger text-decoration-none p-0 small" do %>
                     <i class="fa-solid fa-xmark me-1"></i>削除
                   <% end %>

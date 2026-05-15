@@ -1,0 +1,15 @@
+ja:
+  activerecord:
+    models:
+      user: "会員"
+      review: "レビュー"
+      review_comment: "コメント"
+    attributes:
+      user:
+        name: "ユーザーネーム"
+        email: "メールアドレス"
+      review:
+        title: "タイトル"
+        body: "レビュー内容"
+      review_comment:
+        comment: "コメント内容"

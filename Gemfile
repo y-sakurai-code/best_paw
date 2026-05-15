@@ -57,7 +57,6 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'devise'
 
-gem 'dotenv-rails'
 group :production do
   gem 'mysql2'
 end
@@ -69,3 +68,4 @@ gem 'discard', '~> 1.3'
 gem 'dotenv-rails', groups: [:development, :test]
 gem 'kaminari'
 gem "aws-sdk-s3", require: false
+gem 'rails-i18n'

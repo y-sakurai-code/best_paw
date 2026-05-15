@@ -1,0 +1,15 @@
+ja:
+  devise:
+    confirmations:
+      confirmed: "アカウントを完全に登録しました。"
+      send_instructions: "アカウントの確認方法を記載したメールを数分以内にお送りします。"
+      send_paranoid_instructions: "ご登録中であれば、アカウントの確認方法を記載したメールを数分以内にお送りします。"
+    failure:
+      already_authenticated: "既にログインしています。"
+      inactive: "アカウントが有効化されていません。"
+      invalid: "%{authentication_keys}またはパスワードが違います。"
+      locked: "アカウントがロックされています。"
+      not_found_in_database: "%{authentication_keys}またはパスワードが違います。"
+      timeout: "一定時間が経過したため、再度ログインが必要です。"
+      unauthenticated: "ログインまたは登録が必要です。"
+      unconfirmed: "メールアドレスの確認手続きを完了してください。"

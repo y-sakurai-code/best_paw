@@ -1,15 +1,61 @@
 ja:
   activerecord:
     models:
+      admin: "管理者"
       user: "会員"
+      dog: "愛犬"
       review: "レビュー"
       review_comment: "コメント"
+      genre: "ジャンル"
+      favorite_review: "レビューお気に入り"
+      favorite_comment: "コメントお気に入り"
+      notification: "通知"
+
     attributes:
+      # --- 管理者 ---
+      admin:
+        email: "メールアドレス"
+        password: "パスワード"
+        password_confirmation: "パスワード（確認用）"
+
+      # --- 会員 ---
       user:
         name: "ユーザーネーム"
         email: "メールアドレス"
+        password: "パスワード"
+        password_confirmation: "パスワード（確認用）"
+        created_at: "登録日"
+        discarded_at: "退会日時"
+
+      # --- 愛犬 ---
+      dog:
+        name: "名前"
+        breed: "犬種"
+        birthday: "誕生日"
+        size: "サイズ"
+        gender: "性別"
+        is_archived: "虹の橋を渡りました"
+        archived_date: "虹の橋を渡った日"
+
+      # --- レビュー ---
       review:
         title: "タイトル"
         body: "レビュー内容"
+        star: "評価"
+        category: "カテゴリー"
+        item_name: "対象の商品"
+        genre_id: "ジャンル"
+        discarded_at: "削除日時"
+
+      # --- レビューへのコメント ---
       review_comment:
         comment: "コメント内容"
+
+      # --- ジャンル ---
+      genre:
+        name: "ジャンル名"
+
+      # --- 通知（必要に応じて） ---
+      notification:
+        action: "アクション"
+        checked: "確認ステータス"
